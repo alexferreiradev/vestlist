@@ -2,16 +2,18 @@ package com.alex.vestlist.model;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.provider.BaseColumns;
 
 import com.alex.vestlist.dao.VestListContract;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Alex on 16/03/2017.
  */
 
-public class Doubt implements ModelSqlInterface<Doubt>{
+public class Doubt extends BaseModel<Doubt>{
 
     private long id;
     private String question;
@@ -23,7 +25,7 @@ public class Doubt implements ModelSqlInterface<Doubt>{
         ContentValues contentValues = new ContentValues();
 
         // id, question, details, list
-        contentValues.put(VestListContract.ListEntry._ID, id);
+        contentValues.put(BaseColumns._ID, id);
         contentValues.put(VestListContract.DoubtEntry.QUESTION, question);
         contentValues.put(VestListContract.DoubtEntry.DETAILS_COLLUNM, details);
         contentValues.put(VestListContract.DoubtEntry.FK_LIST_COLLUNM, list.getId());
@@ -37,26 +39,36 @@ public class Doubt implements ModelSqlInterface<Doubt>{
             return null;
 
         // id, question, details, list
-        int columnIndex = cursor.getColumnIndex(VestListContract.ListEntry._ID);
+        int columnIndex = cursor.getColumnIndex(BaseColumns._ID);
         long id = cursor.getLong(columnIndex);
         columnIndex = cursor.getColumnIndex(VestListContract.DoubtEntry.QUESTION);
-        String name = cursor.getString(columnIndex);
-        columnIndex = cursor.getColumnIndex(VestListContract.DoubtEntry.STATUS_COLLUNM);
-        int status = cursor.getInt(columnIndex);
-        columnIndex = cursor.getColumnIndex(VestListContract.DoubtEntry.FK_TEACHER_COLLUNM);
-        long teacherId = cursor.getInt(columnIndex);
+        String question = cursor.getString(columnIndex);
+        columnIndex = cursor.getColumnIndex(VestListContract.DoubtEntry.DETAILS_COLLUNM);
+        String details = cursor.getString(columnIndex);
+        columnIndex = cursor.getColumnIndex(VestListContract.DoubtEntry.FK_LIST_COLLUNM);
+        long listId = cursor.getInt(columnIndex);
 
         Doubt doubt = new Doubt();
         doubt.setId(id);
-        doubt.setName(name);
+        doubt.setQuestion(question);
+        doubt.setDetails(details);
         // TODO criar relacionamento, fazer carregamento do bd
-        doubt.setTeacher(null);
+        doubt.setList(null);
         return doubt;
     }
 
     @Override
     public List<Doubt> getList(Cursor cursor) {
-        return null;
+        if (!cursor.moveToFirst())
+            return null;
+
+        List<Doubt> list = new ArrayList<>();
+        do{
+            Doubt doubt = convertCursor(cursor);
+            list.add(doubt);
+        }while (cursor.moveToNext());
+
+        return list;
     }
 
     public long getId() {

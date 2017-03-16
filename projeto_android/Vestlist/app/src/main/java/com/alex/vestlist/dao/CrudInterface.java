@@ -12,7 +12,7 @@ public interface CrudInterface<T> {
 
     public long save(T object);
 
-    public void delete(T object);
+    public int delete(long id);
 
-    public List<T> search(String key, String value);
+    public List<T> search(String key, String value, String limit);
 }

@@ -2,6 +2,7 @@ package com.alex.vestlist.model;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.provider.BaseColumns;
 
 import com.alex.vestlist.dao.VestListContract;
 
@@ -12,9 +13,8 @@ import java.util.List;
  * Created by Alex on 16/03/2017.
  */
 
-public class ExerciseList implements ModelSqlInterface<ExerciseList> {
+public class ExerciseList extends BaseModel<ExerciseList> {
 
-    private long id;
     private String name;
     private boolean status;
 
@@ -24,7 +24,7 @@ public class ExerciseList implements ModelSqlInterface<ExerciseList> {
     public ContentValues toContentValues() {
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put(VestListContract.ListEntry._ID, id);
+        contentValues.put(BaseColumns._ID, id);
         contentValues.put(VestListContract.ListEntry.NAME_COLLUNM, name);
         contentValues.put(VestListContract.ListEntry.FK_TEACHER_COLLUNM, teacher.getId());
         if (status)
@@ -41,7 +41,7 @@ public class ExerciseList implements ModelSqlInterface<ExerciseList> {
             return null;
 
         // id, name, status, teacher
-        int columnIndex = cursor.getColumnIndex(VestListContract.ListEntry._ID);
+        int columnIndex = cursor.getColumnIndex(BaseColumns._ID);
         long id = cursor.getLong(columnIndex);
         columnIndex = cursor.getColumnIndex(VestListContract.ListEntry.NAME_COLLUNM);
         String name = cursor.getString(columnIndex);
@@ -70,14 +70,6 @@ public class ExerciseList implements ModelSqlInterface<ExerciseList> {
         }while (cursor.moveToNext());
 
         return list;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getName() {
