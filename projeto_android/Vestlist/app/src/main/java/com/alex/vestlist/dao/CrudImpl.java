@@ -1,11 +1,12 @@
 package com.alex.vestlist.dao;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 
-import com.alex.vestlist.model.ModelSqlInterface;
+import com.alex.vestlist.model.BaseModel;
 
 import java.util.List;
 
@@ -16,9 +17,9 @@ import java.util.List;
 public class CrudImpl<T> implements CrudInterface<T> {
     private Context context;
     private String tableName;
-    private ModelSqlInterface<T> factory;
+    private BaseModel<T> factory;
 
-    public CrudImpl(Context context, String tableName, ModelSqlInterface baseObject) {
+    public CrudImpl(Context context, String tableName, BaseModel<T> baseObject) {
         this.context = context;
         this.tableName = tableName;
         this.factory = baseObject;
@@ -26,12 +27,11 @@ public class CrudImpl<T> implements CrudInterface<T> {
 
     @Override
     public T get(long id) {
-        SQLiteDatabase readableDatabase = new DatabaseHelper(context).getReadableDatabase();
-        String selection = BaseColumns._ID + "=?";
-        String[] selectionArgs = {String.valueOf(id)};
-        Cursor cursor = readableDatabase.query(tableName, null, selection, selectionArgs, null, null, null, "1");
-
-        return factory.convertCursor(cursor);
+        List<T> list = search(BaseColumns._ID, String.valueOf(id), 1);
+        if (list == null && list.size() > 1 || list.isEmpty() )
+            return null;
+        T t = list.get(0);
+        return t;
     }
 
     @Override
@@ -53,12 +53,26 @@ public class CrudImpl<T> implements CrudInterface<T> {
     }
 
     @Override
-    public List<T> search(String key, String value, String limit) {
+    public List<T> search(String key, String value, int limit) {
         SQLiteDatabase readableDatabase = new DatabaseHelper(context).getReadableDatabase();
         String selection = key + "=?";
         String[] selectionArgs = {value};
-        Cursor cursor = readableDatabase.query(tableName, null, selection, selectionArgs, null, null, null, limit);
+        Cursor cursor = readableDatabase.query(tableName, null, selection, selectionArgs, null, null, null, String.valueOf(limit));
 
         return factory.getList(cursor);
+    }
+
+    @Override
+    public List<T> load(int offset, int limit) {
+        SQLiteDatabase readableDatabase = new DatabaseHelper(context).getReadableDatabase();
+        String limitString = limit + " OFFSET " + offset;
+        Cursor cursor = readableDatabase.query(tableName, null, null, null, null, null, null, limitString);
+
+        return factory.getList(cursor);
+    }
+
+    @Override
+    public int update(long id, ContentValues values) {
+        return 0;
     }
 }
