@@ -21,7 +21,7 @@ public interface CrudInterface<T> {
      */
     public int delete(long id);
 
-    public List<T> search(String key, String value, int limit);
+    public List<T> search(String key, String value, int offset, int limit);
 
     /**
      * Carrega um lista de objetos, com a restrição de quantidade por carregamento. Serve para paginação.

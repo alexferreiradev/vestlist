@@ -10,7 +10,7 @@ import java.util.List;
  * Created by Alex on 16/03/2017.
  */
 
-interface ListBusInterface {
+interface StudentBusInterface {
 
     /**
      * Carrega máterias com paginação.
@@ -21,6 +21,7 @@ interface ListBusInterface {
     public List loadSubjects(int offset, int limit);
     public List loadTeachers(int offset, int limit);
     public List loadDoubts(int offset, int limit);
+    public List loadLists(Teacher teacher, int offset, int limit);
 
     public boolean removeList(long id);
     public boolean removeDoubt(long id);

@@ -15,7 +15,7 @@ import java.util.List;
  * Created by Alex on 16/03/2017.
  */
 
-public class ListBusiness implements ListBusInterface {
+public class StudentBusiness implements StudentBusInterface {
 
     private Context context;
     private CrudImpl<Subject> subjectCrud = new CrudImpl<>(context, VestListContract.SubjectEntry.TABLE_NAME, new Subject());
@@ -23,7 +23,7 @@ public class ListBusiness implements ListBusInterface {
     private CrudImpl<ExerciseList> exerciseListCrud = new CrudImpl<>(context, VestListContract.ListEntry.TABLE_NAME, new ExerciseList());
     private CrudImpl<Doubt> doubtCrud = new CrudImpl<>(context, VestListContract.DoubtEntry.TABLE_NAME, new Doubt());
 
-    public ListBusiness(Context context) {
+    public StudentBusiness(Context context) {
         this.context = context;
     }
 
@@ -40,6 +40,11 @@ public class ListBusiness implements ListBusInterface {
     @Override
     public List loadDoubts(int offset, int limit) {
         return doubtCrud.load(offset, limit);
+    }
+
+    @Override
+    public List loadLists(Teacher teacher, int offset, int limit) {
+        return exerciseListCrud.search(VestListContract.ListEntry.FK_TEACHER_COLLUNM, String.valueOf(teacher.getId()), offset, limit);
     }
 
     @Override
@@ -72,9 +77,9 @@ public class ListBusiness implements ListBusInterface {
 
     @Override
     public float getListCompletedPercent(Teacher teacher) {
-        List<ExerciseList> lists = exerciseListCrud.search(VestListContract.ListEntry.FK_TEACHER_COLLUNM, String.valueOf(teacher.getId()), -1);
+        List<ExerciseList> lists = exerciseListCrud.search(VestListContract.ListEntry.FK_TEACHER_COLLUNM, String.valueOf(teacher.getId()), 0, -1);
         int total = lists.size();
-        List<ExerciseList> completedLists = exerciseListCrud.search(VestListContract.ListEntry.STATUS_COLLUNM, "1", -1);
+        List<ExerciseList> completedLists = exerciseListCrud.search(VestListContract.ListEntry.STATUS_COLLUNM, "1", 0, -1);
         int totalCompletedLists = completedLists.size();
         return totalCompletedLists/total;
     }

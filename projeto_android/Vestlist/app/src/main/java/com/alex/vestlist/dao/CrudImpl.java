@@ -27,7 +27,7 @@ public class CrudImpl<T> implements CrudInterface<T> {
 
     @Override
     public T get(long id) {
-        List<T> list = search(BaseColumns._ID, String.valueOf(id), 1);
+        List<T> list = search(BaseColumns._ID, String.valueOf(id), 0, 1);
         if (list == null && list.size() > 1 || list.isEmpty() )
             return null;
         T t = list.get(0);
@@ -38,6 +38,7 @@ public class CrudImpl<T> implements CrudInterface<T> {
     public long save(T object) {
         SQLiteDatabase writableDatabase = new DatabaseHelper(context).getWritableDatabase();
         writableDatabase.beginTransaction();
+        // todo resolver problema de factory
         long id = writableDatabase.insert(tableName, null, factory.toContentValues());
 
         return id;
@@ -53,11 +54,12 @@ public class CrudImpl<T> implements CrudInterface<T> {
     }
 
     @Override
-    public List<T> search(String key, String value, int limit) {
+    public List<T> search(String key, String value, int offset, int limit) {
         SQLiteDatabase readableDatabase = new DatabaseHelper(context).getReadableDatabase();
         String selection = key + "=?";
         String[] selectionArgs = {value};
-        Cursor cursor = readableDatabase.query(tableName, null, selection, selectionArgs, null, null, null, String.valueOf(limit));
+        String limitString = String.valueOf(limit) + "OFFSET " + offset;
+        Cursor cursor = readableDatabase.query(tableName, null, selection, selectionArgs, null, null, null, limitString);
 
         return factory.getList(cursor);
     }
