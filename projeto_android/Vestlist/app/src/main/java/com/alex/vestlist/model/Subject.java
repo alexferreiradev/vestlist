@@ -31,9 +31,6 @@ public class Subject extends BaseModel<Subject>{
 
     @Override
     public Subject convertCursor(Cursor cursor) {
-        if (!cursor.moveToFirst())
-            return null;
-
         // id, name
         int columnIndex = cursor.getColumnIndex(BaseColumns._ID);
         long id = cursor.getLong(columnIndex);

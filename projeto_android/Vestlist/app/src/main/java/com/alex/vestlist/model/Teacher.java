@@ -33,9 +33,6 @@ public class Teacher extends BaseModel<Teacher> {
 
     @Override
     public Teacher convertCursor(Cursor cursor) {
-        if (!cursor.moveToFirst())
-            return null;
-
         // id, name, subject
         int columnIndex = cursor.getColumnIndex(BaseColumns._ID);
         long id = cursor.getLong(columnIndex);

@@ -37,9 +37,6 @@ public class ExerciseList extends BaseModel<ExerciseList> {
 
     @Override
     public ExerciseList convertCursor(Cursor cursor) {
-        if (!cursor.moveToFirst())
-            return null;
-
         // id, name, status, teacher
         int columnIndex = cursor.getColumnIndex(BaseColumns._ID);
         long id = cursor.getLong(columnIndex);

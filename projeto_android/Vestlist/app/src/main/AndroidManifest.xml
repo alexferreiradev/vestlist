@@ -17,8 +17,8 @@
         </activity>
         <activity android:name=".ui.view.TeacherActivity" />
         <activity android:name=".ui.view.ListActivity" />
-        <activity android:name=".ui.view.QuestionActivity" />
-        <activity android:name=".ui.view.NewQuestion"></activity>
+        <activity android:name=".ui.view.DoubtActivity" />
+        <activity android:name=".ui.view.NewDoubt"></activity>
     </application>
 
 </manifest>

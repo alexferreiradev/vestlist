@@ -2,6 +2,7 @@ package com.alex.vestlist.bussiness;
 
 import com.alex.vestlist.model.Doubt;
 import com.alex.vestlist.model.ExerciseList;
+import com.alex.vestlist.model.Subject;
 import com.alex.vestlist.model.Teacher;
 
 import java.util.List;
@@ -19,8 +20,8 @@ interface StudentBusInterface {
      * @return
      */
     public List loadSubjects(int offset, int limit);
-    public List loadTeachers(int offset, int limit);
-    public List loadDoubts(int offset, int limit);
+    public List loadTeachers(Subject subject, int offset, int limit);
+    public List loadDoubts(ExerciseList list, int offset, int limit);
     public List loadLists(Teacher teacher, int offset, int limit);
 
     public boolean removeList(long id);

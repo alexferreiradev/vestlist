@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.alex.vestlist.R;
-import com.alex.vestlist.model.Subject;
+import com.alex.vestlist.model.Doubt;
 
 import java.util.List;
 
@@ -16,31 +16,30 @@ import java.util.List;
  * Created by Alex on 16/03/2017.
  */
 
-public class SubjectListViewAdapter extends BaseAdapter {
+public class DoubtListViewAdapter extends BaseAdapter {
     private Context context;
-    private List<Subject> subjects;
+    private List<Doubt> doubts;
     private int resourceLayout;
 
-    public SubjectListViewAdapter(Context context, List subjects, int resourceLayout) {
-        super();
+    public DoubtListViewAdapter(Context context, List doubts, int resourceLayout) {
         this.context = context;
-        this.subjects = subjects;
+        this.doubts = doubts;
         this.resourceLayout = resourceLayout;
     }
 
     @Override
     public int getCount() {
-        return subjects.size();
+        return doubts.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return subjects.get(position);
+        return doubts.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return subjects.get(position).getId();
+        return doubts.get(position).getId();
     }
 
     @Override
@@ -52,17 +51,11 @@ public class SubjectListViewAdapter extends BaseAdapter {
         }else
             convertView = (View) convertView.getTag();
 
-        TextView tvAcronomy = (TextView) convertView.findViewById(R.id.tvAcronomy);
         TextView tvName = (TextView) convertView.findViewById(R.id.tvName);
 
-        Subject subject = subjects.get(position);
-        tvAcronomy.setText(subject.getName().substring(0,2));
-        tvName.setText(subject.getName());
+        Doubt doubt = doubts.get(position);
+        tvName.setText(doubt.getQuestion());
 
         return convertView;
-    }
-
-    public void addAll(List result) {
-        this.subjects.addAll(result);
     }
 }

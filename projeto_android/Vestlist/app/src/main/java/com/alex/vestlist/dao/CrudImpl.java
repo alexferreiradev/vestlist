@@ -39,7 +39,9 @@ public class CrudImpl<T> implements CrudInterface<BaseModel> {
         SQLiteDatabase writableDatabase = new DatabaseHelper(context).getWritableDatabase();
         writableDatabase.beginTransaction();
         // todo resolver problema de factory
-        long id = writableDatabase.insert(tableName, null, factory.toContentValues());
+        ContentValues values = factory.toContentValues();
+        values.remove(BaseColumns._ID);
+        long id = writableDatabase.insert(tableName, null, values);
 
         return id;
     }
@@ -75,6 +77,10 @@ public class CrudImpl<T> implements CrudInterface<BaseModel> {
 
     @Override
     public int update(long id, ContentValues values) {
-        return 0;
+        SQLiteDatabase writableDatabase = new DatabaseHelper(context).getWritableDatabase();
+        String where = BaseColumns._ID + "=?";
+        String[] whereArgs = {String.valueOf(id)};
+        int rowsUpdated = writableDatabase.update(tableName, values, where, whereArgs);
+        return rowsUpdated;
     }
 }

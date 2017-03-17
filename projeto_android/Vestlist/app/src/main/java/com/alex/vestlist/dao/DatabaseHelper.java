@@ -18,7 +18,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DB_NAME = "vestlist.db";
 
     public static final String CREATE_TABLE_SQL_STRING = "CREATE TABLE ";
-    public static final String PRIMARY_KEY_SQL_STRING = " integer primary key ";
+    public static final String PRIMARY_KEY_SQL_STRING = " integer primary key autoincrement";
     public static final String FOREIGN_KEY_SQL_STRING = " Foreign key (";
     public static final String REFERENCES_SQL_STRING = ") references ";
     public static final String DROP_TABLE_IF_EXISTS_SQl_STRING = "Drop table if exists ";
@@ -75,17 +75,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String []subjectNames = {"Matemática", "Português"};
         String []teacherNames = {"João", "José"};
 
-        Subject subject = new Subject();
         for (String name : subjectNames) {
+            Subject subject = new Subject();
             subject.setName(name);
             ContentValues values = subject.toContentValues();
+            values.remove(BaseColumns._ID);
             long insert = db.insert(VestListContract.SubjectEntry.TABLE_NAME, null, values);
             subject.setId(insert);
-            Teacher teacher = new Teacher();
-            teacher.setSubject(subject);
             for (String teacherName : teacherNames){
+                Teacher teacher = new Teacher();
+                teacher.setSubject(subject);
                 teacher.setName(teacherName);
-                insert = db.insert(VestListContract.TeacherEntry.TABLE_NAME, null, teacher.toContentValues());
+                values = teacher.toContentValues();
+                values.remove(BaseColumns._ID);
+                insert = db.insert(VestListContract.TeacherEntry.TABLE_NAME, null, values);
                 teacher.setId(insert);
             }
         }

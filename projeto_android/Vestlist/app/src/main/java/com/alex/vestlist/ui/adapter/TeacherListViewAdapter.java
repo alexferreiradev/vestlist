@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.alex.vestlist.R;
-import com.alex.vestlist.model.Subject;
+import com.alex.vestlist.model.Teacher;
 
 import java.util.List;
 
@@ -16,31 +16,30 @@ import java.util.List;
  * Created by Alex on 16/03/2017.
  */
 
-public class SubjectListViewAdapter extends BaseAdapter {
+public class TeacherListViewAdapter extends BaseAdapter {
     private Context context;
-    private List<Subject> subjects;
+    private List<Teacher> teachers;
     private int resourceLayout;
 
-    public SubjectListViewAdapter(Context context, List subjects, int resourceLayout) {
-        super();
+    public TeacherListViewAdapter(Context context, List teachers, int resourceLayout) {
         this.context = context;
-        this.subjects = subjects;
+        this.teachers = teachers;
         this.resourceLayout = resourceLayout;
     }
 
     @Override
     public int getCount() {
-        return subjects.size();
+        return teachers.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return subjects.get(position);
+        return teachers.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return subjects.get(position).getId();
+        return teachers.get(position).getId();
     }
 
     @Override
@@ -52,17 +51,15 @@ public class SubjectListViewAdapter extends BaseAdapter {
         }else
             convertView = (View) convertView.getTag();
 
-        TextView tvAcronomy = (TextView) convertView.findViewById(R.id.tvAcronomy);
         TextView tvName = (TextView) convertView.findViewById(R.id.tvName);
 
-        Subject subject = subjects.get(position);
-        tvAcronomy.setText(subject.getName().substring(0,2));
-        tvName.setText(subject.getName());
+        Teacher teacher = teachers.get(position);
+        tvName.setText(teacher.getName());
 
         return convertView;
     }
 
-    public void addAll(List result) {
-        this.subjects.addAll(result);
+    public void addAll(List result){
+        teachers.addAll(result);
     }
 }

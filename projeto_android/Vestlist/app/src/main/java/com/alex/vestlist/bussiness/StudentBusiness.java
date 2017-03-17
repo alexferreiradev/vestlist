@@ -35,12 +35,12 @@ public class StudentBusiness implements StudentBusInterface {
     }
 
     @Override
-    public List loadTeachers(int offset, int limit) {
-        return teacherCrud.load(offset, limit);
+    public List loadTeachers(Subject subject, int offset, int limit) {
+        return teacherCrud.search(VestListContract.TeacherEntry.FK_SUBJECT_COLLUNM, String.valueOf(subject.getId()), offset, limit);
     }
 
     @Override
-    public List loadDoubts(int offset, int limit) {
+    public List loadDoubts(ExerciseList list, int offset, int limit) {
         return doubtCrud.load(offset, limit);
     }
 

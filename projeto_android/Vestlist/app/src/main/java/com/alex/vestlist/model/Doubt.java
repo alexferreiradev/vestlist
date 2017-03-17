@@ -35,9 +35,6 @@ public class Doubt extends BaseModel<Doubt>{
 
     @Override
     public Doubt convertCursor(Cursor cursor) {
-        if (!cursor.moveToFirst())
-            return null;
-
         // id, question, details, list
         int columnIndex = cursor.getColumnIndex(BaseColumns._ID);
         long id = cursor.getLong(columnIndex);
