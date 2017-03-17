@@ -2,7 +2,6 @@ package com.alex.vestlist.ui.presenter;
 
 import android.content.Context;
 
-import com.alex.vestlist.bussiness.StudentBusiness;
 import com.alex.vestlist.model.Subject;
 
 import java.util.List;
@@ -11,24 +10,41 @@ import java.util.List;
  * Created by Alex on 16/03/2017.
  */
 
-public class SubjectPresenter extends Presenter<SubjectPresenter.View> {
+public class SubjectPresenter extends BaseListInfoPresenter<Subject> {
 
-    public SubjectPresenter(View view, Context context) {
-        super(view, context);
+    public SubjectPresenter(BaseListInfoPresenter.View mView, Context context) {
+        super(mView, context);
     }
 
     @Override
     public void initialize() {
-        super.initialize();
-        StudentBusiness business = new StudentBusiness(context);
-        List<Subject> subjects = business.loadSubjects(0, -1);
-        mView.showSubjects(subjects);
+        mView.setEmptyView();
+        mView.toggleProgressBar();
+        mView.loadList();
+    }
+
+    @Override
+    public void onLoadedList(List<Subject> result) {
+        mView.toggleProgressBar();
+        if (result == null || result.isEmpty()){
+            mView.toggleEmptyView();
+        }else {
+            mView.showList(result);
+        }
+    }
+
+    @Override
+    public void onUpdateListActionSelected() {
+    }
+
+    @Override
+    public void onAddActionSelected() {
     }
 
     /**
-     * Funções que somente este presenter realiza
+     * Funções que somente este presenter usa da View
      */
-    public interface View extends Presenter.View{
-        public void showSubjects(List<Subject> subjects);
+    public interface View extends ListInfoViewInterface<Subject>{
+        // Nenhum função
     }
 }

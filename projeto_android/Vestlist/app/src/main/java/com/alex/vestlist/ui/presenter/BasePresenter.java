@@ -8,21 +8,19 @@ import com.alex.vestlist.bussiness.StudentBusiness;
  * Created by Alex on 16/03/2017.
  */
 
-public class Presenter <T extends Presenter.View> {
+public abstract class BasePresenter<T extends BasePresenter.View> {
 
     protected Context context;
     protected T mView;
     protected StudentBusiness mBussiness;
 
-    public Presenter(T mView, Context context) {
+    public BasePresenter(T mView, Context context) {
         this.context = context;
         this.mView = mView;
         this.mBussiness = new StudentBusiness(context);
     }
 
-    public void initialize(){
-
-    }
+    public abstract void initialize();
 
     public void update(){
 
@@ -32,6 +30,6 @@ public class Presenter <T extends Presenter.View> {
      * Funções que todas mView tem
      */
     public interface View {
-
+        public void toggleProgressBar();
     }
 }

@@ -53,6 +53,10 @@ public class ExerciseList extends BaseModel<ExerciseList> {
         ExerciseList exerciseList = new ExerciseList();
         exerciseList.setId(id);
         exerciseList.setName(name);
+        if (status == 1)
+            exerciseList.setStatus(true);
+        else
+            exerciseList.setStatus(false);
         // TODO criar relacionamento, fazer carregamento do bd
         exerciseList.setTeacher(null);
         return exerciseList;

@@ -15,7 +15,7 @@ interface StudentBusInterface {
     /**
      * Carrega máterias com paginação.
      * @param offset - total já carregado
-     * @param limit
+     * @param limit - Não pode ser negativo
      * @return
      */
     public List loadSubjects(int offset, int limit);

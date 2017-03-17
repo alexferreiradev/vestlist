@@ -3,30 +3,29 @@ package com.alex.vestlist.ui.presenter;
 import android.content.Context;
 
 import com.alex.vestlist.model.ExerciseList;
-import com.alex.vestlist.model.Teacher;
-
-import java.util.List;
 
 /**
- * Created by Alex on 16/03/2017.
+ * Created by Alex on 17/03/2017.
  */
 
-public class ListPresenter extends Presenter<ListPresenter.View> {
+public class ListPresenter extends BaseListInfoPresenter<ExerciseList> {
 
-    private Teacher teacher;
-
-    public ListPresenter(View mView, Context context, Teacher teacher) {
+    public ListPresenter(ListPresenter.View mView, Context context) {
         super(mView, context);
-        this.teacher = teacher;
     }
 
     @Override
-    public void initialize() {
-        super.initialize();
-//        mBussiness.loadLists(teacher, 0, -1)
+    public void onUpdateListActionSelected() {
+
     }
 
-    public interface View extends Presenter.View{
-        public void showLists(List<ExerciseList> lists);
+    @Override
+    public void onAddActionSelected() {
+        mView.show
     }
+
+    public interface View extends BaseListInfoPresenter.View<ExerciseList> {
+        public void showNewListDialog();
+    }
+
 }

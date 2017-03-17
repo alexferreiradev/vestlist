@@ -14,28 +14,28 @@ import java.util.List;
  * Created by Alex on 16/03/2017.
  */
 
-public class CrudImpl<T> implements CrudInterface<T> {
+public class CrudImpl<T> implements CrudInterface<BaseModel> {
     private Context context;
     private String tableName;
-    private BaseModel<T> factory;
+    private BaseModel<? extends BaseModel> factory;
 
-    public CrudImpl(Context context, String tableName, BaseModel<T> baseObject) {
+    public CrudImpl(Context context, String tableName, BaseModel<? extends BaseModel> baseObject) {
         this.context = context;
         this.tableName = tableName;
         this.factory = baseObject;
     }
 
     @Override
-    public T get(long id) {
-        List<T> list = search(BaseColumns._ID, String.valueOf(id), 0, 1);
+    public BaseModel get(long id) {
+        List<BaseModel> list = search(BaseColumns._ID, String.valueOf(id), 0, 1);
         if (list == null && list.size() > 1 || list.isEmpty() )
             return null;
-        T t = list.get(0);
+        BaseModel t = list.get(0);
         return t;
     }
 
     @Override
-    public long save(T object) {
+    public long save(BaseModel object) {
         SQLiteDatabase writableDatabase = new DatabaseHelper(context).getWritableDatabase();
         writableDatabase.beginTransaction();
         // todo resolver problema de factory
@@ -54,20 +54,20 @@ public class CrudImpl<T> implements CrudInterface<T> {
     }
 
     @Override
-    public List<T> search(String key, String value, int offset, int limit) {
+    public List search(String key, String value, int offset, int limit) {
         SQLiteDatabase readableDatabase = new DatabaseHelper(context).getReadableDatabase();
         String selection = key + "=?";
         String[] selectionArgs = {value};
-        String limitString = String.valueOf(limit) + "OFFSET " + offset;
+        String limitString = offset + "," + limit;
         Cursor cursor = readableDatabase.query(tableName, null, selection, selectionArgs, null, null, null, limitString);
 
         return factory.getList(cursor);
     }
 
     @Override
-    public List<T> load(int offset, int limit) {
+    public List load(int offset, int limit) {
         SQLiteDatabase readableDatabase = new DatabaseHelper(context).getReadableDatabase();
-        String limitString = limit + " OFFSET " + offset;
+        String limitString = offset + "," + limit;
         Cursor cursor = readableDatabase.query(tableName, null, null, null, null, null, null, limitString);
 
         return factory.getList(cursor);

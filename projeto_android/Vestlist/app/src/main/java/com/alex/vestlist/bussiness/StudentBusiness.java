@@ -17,14 +17,16 @@ import java.util.List;
 
 public class StudentBusiness implements StudentBusInterface {
 
-    private Context context;
-    private CrudImpl<Subject> subjectCrud = new CrudImpl<>(context, VestListContract.SubjectEntry.TABLE_NAME, new Subject());
-    private CrudImpl<Teacher> teacherCrud = new CrudImpl<>(context, VestListContract.TeacherEntry.TABLE_NAME, new Teacher());
-    private CrudImpl<ExerciseList> exerciseListCrud = new CrudImpl<>(context, VestListContract.ListEntry.TABLE_NAME, new ExerciseList());
-    private CrudImpl<Doubt> doubtCrud = new CrudImpl<>(context, VestListContract.DoubtEntry.TABLE_NAME, new Doubt());
+    private CrudImpl<Subject> subjectCrud;
+    private CrudImpl<Teacher> teacherCrud;
+    private CrudImpl<ExerciseList> exerciseListCrud;
+    private CrudImpl<Doubt> doubtCrud;
 
     public StudentBusiness(Context context) {
-        this.context = context;
+        subjectCrud = new CrudImpl<>(context, VestListContract.SubjectEntry.TABLE_NAME, new Subject());
+        teacherCrud = new CrudImpl<>(context, VestListContract.TeacherEntry.TABLE_NAME, new Teacher());
+        exerciseListCrud = new CrudImpl<>(context, VestListContract.ListEntry.TABLE_NAME, new ExerciseList());
+        doubtCrud = new CrudImpl<>(context, VestListContract.DoubtEntry.TABLE_NAME, new Doubt());
     }
 
     @Override
