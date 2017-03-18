@@ -29,34 +29,6 @@ public class Subject extends BaseModel<Subject>{
         return contentValues;
     }
 
-    @Override
-    public Subject convertCursor(Cursor cursor) {
-        // id, name
-        int columnIndex = cursor.getColumnIndex(BaseColumns._ID);
-        long id = cursor.getLong(columnIndex);
-        columnIndex = cursor.getColumnIndex(VestListContract.SubjectEntry.NAME_COLLUNM);
-        String name = cursor.getString(columnIndex);
-
-        Subject subject = new Subject();
-        subject.setId(id);
-        subject.setName(name);
-        return subject;
-    }
-
-    @Override
-    public List<Subject> getList(Cursor cursor) {
-        if (!cursor.moveToFirst())
-            return null;
-
-        List<Subject> list = new ArrayList<>();
-        do{
-            Subject subject = convertCursor(cursor);
-            list.add(subject);
-        }while (cursor.moveToNext());
-
-        return list;
-    }
-
     public long getId() {
         return id;
     }

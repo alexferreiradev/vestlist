@@ -1,13 +1,9 @@
 package com.alex.vestlist.model;
 
 import android.content.ContentValues;
-import android.database.Cursor;
 import android.provider.BaseColumns;
 
 import com.alex.vestlist.dao.VestListContract;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Alex on 16/03/2017.
@@ -17,7 +13,7 @@ public class Teacher extends BaseModel<Teacher> {
 
     private long id;
     private String name;
-    private Subject subject;
+    private long subjectId;
 
     @Override
     public ContentValues toContentValues() {
@@ -26,41 +22,9 @@ public class Teacher extends BaseModel<Teacher> {
         // id, name, subject
         contentValues.put(BaseColumns._ID, id);
         contentValues.put(VestListContract.TeacherEntry.NAME_COLLUNM, name);
-        contentValues.put(VestListContract.TeacherEntry.FK_SUBJECT_COLLUNM, subject.getId());
+        contentValues.put(VestListContract.TeacherEntry.FK_SUBJECT_COLLUNM, subjectId);
 
         return contentValues;
-    }
-
-    @Override
-    public Teacher convertCursor(Cursor cursor) {
-        // id, name, subject
-        int columnIndex = cursor.getColumnIndex(BaseColumns._ID);
-        long id = cursor.getLong(columnIndex);
-        columnIndex = cursor.getColumnIndex(VestListContract.TeacherEntry.NAME_COLLUNM);
-        String name = cursor.getString(columnIndex);
-        columnIndex = cursor.getColumnIndex(VestListContract.TeacherEntry.FK_SUBJECT_COLLUNM);
-        long subjectId = cursor.getInt(columnIndex);
-
-        Teacher teacher = new Teacher();
-        teacher.setId(id);
-        teacher.setName(name);
-        // TODO criar relacionamento, fazer carregamento do bd
-        teacher.setSubject(null);
-        return teacher;
-    }
-
-    @Override
-    public List<Teacher> getList(Cursor cursor) {
-        if (!cursor.moveToFirst())
-            return null;
-
-        List<Teacher> list = new ArrayList<>();
-        do{
-            Teacher teacher = convertCursor(cursor);
-            list.add(teacher);
-        }while (cursor.moveToNext());
-
-        return list;
     }
 
     public long getId() {
@@ -79,12 +43,12 @@ public class Teacher extends BaseModel<Teacher> {
         this.name = name;
     }
 
-    public Subject getSubject() {
-        return subject;
+    public long getSubjectId() {
+        return subjectId;
     }
 
-    public void setSubject(Subject subject) {
-        this.subject = subject;
+    public void setSubjectId(long subjectId) {
+        this.subjectId = subjectId;
     }
 
     @Override
@@ -95,8 +59,8 @@ public class Teacher extends BaseModel<Teacher> {
         Teacher teacher = (Teacher) o;
 
         if (id != teacher.id) return false;
-        if (name != null ? !name.equals(teacher.name) : teacher.name != null) return false;
-        return subject != null ? subject.equals(teacher.subject) : teacher.subject == null;
+        if (subjectId != teacher.subjectId) return false;
+        return name != null ? name.equals(teacher.name) : teacher.name == null;
 
     }
 
@@ -104,7 +68,7 @@ public class Teacher extends BaseModel<Teacher> {
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
         result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (subject != null ? subject.hashCode() : 0);
+        result = 31 * result + (int) (subjectId ^ (subjectId >>> 32));
         return result;
     }
 
@@ -113,7 +77,7 @@ public class Teacher extends BaseModel<Teacher> {
         return "Teacher{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", subject=" + subject +
+                ", subjectId=" + subjectId +
                 '}';
     }
 }

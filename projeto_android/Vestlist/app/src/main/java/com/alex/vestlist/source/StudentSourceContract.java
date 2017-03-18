@@ -1,4 +1,6 @@
-package com.alex.vestlist.bussiness;
+package com.alex.vestlist.source;
+
+import android.content.ContentValues;
 
 import com.alex.vestlist.model.Doubt;
 import com.alex.vestlist.model.ExerciseList;
@@ -9,9 +11,37 @@ import java.util.List;
 
 /**
  * Created by Alex on 16/03/2017.
+ *
+ * Contract between source e Dao
  */
 
-interface StudentBusInterface {
+interface StudentSourceContract {
+
+    public interface Dao<ModelType> {
+
+        public ModelType get(long id);
+
+        public long save(ModelType object);
+
+        /**
+         * Apaga o objeto com id = id
+         * @param id
+         * @return - número de linhas alterado. Se == 1, ok.
+         */
+        public int delete(long id);
+
+        public List<ModelType> search(String key, String value, int offset, int limit);
+
+        /**
+         * Carrega um lista de objetos, com a restrição de quantidade por carregamento. Serve para paginação.
+         * @param offset - total já carregado
+         * @param limit - total a ser carregado
+         * @return - lista com total de itens = limit.
+         */
+        public List<ModelType> load(int offset, int limit);
+
+        public int update(long id, ContentValues values);
+    }
 
     /**
      * Carrega máterias com paginação.

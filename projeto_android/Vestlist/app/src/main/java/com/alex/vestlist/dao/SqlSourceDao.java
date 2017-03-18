@@ -6,7 +6,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 
+import com.alex.vestlist.dao.util.BaseCursorModelUtil;
+import com.alex.vestlist.dao.util.CursorModelUtil;
 import com.alex.vestlist.model.BaseModel;
+import com.alex.vestlist.source.StudentSource;
 
 import java.util.List;
 
@@ -14,32 +17,32 @@ import java.util.List;
  * Created by Alex on 16/03/2017.
  */
 
-public class CrudImpl<T> implements CrudInterface<BaseModel> {
+public class SqlSourceDao<ModelType extends BaseModel> implements StudentSource.Dao<ModelType>{
     private Context context;
     private String tableName;
-    private BaseModel<? extends BaseModel> factory;
+    private BaseCursorModelUtil cursorModelUtil;
 
-    public CrudImpl(Context context, String tableName, BaseModel<? extends BaseModel> baseObject) {
+    public SqlSourceDao(Context context, String tableName, CursorModelUtil cursorModelUtil) {
         this.context = context;
         this.tableName = tableName;
-        this.factory = baseObject;
+        this.cursorModelUtil = cursorModelUtil;
     }
 
     @Override
-    public BaseModel get(long id) {
-        List<BaseModel> list = search(BaseColumns._ID, String.valueOf(id), 0, 1);
+    public ModelType get(long id) {
+        List<ModelType> list = search(BaseColumns._ID, String.valueOf(id), 0, 1);
         if (list == null && list.size() > 1 || list.isEmpty() )
             return null;
-        BaseModel t = list.get(0);
+        ModelType t = list.get(0);
         return t;
     }
 
     @Override
-    public long save(BaseModel object) {
+    public long save(ModelType object) {
         SQLiteDatabase writableDatabase = new DatabaseHelper(context).getWritableDatabase();
         writableDatabase.beginTransaction();
         // todo resolver problema de factory
-        ContentValues values = factory.toContentValues();
+        ContentValues values = object.toContentValues();
         values.remove(BaseColumns._ID);
         long id = writableDatabase.insert(tableName, null, values);
 
@@ -63,7 +66,7 @@ public class CrudImpl<T> implements CrudInterface<BaseModel> {
         String limitString = offset + "," + limit;
         Cursor cursor = readableDatabase.query(tableName, null, selection, selectionArgs, null, null, null, limitString);
 
-        return factory.getList(cursor);
+        return cursorModelUtil.getListFromCursor(cursor);
     }
 
     @Override
@@ -72,7 +75,7 @@ public class CrudImpl<T> implements CrudInterface<BaseModel> {
         String limitString = offset + "," + limit;
         Cursor cursor = readableDatabase.query(tableName, null, null, null, null, null, null, limitString);
 
-        return factory.getList(cursor);
+        return cursorModelUtil.getListFromCursor(cursor);
     }
 
     @Override

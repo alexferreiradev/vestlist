@@ -1,9 +1,10 @@
-package com.alex.vestlist.bussiness;
+package com.alex.vestlist.source;
 
 import android.content.Context;
 
-import com.alex.vestlist.dao.CrudImpl;
+import com.alex.vestlist.dao.SqlSourceDao;
 import com.alex.vestlist.dao.VestListContract;
+import com.alex.vestlist.dao.util.CursorModelUtil;
 import com.alex.vestlist.model.Doubt;
 import com.alex.vestlist.model.ExerciseList;
 import com.alex.vestlist.model.Subject;
@@ -15,18 +16,18 @@ import java.util.List;
  * Created by Alex on 16/03/2017.
  */
 
-public class StudentBusiness implements StudentBusInterface {
+public class StudentSource implements StudentSourceContract {
 
-    private CrudImpl<Subject> subjectCrud;
-    private CrudImpl<Teacher> teacherCrud;
-    private CrudImpl<ExerciseList> exerciseListCrud;
-    private CrudImpl<Doubt> doubtCrud;
+    private SqlSourceDao<Subject> subjectCrud;
+    private SqlSourceDao<Teacher> teacherCrud;
+    private SqlSourceDao<ExerciseList> exerciseListCrud;
+    private SqlSourceDao<Doubt> doubtCrud;
 
-    public StudentBusiness(Context context) {
-        subjectCrud = new CrudImpl<>(context, VestListContract.SubjectEntry.TABLE_NAME, new Subject());
-        teacherCrud = new CrudImpl<>(context, VestListContract.TeacherEntry.TABLE_NAME, new Teacher());
-        exerciseListCrud = new CrudImpl<>(context, VestListContract.ListEntry.TABLE_NAME, new ExerciseList());
-        doubtCrud = new CrudImpl<>(context, VestListContract.DoubtEntry.TABLE_NAME, new Doubt());
+    public StudentSource(Context context) {
+        subjectCrud = new SqlSourceDao<>(context, VestListContract.SubjectEntry.TABLE_NAME, CursorModelUtil.SUBJECT);
+        teacherCrud = new SqlSourceDao<>(context, VestListContract.TeacherEntry.TABLE_NAME, CursorModelUtil.TEACHER);
+        exerciseListCrud = new SqlSourceDao<>(context, VestListContract.ListEntry.TABLE_NAME, CursorModelUtil.LIST);
+        doubtCrud = new SqlSourceDao<>(context, VestListContract.DoubtEntry.TABLE_NAME, CursorModelUtil.DOUBT);
     }
 
     @Override

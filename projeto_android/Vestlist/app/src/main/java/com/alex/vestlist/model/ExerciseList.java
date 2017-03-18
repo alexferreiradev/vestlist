@@ -1,13 +1,9 @@
 package com.alex.vestlist.model;
 
 import android.content.ContentValues;
-import android.database.Cursor;
 import android.provider.BaseColumns;
 
 import com.alex.vestlist.dao.VestListContract;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Alex on 16/03/2017.
@@ -17,8 +13,7 @@ public class ExerciseList extends BaseModel<ExerciseList> {
 
     private String name;
     private boolean status;
-
-    private Teacher teacher;
+    private long teacherId;
 
     @Override
     public ContentValues toContentValues() {
@@ -26,51 +21,13 @@ public class ExerciseList extends BaseModel<ExerciseList> {
 
         contentValues.put(BaseColumns._ID, id);
         contentValues.put(VestListContract.ListEntry.NAME_COLLUNM, name);
-        contentValues.put(VestListContract.ListEntry.FK_TEACHER_COLLUNM, teacher.getId());
+        contentValues.put(VestListContract.ListEntry.FK_TEACHER_COLLUNM, teacherId);
         if (status)
             contentValues.put(VestListContract.ListEntry.STATUS_COLLUNM, 1);
         else
             contentValues.put(VestListContract.ListEntry.STATUS_COLLUNM, 0);
 
         return contentValues;
-    }
-
-    @Override
-    public ExerciseList convertCursor(Cursor cursor) {
-        // id, name, status, teacher
-        int columnIndex = cursor.getColumnIndex(BaseColumns._ID);
-        long id = cursor.getLong(columnIndex);
-        columnIndex = cursor.getColumnIndex(VestListContract.ListEntry.NAME_COLLUNM);
-        String name = cursor.getString(columnIndex);
-        columnIndex = cursor.getColumnIndex(VestListContract.ListEntry.STATUS_COLLUNM);
-        int status = cursor.getInt(columnIndex);
-        columnIndex = cursor.getColumnIndex(VestListContract.ListEntry.FK_TEACHER_COLLUNM);
-        long teacherId = cursor.getInt(columnIndex);
-
-        ExerciseList exerciseList = new ExerciseList();
-        exerciseList.setId(id);
-        exerciseList.setName(name);
-        if (status == 1)
-            exerciseList.setStatus(true);
-        else
-            exerciseList.setStatus(false);
-        // TODO criar relacionamento, fazer carregamento do bd
-        exerciseList.setTeacher(null);
-        return exerciseList;
-    }
-
-    @Override
-    public List<ExerciseList> getList(Cursor cursor) {
-        if (!cursor.moveToFirst())
-            return null;
-
-        List<ExerciseList> list = new ArrayList<>();
-        do{
-            ExerciseList e = convertCursor(cursor);
-            list.add(e);
-        }while (cursor.moveToNext());
-
-        return list;
     }
 
     public String getName() {
@@ -89,12 +46,12 @@ public class ExerciseList extends BaseModel<ExerciseList> {
         this.status = status;
     }
 
-    public Teacher getTeacher() {
-        return teacher;
+    public long getTeacherId() {
+        return teacherId;
     }
 
-    public void setTeacher(Teacher teacher) {
-        this.teacher = teacher;
+    public void setTeacherId(long teacherId) {
+        this.teacherId = teacherId;
     }
 
     @Override
@@ -104,29 +61,26 @@ public class ExerciseList extends BaseModel<ExerciseList> {
 
         ExerciseList that = (ExerciseList) o;
 
-        if (id != that.id) return false;
         if (status != that.status) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        return teacher != null ? teacher.equals(that.teacher) : that.teacher == null;
+        if (teacherId != that.teacherId) return false;
+        return name.equals(that.name);
 
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (name != null ? name.hashCode() : 0);
+        int result = name.hashCode();
         result = 31 * result + (status ? 1 : 0);
-        result = 31 * result + (teacher != null ? teacher.hashCode() : 0);
+        result = 31 * result + (int) (teacherId ^ (teacherId >>> 32));
         return result;
     }
 
     @Override
     public String toString() {
         return "ExerciseList{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
+                "name='" + name + '\'' +
                 ", status=" + status +
-                ", teacher=" + teacher +
+                ", teacherId=" + teacherId +
                 '}';
     }
 }
