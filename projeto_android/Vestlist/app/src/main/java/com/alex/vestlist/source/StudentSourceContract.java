@@ -61,7 +61,7 @@ interface StudentSourceContract {
     public long insertDoubt(Doubt doubt);
 
     public long updateDoubt(Doubt doubt);
-    public long updateList(ExerciseList list);
+    public int updateList(ExerciseList list);
 
     /**
      * Calcula a porcentagem de listas de um professor que estão com status true.

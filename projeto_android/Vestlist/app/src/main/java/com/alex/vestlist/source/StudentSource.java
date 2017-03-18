@@ -93,7 +93,7 @@ public class StudentSource implements StudentSourceContract {
     }
 
     @Override
-    public long updateList(ExerciseList list) {
+    public int updateList(ExerciseList list) {
         return exerciseListCrud.update(list.getId(), list.toContentValues());
     }
 }
