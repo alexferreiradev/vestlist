@@ -10,7 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.alex.vestlist.model.BaseModel;
-import com.alex.vestlist.ui.presenter.BaseListInfoPresenter;
+import com.alex.vestlist.ui.presenter.BaseListPresenter;
 
 import java.util.List;
 
@@ -22,11 +22,11 @@ import static com.alex.vestlist.R.id.progressBar;
  * Created by Alex on 17/03/2017.
  */
 
-abstract class BaseListViewActivity<Model extends BaseModel, Presenter, ViewType extends BaseListInfoPresenter.View> extends BaseActivity implements AbsListView.OnScrollListener, BaseListInfoPresenter.View {
+abstract class BaseListViewActivity<Model extends BaseModel, Presenter extends BaseListPresenter, ViewType extends BaseListPresenter.View> extends BaseActivity implements AbsListView.OnScrollListener, BaseListPresenter.View {
 
     protected int mLoadItemsLimit;
     protected int mOffset;
-    protected BaseListInfoPresenter<ViewType, Model> mPresenter;
+    protected Presenter mPresenter;
     protected ListView mListView;
     protected TextView mEmptyView;
     protected ProgressBar mProgressBar;
@@ -99,7 +99,7 @@ abstract class BaseListViewActivity<Model extends BaseModel, Presenter, ViewType
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (mPresenter != null) {
             Model item = (Model) parent.getAdapter().getItem(position);
-            mPresenter.onItemSelected(this, item);
+            mPresenter.openDataDetails(item);
         }
     }
 
@@ -113,13 +113,23 @@ abstract class BaseListViewActivity<Model extends BaseModel, Presenter, ViewType
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
         if (mPresenter != null && mOffset > 0)
-            mPresenter.loadMoreItems(mOffset, mLoadItemsLimit, firstVisibleItem, visibleItemCount, totalItemCount);
+            mPresenter.loadMoreData(mOffset, mLoadItemsLimit, firstVisibleItem, visibleItemCount, totalItemCount);
     }
 
     @Override
     public void loadList(int offset) {
         String[] params = {String.valueOf(offset)};
         new LoadSubjects().execute(params);
+    }
+
+    @Override
+    public void showSaveError() {
+
+    }
+
+    @Override
+    public void showSaveSuccess() {
+
     }
 
     public class LoadSubjects extends AsyncTask<String, Integer, List> {
@@ -130,14 +140,14 @@ abstract class BaseListViewActivity<Model extends BaseModel, Presenter, ViewType
             if (mPresenter == null)
                 return null;
 
-            return mPresenter.requestLoadInfo(Integer.parseInt(offsetString), mLoadItemsLimit);
+            return mPresenter.loadDataFromSource(Integer.parseInt(offsetString), mLoadItemsLimit);
         }
 
         @Override
         protected void onPostExecute(List list) {
             List listBase = list;
             if (mPresenter != null)
-                mPresenter.onLoadedList(listBase, mOffset);
+                mPresenter.populateList(listBase, mOffset);
         }
     }
 }

@@ -3,7 +3,7 @@ package com.alex.vestlist.ui.presenter;
 import android.content.Context;
 import android.os.Bundle;
 
-import com.alex.vestlist.bussiness.StudentBusiness;
+import com.alex.vestlist.source.StudentSource;
 
 /**
  * Created by Alex on 16/03/2017.
@@ -13,12 +13,12 @@ public abstract class BasePresenter<ViewType extends BasePresenter.View> {
 
     protected Context context;
     protected ViewType mView;
-    protected StudentBusiness mBussiness;
+    protected StudentSource mSource;
 
     public BasePresenter(ViewType mView, Context context, Bundle savedInstanceState) {
         this.context = context;
         this.mView = mView;
-        this.mBussiness = new StudentBusiness(context);
+        this.mSource = new StudentSource(context);
         initializeWidgets(savedInstanceState);
     }
 
@@ -33,7 +33,7 @@ public abstract class BasePresenter<ViewType extends BasePresenter.View> {
      * Chamado para fazer bind entre view e atributos da activity.
      * @param savedInstanceState -
      */
-    public void initializeWidgets(Bundle savedInstanceState) {
+    protected void initializeWidgets(Bundle savedInstanceState) {
         mView.initializeWidgets(savedInstanceState);
     }
 
@@ -52,5 +52,10 @@ public abstract class BasePresenter<ViewType extends BasePresenter.View> {
          * @param savedInstanceState - dados da instancia salvos
          */
         public void initializeWidgets(Bundle savedInstanceState);
+
+        public void showErroMsg(String msg);
+
+        public void showSuccessMsg(String msg);
+
     }
 }

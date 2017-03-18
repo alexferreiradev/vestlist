@@ -11,33 +11,43 @@ import java.util.List;
  * Created by Alex on 17/03/2017.
  */
 
-public class DoubtPresenter extends BaseListInfoPresenter<DoubtPresenter.View, Doubt> {
+public class DoubtPresenter extends BaseListPresenter<DoubtPresenter.View, Doubt> {
 
     public DoubtPresenter(View mView, Context context, Bundle savedInstanceState) {
         super(mView, context, savedInstanceState);
     }
 
     @Override
-    public List<Doubt> requestLoadInfo(int offset, int loadItemsLimit) {
+    public List<Doubt> loadDataFromSource(int offset, int loadItemsLimit) {
         return null;
     }
 
     @Override
-    public void onAddActionSelected() {
+    protected void setEmptyView() {
 
     }
 
     @Override
-    public void onItemSelected(Context context, Doubt item) {
+    public void populateFilteredList(String filterType) {
 
     }
 
     @Override
-    public void onAddedListViewItem() {
+    public void showAddOrEditView(Doubt data) {
 
     }
 
-    public interface View extends BaseListInfoPresenter.View{
+    @Override
+    public int updateModelInSource(Doubt data) {
+        return 0;
+    }
+
+    @Override
+    public void openDataDetails(Doubt item) {
+
+    }
+
+    public interface View extends BaseListContract.View{
 
     }
 }

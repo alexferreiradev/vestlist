@@ -13,37 +13,47 @@ import java.util.List;
  * Created by Alex on 16/03/2017.
  */
 
-public class SubjectPresenter extends BaseListInfoPresenter<SubjectPresenter.View, Subject> {
+public class SubjectPresenter extends BaseListPresenter<SubjectPresenter.View, Subject> {
 
     public SubjectPresenter(View mView, Context context, Bundle savedInstanceState) {
         super(mView, context, savedInstanceState);
     }
 
     @Override
-    public void onAddActionSelected() {
+    public void showAddOrEditView(Subject data) {
     }
 
     @Override
-    public void onItemSelected(Context context, Subject subject) {
+    public int updateModelInSource(Subject data) {
+        return 0;
+    }
+
+    @Override
+    public void openDataDetails(Subject subject) {
         Intent intent = new Intent(context, TeacherActivity.class);
         intent.putExtra(TeacherActivity.SUBJECT_EXTRA_KEY, subject);
         context.startActivity(intent);
     }
 
     @Override
-    public void onAddedListViewItem() {
+    public List<Subject> loadDataFromSource(int offset, int loadItemsLimit) {
+        return mSource.loadSubjects(offset, loadItemsLimit);
+    }
+
+    @Override
+    protected void setEmptyView() {
 
     }
 
     @Override
-    public List<Subject> requestLoadInfo(int offset, int loadItemsLimit) {
-        return mBussiness.loadSubjects(offset, loadItemsLimit);
+    public void populateFilteredList(String filterType) {
+
     }
 
     /**
      * Funções que somente este presenter usa da View
      */
-    public interface View extends BaseListInfoPresenter.View{
+    public interface View extends BaseListContract.View{
 
     }
 }
