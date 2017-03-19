@@ -5,8 +5,6 @@ import android.os.Bundle;
 
 import com.alex.vestlist.model.Doubt;
 
-import java.util.List;
-
 /**
  * Created by Alex on 19/03/2017.
  */

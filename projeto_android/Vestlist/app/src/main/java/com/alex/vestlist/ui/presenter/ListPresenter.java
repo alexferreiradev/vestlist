@@ -87,17 +87,17 @@ public class ListPresenter extends BaseListPresenter<ListPresenter.View, Exercis
 
     @Override
     protected int updateDataFromSource(ExerciseList data) {
-        return 0;
+        return mSource.updateList(data);
     }
 
     @Override
     protected boolean removeDataFromSource(ExerciseList data) {
-        return false;
+        return mSource.removeList(data.getId());
     }
 
     @Override
     protected Long saveDataFromSource(ExerciseList data) {
-        return null;
+        return mSource.insertList(data);
     }
 
     @Override

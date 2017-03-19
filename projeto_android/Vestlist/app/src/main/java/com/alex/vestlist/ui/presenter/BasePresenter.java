@@ -35,6 +35,15 @@ public abstract class BasePresenter<ViewType extends BasePresenter.View,
 
     public abstract void analiseBackgroundThreadResult(Object result, TaskType taskType);
 
+    public void startSaveOrEditDataInSource(ModelType data) {
+        if (data == null)
+            throw new NullPointerException("Dado a ser salvo estava nulo");
+        if (data.getId() > 0)
+            startBackgroundThread(data, TaskType.EDIT);
+        else
+            startBackgroundThread(data, TaskType.SAVE);
+    }
+
     /**
      * Chamado para fazer bind entre view e atributos da activity.
      * @param savedInstanceState -

@@ -11,9 +11,10 @@ import com.alex.vestlist.model.BaseModel;
 
 public abstract class BaseAddOrEditPresenter<ModelType extends BaseModel,
         ViewType extends BaseAddOrEditContract.View>
-        extends BasePresenter<BaseAddOrEditContract.View, ModelType> implements BaseAddOrEditContract.Presenter<ModelType>{
+        extends BasePresenter<ViewType, ModelType>
+        implements BaseAddOrEditContract.Presenter<ModelType>{
 
-    public BaseAddOrEditPresenter(ViewType mView, Context mContext, Bundle savedInstanceState) {
+    protected BaseAddOrEditPresenter(ViewType mView, Context mContext, Bundle savedInstanceState) {
         super(mView, mContext, savedInstanceState);
     }
 

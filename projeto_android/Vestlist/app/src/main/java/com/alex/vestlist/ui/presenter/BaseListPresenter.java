@@ -34,7 +34,7 @@ public abstract class BaseListPresenter<ViewType extends BaseListContract.View ,
     private String filterKey;
     private String filterValue;
 
-    public BaseListPresenter(ViewType mView, Context context, Bundle savedInstanceState) {
+    protected BaseListPresenter(ViewType mView, Context context, Bundle savedInstanceState) {
         super(mView, context, savedInstanceState);
     }
 

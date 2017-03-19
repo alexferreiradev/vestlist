@@ -89,12 +89,12 @@ public class DoubtPresenter extends BaseListPresenter<DoubtPresenter.View, Doubt
 
     @Override
     protected boolean removeDataFromSource(Doubt data) {
-        return false;
+        return mSource.removeDoubt(data.getId());
     }
 
     @Override
     protected Long saveDataFromSource(Doubt data) {
-        return null;
+        return mSource.insertDoubt(data);
     }
 
     @Override
