@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import com.alex.vestlist.model.Doubt;
 
+import java.util.List;
+
 /**
  * Created by Alex on 19/03/2017.
  */
@@ -16,8 +18,58 @@ public class AddOrEditDoubtPresenter extends BaseAddOrEditPresenter<Doubt, AddOr
     }
 
     @Override
+    protected int updateDataFromSource(Doubt data) {
+        return mSource.updateDoubt(data);
+    }
+
+    @Override
+    protected boolean removeDataFromSource(Doubt data) {
+        return mSource.removeDoubt(data.getId());
+    }
+
+    @Override
+    protected Long saveDataFromSource(Doubt data) {
+        return mSource.insertDoubt(data);
+    }
+
+    @Override
     protected void initialize() {
         // TODO start teclado no primeiro ETV
+    }
+
+    @Override
+    public void analiseBackgroundThreadResult(Object result, TaskType taskType) {
+        mView.toggleProgressBar();
+        switch (taskType){
+            case SAVE:
+                Long dataId = (Long) result;
+                if (dataId <= 0){
+                    mView.showErrorMsg("Dúvida não foi salva");
+                }else {
+                    mView.showSuccessMsg("Dúvida adicionada");
+                    mView.returnResultToActivity();
+                }
+                break;
+            case REMOVE:
+                int rowUpdated = (int) result;
+                if (rowUpdated <= 0){
+                    mView.showErrorMsg("Dúvida não pode ser removida");
+                }else {
+                    mView.showSuccessMsg("Dúvida removida");
+                    mView.returnResultToActivity();
+                }
+                break;
+            case EDIT:
+                rowUpdated = (int) result;
+                if (rowUpdated <= 0){
+                    mView.showErrorMsg("Dúvida não pode ser editada");
+                }else {
+                    mView.showSuccessMsg("Dúvida editada");
+                    mView.returnResultToActivity();
+                }
+                break;
+
+        }
     }
 
     @Override
@@ -30,29 +82,7 @@ public class AddOrEditDoubtPresenter extends BaseAddOrEditPresenter<Doubt, AddOr
             mView.toggleProgressBar();
             mView.showInvalidInputError("Você deve informar a questão");
         }else
-            mView.startAddOrUpdateThread(data);
-    }
-
-    @Override
-    public void analiseResultFromThread(Object result) {
-        Long resultLong = new Long(String.valueOf(result));
-        mView.toggleProgressBar();
-        if (resultLong <= 0)
-            mView.showErrorMsg("Erro ao salvar dado");
-        else{
-            mView.showSuccessMsg("Dúvida salva");
-            returnResultToActivity();
-        }
-    }
-
-    public Object saveOrEditDataInSource(Doubt doubt){
-        Object result;
-        if (doubt.getId() > 0) // edit
-            result = mSource.updateDoubt(doubt);
-        else
-            result = mSource.insertDoubt(doubt);
-
-        return result;
+            startBackgroundThread(data, TaskType.SAVE);
     }
 
     public interface View extends BaseAddOrEditContract.View<Doubt>{

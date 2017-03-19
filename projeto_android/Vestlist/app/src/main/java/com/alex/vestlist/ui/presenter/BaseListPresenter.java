@@ -44,7 +44,7 @@ public abstract class BaseListPresenter<ViewType extends BaseListContract.View ,
 
     protected abstract int updateDataFromSource(ModelType data);
 
-    protected abstract int removeDataFromSource(ModelType data);
+    protected abstract boolean removeDataFromSource(ModelType data);
 
     protected abstract Long saveDataFromSource(ModelType data);
 

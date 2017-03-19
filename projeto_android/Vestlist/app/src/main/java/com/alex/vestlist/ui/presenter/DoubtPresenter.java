@@ -25,28 +25,91 @@ public class DoubtPresenter extends BaseListPresenter<DoubtPresenter.View, Doubt
     }
 
     @Override
+    public void analiseBackgroundThreadResult(Object result, TaskType taskType) {
+        mView.toggleProgressBar();
+        switch (taskType){
+            case LOAD:
+                List<Doubt> list = (List<Doubt>) result;
+                if (list == null || list.isEmpty())
+                    return;
+                if (mOffset <= 0)
+                    mView.createListAdapter(list);
+                else
+                    mView.addAdapterData(list);
+                break;
+            case SAVE:
+                Long dataId = (Long) result;
+                if (dataId <= 0){
+                    mView.showErrorMsg("Dúvida não foi salva");
+                }else {
+                    mView.showSuccessMsg("Dúvida adicionada");
+                    reCreateAdapter();
+                }
+                break;
+            case REMOVE:
+                int rowUpdated = (int) result;
+                if (rowUpdated <= 0){
+                    mView.showErrorMsg("Dúvida não pode ser removida");
+                }else {
+                    mView.showSuccessMsg("Dúvida removida");
+                    reCreateAdapter();
+                }
+                break;
+            case EDIT:
+                rowUpdated = (int) result;
+                if (rowUpdated <= 0){
+                    mView.showErrorMsg("Dúvida não pode ser editada");
+                }else {
+                    mView.showSuccessMsg("Dúvida editada");
+                    reCreateAdapter();
+                }
+                break;
+            case FILTER_FROM_ADAPTER:
+            case FILTER_FROM_SOURCE:
+                list = (List<Doubt>) result;
+                if (list == null || list.isEmpty())
+                    return;
+                else{
+                    mView.createListAdapter(list);
+                }
+                break;
+
+        }
+    }
+
+    @Override
     public List<Doubt> loadDataFromSource(int offset, int loadItemsLimit) {
         return mSource.loadDoubts(mView.getExerciseList(), offset, loadItemsLimit);
     }
 
     @Override
+    protected int updateDataFromSource(Doubt data) {
+        return 0;
+    }
+
+    @Override
+    protected boolean removeDataFromSource(Doubt data) {
+        return false;
+    }
+
+    @Override
+    protected Long saveDataFromSource(Doubt data) {
+        return null;
+    }
+
+    @Override
+    protected List<Doubt> applyFilterFromAdapter() {
+        return null;
+    }
+
+    @Override
+    protected List<Doubt> applyFilterFromSource() {
+        return null;
+    }
+
+    @Override
     protected void setEmptyView() {
         mView.setEmptyView("Não há dúvidas");
-    }
-
-    @Override
-    protected void showSuccessMsg() {
-        // TODO
-    }
-
-    @Override
-    protected void showErrorMsg() {
-        // TODO
-    }
-
-    @Override
-    public void populateFilteredList(String filterType) {
-        // TODO
     }
 
     @Override
@@ -58,11 +121,6 @@ public class DoubtPresenter extends BaseListPresenter<DoubtPresenter.View, Doubt
             intent.putExtra(AddOrEditDoubtActivity.ARGUMENT_DOUBT_KEY, data);
         }
         ((Activity)mContext).startActivityForResult(intent, ADD_DOUBT_REQUEST_CODE);
-    }
-
-    @Override
-    public int updateModelInSource(Doubt data) {
-        return mSource.updateDoubt(data);
     }
 
     @Override

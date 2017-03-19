@@ -22,8 +22,38 @@ public class TeacherPresenter extends BaseListPresenter<TeacherPresenter.View, T
     }
 
     @Override
+    public void analiseBackgroundThreadResult(Object result, TaskType taskType) {
+
+    }
+
+    @Override
     public List<Teacher> loadDataFromSource(int offset, int loadItemsLimit) {
         return mSource.loadTeachers(mView.getSubject(), offset, loadItemsLimit);
+    }
+
+    @Override
+    protected int updateDataFromSource(Teacher data) {
+        return 0;
+    }
+
+    @Override
+    protected boolean removeDataFromSource(Teacher data) {
+        return false;
+    }
+
+    @Override
+    protected Long saveDataFromSource(Teacher data) {
+        return null;
+    }
+
+    @Override
+    protected List<Teacher> applyFilterFromAdapter() {
+        return null;
+    }
+
+    @Override
+    protected List<Teacher> applyFilterFromSource() {
+        return null;
     }
 
     @Override
@@ -31,29 +61,10 @@ public class TeacherPresenter extends BaseListPresenter<TeacherPresenter.View, T
         mView.setEmptyView("Não há professores");
     }
 
-    @Override
-    protected void showSuccessMsg() {
-
-    }
-
-    @Override
-    protected void showErrorMsg() {
-
-    }
-
-    @Override
-    public void populateFilteredList(String filterType) {
-
-    }
 
     @Override
     public void showAddOrEditView(Teacher data) {
         ViewUtil.showNotImplementedMsg(mContext);
-    }
-
-    @Override
-    public int updateModelInSource(Teacher data) {
-        return 0;
     }
 
     @Override

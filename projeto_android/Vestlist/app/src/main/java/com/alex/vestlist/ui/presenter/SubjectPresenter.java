@@ -20,12 +20,18 @@ public class SubjectPresenter extends BaseListPresenter<SubjectPresenter.View, S
     }
 
     @Override
-    public void showAddOrEditView(Subject data) {
-    }
-
-    @Override
-    public int updateModelInSource(Subject data) {
-        return 0;
+    public void analiseBackgroundThreadResult(Object result, TaskType taskType) {
+        switch (taskType){
+            case LOAD:
+                List<Subject> list = (List<Subject>) result;
+                if (list == null && list.isEmpty())
+                    return;
+                if (mOffset <= 0)
+                    mView.createListAdapter(list);
+                else
+                    mView.addAdapterData(list);
+                break;
+        }
     }
 
     @Override
@@ -36,28 +42,43 @@ public class SubjectPresenter extends BaseListPresenter<SubjectPresenter.View, S
     }
 
     @Override
+    public void showAddOrEditView(Subject data) {
+
+    }
+
+    @Override
     public List<Subject> loadDataFromSource(int offset, int loadItemsLimit) {
         return mSource.loadSubjects(offset, loadItemsLimit);
     }
 
     @Override
+    protected int updateDataFromSource(Subject data) {
+        return 0;
+    }
+
+    @Override
+    protected boolean removeDataFromSource(Subject data) {
+        return false;
+    }
+
+    @Override
+    protected Long saveDataFromSource(Subject data) {
+        return null;
+    }
+
+    @Override
+    protected List<Subject> applyFilterFromAdapter() {
+        return null;
+    }
+
+    @Override
+    protected List<Subject> applyFilterFromSource() {
+        return null;
+    }
+
+    @Override
     protected void setEmptyView() {
         mView.setEmptyView("Não há matérias");
-    }
-
-    @Override
-    protected void showSuccessMsg() {
-
-    }
-
-    @Override
-    protected void showErrorMsg() {
-
-    }
-
-    @Override
-    public void populateFilteredList(String filterType) {
-
     }
 
     /**
