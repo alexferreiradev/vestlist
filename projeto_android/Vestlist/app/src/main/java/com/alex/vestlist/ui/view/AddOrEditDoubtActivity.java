@@ -14,7 +14,6 @@ public class AddOrEditDoubtActivity extends BaseActivity<Doubt, AddOrEditDoubtPr
     public static final String ARGUMENT_DOUBT_KEY = "doubt argument";
     public static final String ARGUMENT_LIST_ID_KEY = "list id argument";
 
-    private AddOrEditDoubtPresenter mPresenter;
     private EditText questionETV;
     private EditText detailsETV;
     private long mListId;
@@ -42,7 +41,7 @@ public class AddOrEditDoubtActivity extends BaseActivity<Doubt, AddOrEditDoubtPr
                 doubt.setQuestion(questionETV.getText().toString());
                 doubt.setDetails(detailsETV.getText().toString());
                 doubt.setListId(mListId);
-                mPresenter.validateData(doubt);
+                mPresenter.validateDataInputedToSaveOrEdit(doubt);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -60,7 +59,7 @@ public class AddOrEditDoubtActivity extends BaseActivity<Doubt, AddOrEditDoubtPr
             throw new IllegalArgumentException("Id de lista está nulo ou não foi passado");
 
         if (getIntent().hasExtra(ARGUMENT_DOUBT_KEY))
-            mPresenter.validateDataToEdit((Doubt) getIntent().getExtras().getSerializable(ARGUMENT_DOUBT_KEY));
+            mPresenter.validateDataToSetEditView((Doubt) getIntent().getExtras().getSerializable(ARGUMENT_DOUBT_KEY));
     }
 
     @Override
