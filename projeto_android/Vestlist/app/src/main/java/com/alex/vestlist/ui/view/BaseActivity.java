@@ -53,6 +53,7 @@ public abstract class BaseActivity<ModelType extends BaseModel,
 
     @Override
     public void startBackgroundThread(ModelType data, BasePresenter.TaskType taskType) {
+        mTaskType = taskType;
         new BackgroundTask().execute();
     }
 
