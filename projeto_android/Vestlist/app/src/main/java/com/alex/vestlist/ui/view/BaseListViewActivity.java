@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alex.vestlist.model.BaseModel;
 import com.alex.vestlist.ui.presenter.BaseListContract;
@@ -81,12 +82,12 @@ abstract class BaseListViewActivity<ModelType extends BaseModel,
 
     @Override
     public void showErrorMsg(String msg) {
-
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void showSuccessMsg(String msg) {
-
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -115,7 +116,7 @@ abstract class BaseListViewActivity<ModelType extends BaseModel,
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (mPresenter != null) {
             ModelType item = (ModelType) parent.getAdapter().getItem(position);
-            mPresenter.openDataDetails(item);
+            mPresenter.selectItemClicked(item);
         }
     }
 
