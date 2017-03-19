@@ -50,7 +50,7 @@ public class DoubtPresenter extends BaseListPresenter<DoubtPresenter.View, Doubt
     }
 
     @Override
-    public Long updateModelInSource(Doubt data) {
+    public int updateModelInSource(Doubt data) {
         return mSource.updateDoubt(data);
     }
 

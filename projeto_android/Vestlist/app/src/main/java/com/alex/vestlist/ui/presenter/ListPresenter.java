@@ -60,7 +60,7 @@ public class ListPresenter extends BaseListPresenter<ListPresenter.View, Exercis
     }
 
     @Override
-    public Long updateModelInSource(ExerciseList data) {
+    public int updateModelInSource(ExerciseList data) {
         return mSource.updateList(data);
     }
 

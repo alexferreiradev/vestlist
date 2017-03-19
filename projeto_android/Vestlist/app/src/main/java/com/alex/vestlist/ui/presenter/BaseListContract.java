@@ -69,7 +69,7 @@ public interface BaseListContract {
 
         public abstract void showAddOrEditView(ModelType data);
 
-        public abstract Long updateModelInSource(ModelType data);
+        public abstract int updateModelInSource(ModelType data);
 
         public abstract void startAddOrEditThread(ModelType data);
 
