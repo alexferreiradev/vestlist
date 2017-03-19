@@ -11,14 +11,14 @@ import com.alex.vestlist.source.StudentSource;
 
 public abstract class BasePresenter<ViewType extends BasePresenter.View> {
 
-    protected Context context;
+    protected Context mContext;
     protected ViewType mView;
     protected StudentSource mSource;
 
-    public BasePresenter(ViewType mView, Context context, Bundle savedInstanceState) {
-        this.context = context;
+    public BasePresenter(ViewType mView, Context mContext, Bundle savedInstanceState) {
+        this.mContext = mContext;
         this.mView = mView;
-        this.mSource = new StudentSource(context);
+        this.mSource = new StudentSource(mContext);
         initializeWidgets(savedInstanceState);
     }
 
