@@ -30,23 +30,28 @@ public class TeacherActivity extends BaseListViewActivity<Teacher, TeacherPresen
     }
 
     @Override
-    public void setListAdapter(List results) {
+    public Subject getSubject() {
+        return mSubject;
+    }
+
+    @Override
+    public void createListAdapter(List results) {
         mAdapter = new TeacherListViewAdapter(this, results, R.layout.adapter_subject_listview);
         mListView.setAdapter(mAdapter);
     }
 
     @Override
-    public void setEmptyView() {
-        mEmptyView.setText("Não há professores");
+    public void showAddOrEditDataView() {
+
     }
 
     @Override
-    public void addAdapterItems(List result) {
+    public void addAdapterData(List result) {
         mAdapter.addAll(result);
     }
 
     @Override
-    public Subject getSubject() {
-        return mSubject;
+    public void startSaveOrEditThread(Teacher data) {
+
     }
 }

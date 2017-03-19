@@ -24,6 +24,16 @@ public class DoubtPresenter extends BaseListPresenter<DoubtPresenter.View, Doubt
 
     @Override
     protected void setEmptyView() {
+        mView.setEmptyView("Não há dúvidas");
+    }
+
+    @Override
+    protected void showSuccessMsg() {
+
+    }
+
+    @Override
+    protected void showErrorMsg() {
 
     }
 
@@ -47,7 +57,7 @@ public class DoubtPresenter extends BaseListPresenter<DoubtPresenter.View, Doubt
 
     }
 
-    public interface View extends BaseListContract.View{
+    public interface View extends BaseListContract.View<Doubt>{
 
     }
 }

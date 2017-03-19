@@ -53,7 +53,7 @@ public abstract class BasePresenter<ViewType extends BasePresenter.View> {
          */
         public void initializeWidgets(Bundle savedInstanceState);
 
-        public void showErroMsg(String msg);
+        public void showErrorMsg(String msg);
 
         public void showSuccessMsg(String msg);
 

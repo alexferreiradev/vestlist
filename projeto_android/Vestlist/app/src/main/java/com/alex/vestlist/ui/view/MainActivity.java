@@ -21,19 +21,24 @@ public class MainActivity extends BaseListViewActivity<Subject, SubjectPresenter
     }
 
     @Override
-    public void setListAdapter(List results) {
+    public void createListAdapter(List results) {
         mAdapter = new SubjectListViewAdapter(this, results, R.layout.adapter_subject_listview);
         mListView.setAdapter(mAdapter);
     }
 
     @Override
-    public void addAdapterItems(List result) {
+    public void showAddOrEditDataView() {
+
+    }
+
+    @Override
+    public void addAdapterData(List result) {
         if (mAdapter != null)
             mAdapter.addAll(result);
     }
 
     @Override
-    public void setEmptyView() {
-        mEmptyView.setText("Nenhuma matéria encontrada");
+    public void startSaveOrEditThread(Subject data) {
+
     }
 }

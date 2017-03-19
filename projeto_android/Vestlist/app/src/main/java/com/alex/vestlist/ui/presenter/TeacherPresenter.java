@@ -27,8 +27,33 @@ public class TeacherPresenter extends BaseListPresenter<TeacherPresenter.View, T
     }
 
     @Override
+    protected void setEmptyView() {
+        mView.setEmptyView("Não há professores");
+    }
+
+    @Override
+    protected void showSuccessMsg() {
+
+    }
+
+    @Override
+    protected void showErrorMsg() {
+
+    }
+
+    @Override
+    public void populateFilteredList(String filterType) {
+
+    }
+
+    @Override
     public void showAddOrEditView(Teacher data) {
         ViewUtil.showNotImplementedMsg(context);
+    }
+
+    @Override
+    public int updateModelInSource(Teacher data) {
+        return 0;
     }
 
     @Override
@@ -38,12 +63,7 @@ public class TeacherPresenter extends BaseListPresenter<TeacherPresenter.View, T
         context.startActivity(intent);
     }
 
-    @Override
-    public void AddOrEditData(Teacher added) {
-        ViewUtil.showNotImplementedMsg(context);
-    }
-
-    public interface View extends BaseListPresenter.View{
+    public interface View extends BaseListContract.View<Teacher>{
         public Subject getSubject();
     }
 }

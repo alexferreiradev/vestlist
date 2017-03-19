@@ -42,6 +42,16 @@ public class SubjectPresenter extends BaseListPresenter<SubjectPresenter.View, S
 
     @Override
     protected void setEmptyView() {
+        mView.setEmptyView("Não há matérias");
+    }
+
+    @Override
+    protected void showSuccessMsg() {
+
+    }
+
+    @Override
+    protected void showErrorMsg() {
 
     }
 
@@ -53,7 +63,7 @@ public class SubjectPresenter extends BaseListPresenter<SubjectPresenter.View, S
     /**
      * Funções que somente este presenter usa da View
      */
-    public interface View extends BaseListContract.View{
+    public interface View extends BaseListContract.View<Subject>{
 
     }
 }

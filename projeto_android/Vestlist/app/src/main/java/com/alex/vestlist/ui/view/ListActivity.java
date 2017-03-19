@@ -17,7 +17,7 @@ import com.alex.vestlist.ui.presenter.ListPresenter;
 
 import java.util.List;
 
-public class ListActivity extends BaseListViewActivity<ExerciseList, ListPresenter, ListPresenter.View> implements ListPresenter.View<ExerciseList> {
+public class ListActivity extends BaseListViewActivity<ExerciseList, ListPresenter, ListPresenter.View> implements ListPresenter.View {
 
     public static final String TEACHER_EXTRA_KEY = "teacher extra" ;
     private Teacher mTeacher;
@@ -35,22 +35,6 @@ public class ListActivity extends BaseListViewActivity<ExerciseList, ListPresent
         super.initializeWidgets(savedInstanceState);
 
         mTeacher = (Teacher) getIntent().getExtras().getSerializable(TEACHER_EXTRA_KEY);
-    }
-
-    @Override
-    public void showErroMsg(String msg) {
-
-    }
-
-    @Override
-    public void showSuccessMsg(String msg) {
-
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mPresenter.reloadList();
     }
 
     @Override
@@ -75,48 +59,7 @@ public class ListActivity extends BaseListViewActivity<ExerciseList, ListPresent
     }
 
     @Override
-    public void startLoadThread(int offset) {
-
-    }
-
-    @Override
-    public void setEmptyView(String text) {
-        mEmptyView.setText(text);
-    }
-
-    @Override
-    public void resetPagingCounters() {
-
-    }
-
-    @Override
-    public void showAddDataView() {
-
-    }
-
-    @Override
-    public void setOffsetValue(int newValue) {
-
-    }
-
-    @Override
-    public void setLoadItemsLimitValue(int newLimit) {
-
-    }
-
-    @Override
-    public void addAdapterData(List<ExerciseList> result) {
-
-    }
-
-    @Override
-    public void startSaveOrEditThread(ExerciseList data) {
-        mList = (ExerciseList) data;
-        new SaveItem().execute();
-    }
-
-    @Override
-    public void showNewListDialog() {
+    public void showAddOrEditDataView() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         final EditText etvName = new EditText(this);
@@ -127,6 +70,7 @@ public class ListActivity extends BaseListViewActivity<ExerciseList, ListPresent
             public void onClick(DialogInterface dialog, int which) {
                 String textTyped = etvName.getText().toString();
                 ExerciseList exerciseList = new ExerciseList();
+                exerciseList.setName(textTyped);
                 mPresenter.startAddOrEditThread(exerciseList);
             }
         });
@@ -134,21 +78,32 @@ public class ListActivity extends BaseListViewActivity<ExerciseList, ListPresent
     }
 
     @Override
+    public void addAdapterData(List result) {
+
+    }
+
+    @Override
+    public void startSaveOrEditThread(ExerciseList data) {
+        mList = (ExerciseList) data;
+        new SaveItem().execute();
+    }
+
+    @Override
     public Teacher getTeacher() {
         return mTeacher;
     }
 
-    public class SaveItem extends AsyncTask<String, Integer, Integer> {
+    public class SaveItem extends AsyncTask<Object, Object, Long> {
 
         @Override
-        protected Integer doInBackground(String... params) {
-            return mPresenter.updateModelInSource(mList);
+        protected Long doInBackground(Object... params) {
+            return mPresenter.saveModelInSource(mList);
         }
 
         @Override
-        protected void onPostExecute(Integer integer) {
-            super.onPostExecute(integer);
-            mPresenter.analiseThreadResult(integer);
+        protected void onPostExecute(Long aLong) {
+            super.onPostExecute(aLong);
+            mPresenter.analiseSaveThreadResult(aLong);
         }
     }
 }

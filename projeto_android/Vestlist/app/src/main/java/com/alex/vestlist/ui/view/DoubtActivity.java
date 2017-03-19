@@ -17,18 +17,24 @@ public class DoubtActivity extends BaseListViewActivity<Doubt, DoubtPresenter, D
         mPresenter = new DoubtPresenter(this, this, savedInstanceState);
     }
 
+
     @Override
-    public void setListAdapter(List results) {
+    public void createListAdapter(List results) {
 
     }
 
     @Override
-    public void setEmptyView() {
-        mEmptyView.setText("Não há dúvidas");
+    public void showAddOrEditDataView() {
+
     }
 
     @Override
-    public void addAdapterItems(List result) {
+    public void addAdapterData(List<Doubt> result) {
+
+    }
+
+    @Override
+    public void startSaveOrEditThread(Doubt data) {
 
     }
 }

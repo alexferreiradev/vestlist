@@ -10,6 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.alex.vestlist.model.BaseModel;
+import com.alex.vestlist.ui.presenter.BaseListContract;
 import com.alex.vestlist.ui.presenter.BaseListPresenter;
 
 import java.util.List;
@@ -22,7 +23,11 @@ import static com.alex.vestlist.R.id.progressBar;
  * Created by Alex on 17/03/2017.
  */
 
-abstract class BaseListViewActivity<Model extends BaseModel, Presenter extends BaseListPresenter, ViewType extends BaseListPresenter.View> extends BaseActivity implements AbsListView.OnScrollListener, BaseListPresenter.View {
+abstract class BaseListViewActivity<ModelType extends BaseModel,
+        Presenter extends BaseListPresenter,
+        ViewType extends BaseListContract.View>
+        extends BaseActivity
+        implements AbsListView.OnScrollListener, BaseListContract.View<ModelType> {
 
     protected int mLoadItemsLimit;
     protected int mOffset;
@@ -53,28 +58,43 @@ abstract class BaseListViewActivity<Model extends BaseModel, Presenter extends B
     }
 
     @Override
-    public void resetLoadedPageCounters() {
+    public void setEmptyView(String text) {
+        mEmptyView.setText(text);
+    }
+
+    @Override
+    public void resetPagingCounters() {
         mLoadItemsLimit = LIMIT_INITIAL;
         mOffset = 0;
         mListView.setAdapter(null);
     }
 
     @Override
-    public void setOffset(int newValue) {
+    public void setOffsetValue(int newValue) {
         mOffset = newValue;
     }
 
     @Override
-    public void setLoadItemsLimit(int newLimit) {
+    public void setLoadItemsLimitValue(int newLimit) {
         mLoadItemsLimit = newLimit;
     }
 
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        if (mPresenter != null)
-//            mPresenter.initialize();
-//    }
+    @Override
+    public void showErrorMsg(String msg) {
+
+    }
+
+    @Override
+    public void showSuccessMsg(String msg) {
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (mPresenter != null)
+            mPresenter.reloadList();
+    }
 
     @Override
     public void initializeWidgets(Bundle savedInstanceState){
@@ -87,10 +107,6 @@ abstract class BaseListViewActivity<Model extends BaseModel, Presenter extends B
     }
 
     @Override
-    public void addListViewItem() {
-    }
-
-    @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {
 
     }
@@ -98,7 +114,7 @@ abstract class BaseListViewActivity<Model extends BaseModel, Presenter extends B
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (mPresenter != null) {
-            Model item = (Model) parent.getAdapter().getItem(position);
+            ModelType item = (ModelType) parent.getAdapter().getItem(position);
             mPresenter.openDataDetails(item);
         }
     }
@@ -117,19 +133,9 @@ abstract class BaseListViewActivity<Model extends BaseModel, Presenter extends B
     }
 
     @Override
-    public void loadList(int offset) {
+    public void startLoadThread(int offset) {
         String[] params = {String.valueOf(offset)};
         new LoadSubjects().execute(params);
-    }
-
-    @Override
-    public void showSaveError() {
-
-    }
-
-    @Override
-    public void showSaveSuccess() {
-
     }
 
     public class LoadSubjects extends AsyncTask<String, Integer, List> {

@@ -77,7 +77,7 @@ public abstract class BaseListPresenter<ViewType extends BaseListContract.View ,
      * Recarrega os dados para lista, desde o primeiro. Caso os dados mudaram, seram atualizados no adapter.
      */
     public void reloadList(){
-        mView.resetPagingCounters();
+        initialize();
     }
 
 
@@ -102,11 +102,21 @@ public abstract class BaseListPresenter<ViewType extends BaseListContract.View ,
 
     @Override
     public void startAddOrEditThread(Model data) {
-
+        mView.startSaveOrEditThread(data);
     }
+
+    protected abstract void showSuccessMsg();
 
     @Override
-    public void analiseThreadResult(int rowsUpdated) {
-
+    public void analiseSaveThreadResult(Long id) {
+        if (id > 0){
+            showSuccessMsg();// TODO fazer msg para cada operação com metodo abstract para cada uma
+            reloadList();
+        }else{
+            showErrorMsg();// TODO fazer msg para cada operação com metodo abstract para cada uma
+            reloadList();
+        }
     }
+
+    protected abstract void showErrorMsg();
 }

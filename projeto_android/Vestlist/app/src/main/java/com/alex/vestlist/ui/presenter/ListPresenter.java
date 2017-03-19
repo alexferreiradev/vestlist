@@ -3,7 +3,6 @@ package com.alex.vestlist.ui.presenter;
 import android.content.Context;
 import android.os.Bundle;
 
-import com.alex.vestlist.model.BaseModel;
 import com.alex.vestlist.model.ExerciseList;
 import com.alex.vestlist.model.Teacher;
 import com.alex.vestlist.ui.util.ViewUtil;
@@ -36,13 +35,38 @@ public class ListPresenter extends BaseListPresenter<ListPresenter.View, Exercis
     }
 
     @Override
+    public void startAddOrEditThread(ExerciseList data) {
+        if (data == null || data.getName().isEmpty()){
+            mView.showErrorMsg("voce deve escrever um nome com mais de 3 carac.");
+            mView.showAddOrEditDataView();
+            return ;
+        }
+        super.startAddOrEditThread(data);
+    }
+
+    @Override
     public void showAddOrEditView(ExerciseList data) {
-        mView.showNewListDialog();
+        mView.showAddOrEditDataView();
     }
 
     @Override
     public int updateModelInSource(ExerciseList data) {
         return mSource.updateList(data);
+    }
+
+    //TODO colocar no BaseContract
+    public long saveModelInSource(ExerciseList data){
+        return mSource.insertList(data);
+    }
+
+    @Override
+    protected void showSuccessMsg() {
+        mView.showSuccessMsg("Operacao realizada com sucesso");
+    }
+
+    @Override
+    protected void showErrorMsg() {
+        mView.showErrorMsg("Operacao realizada com erro");
     }
 
     @Override
@@ -51,8 +75,7 @@ public class ListPresenter extends BaseListPresenter<ListPresenter.View, Exercis
     }
 
 
-    public interface View<ModelType extends BaseModel> extends BaseListContract.View<ModelType> {
-        public void showNewListDialog();
+    public interface View extends BaseListContract.View<ExerciseList> {
 
         public Teacher getTeacher();
     }

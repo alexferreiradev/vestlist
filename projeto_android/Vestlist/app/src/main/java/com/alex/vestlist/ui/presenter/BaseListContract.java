@@ -12,7 +12,8 @@ import java.util.List;
 
 public interface BaseListContract {
 
-    public interface View<ModelType extends BaseModel> extends BasePresenter.View, AbsListView.OnScrollListener, AbsListView.OnItemClickListener {
+    public interface View<ModelType extends BaseModel>
+            extends BasePresenter.View, AbsListView.OnScrollListener, AbsListView.OnItemClickListener {
 
         public void createListAdapter(List results);
 
@@ -34,7 +35,7 @@ public interface BaseListContract {
          */
         public void resetPagingCounters();
 
-        public void showAddDataView();
+        public void showAddOrEditDataView();
 
         public void setOffsetValue(int newValue);
 
@@ -72,7 +73,7 @@ public interface BaseListContract {
 
         public abstract void startAddOrEditThread(ModelType data);
 
-        public abstract void analiseThreadResult(int rowsUpdated);
+        public abstract void analiseSaveThreadResult(Long rowsUpdated);
 
     }
 }
