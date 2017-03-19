@@ -38,8 +38,7 @@ public class AddOrEditDoubtPresenter extends BaseAddOrEditPresenter<Doubt, AddOr
     }
 
     @Override
-    public void analiseBackgroundThreadResult(Object result, TaskType taskType) {
-        mView.toggleProgressBar();
+    protected void analiseBackgroundThreadResultData(Object result, TaskType taskType) {
         switch (taskType){
             case SAVE:
                 Long dataId = (Long) result;
@@ -73,20 +72,17 @@ public class AddOrEditDoubtPresenter extends BaseAddOrEditPresenter<Doubt, AddOr
     }
 
     @Override
-    public void validateData(Doubt data) {
-        mView.toggleProgressBar();
+    public void validateDataInputedToSaveOrEdit(Doubt data) {
         if (data == null) {
-            mView.toggleProgressBar();
             throw new NullPointerException("Dado para validar está nulo");
         }else if (data.getQuestion().isEmpty() || data.getListId() <= 0) {
-            mView.toggleProgressBar();
             mView.showInvalidInputError("Você deve informar a questão");
         }else
-            startBackgroundThread(data, TaskType.SAVE);
+            startSaveOrEditDataInSource(data);
     }
 
     @Override
-    public void validateDataToEdit(Doubt data) {
+    public void validateDataToSetEditView(Doubt data) {
         if (data == null || data.getQuestion().isEmpty() || data.getId() <= 0 || data.getListId() <= 0)
             throw new InvalidParameterException("Dúvida não é válida para edição");
         else
