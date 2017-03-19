@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants"
+    >
 
     <TextView
         android:id="@+id/nameTV"
@@ -21,7 +23,8 @@
         android:layout_alignParentTop="true"
         android:layout_marginLeft="23dp"
         android:layout_marginStart="23dp"
-        android:layout_marginTop="38dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
         />
 
     <Button
@@ -35,5 +38,6 @@
         android:layout_alignTop="@+id/statusCB"
         android:layout_marginLeft="24dp"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:focusable="false"
         android:background="@android:drawable/ic_delete" />
 </RelativeLayout>
