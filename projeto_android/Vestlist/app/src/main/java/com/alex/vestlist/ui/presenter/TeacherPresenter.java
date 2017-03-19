@@ -23,7 +23,20 @@ public class TeacherPresenter extends BaseListPresenter<TeacherPresenter.View, T
 
     @Override
     public void analiseBackgroundThreadResult(Object result, TaskType taskType) {
+        if (taskType == null)
+            throw new NullPointerException("Tipo de task está nulo");
 
+        switch (taskType){
+            case LOAD:
+                List<Teacher> list = (List<Teacher>) result;
+                if (list == null || list.isEmpty())
+                    return;
+                if (mView.getAdapter() == null)
+                    mView.createListAdapter(list);
+                else
+                    mView.addAdapterData(list);
+                break;
+        }
     }
 
     @Override

@@ -24,7 +24,7 @@ public class SubjectPresenter extends BaseListPresenter<SubjectPresenter.View, S
         switch (taskType){
             case LOAD:
                 List<Subject> list = (List<Subject>) result;
-                if (list == null && list.isEmpty())
+                if (list == null || list.isEmpty())
                     return;
                 if (mView.getAdapter() == null)
                     mView.createListAdapter(list);
