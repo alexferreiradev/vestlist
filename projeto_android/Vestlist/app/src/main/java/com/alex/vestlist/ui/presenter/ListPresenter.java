@@ -44,8 +44,8 @@ public class ListPresenter extends BaseListPresenter<ListPresenter.View, Exercis
                 }
                 break;
             case REMOVE:
-                int rowUpdated = (int) result;
-                if (rowUpdated <= 0){
+                boolean deleted = (boolean) result;
+                if (!deleted){
                     mView.showErrorMsg("Lista não pode ser removida");
                 }else {
                     mView.showSuccessMsg("Lista removida");
@@ -53,8 +53,8 @@ public class ListPresenter extends BaseListPresenter<ListPresenter.View, Exercis
                 }
                 break;
             case EDIT:
-                rowUpdated = (int) result;
-                if (rowUpdated <= 0){
+                int rowsUpdated = (int) result;
+                if (rowsUpdated <= 0){
                     mView.showErrorMsg("Lista não pode ser editada");
                 }else {
                     mView.showSuccessMsg("Lista editada");

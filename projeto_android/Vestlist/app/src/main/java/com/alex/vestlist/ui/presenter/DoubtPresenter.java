@@ -46,8 +46,8 @@ public class DoubtPresenter extends BaseListPresenter<DoubtPresenter.View, Doubt
                 }
                 break;
             case REMOVE:
-                int rowUpdated = (int) result;
-                if (rowUpdated <= 0){
+                boolean deleted = (boolean) result;
+                if (!deleted){
                     mView.showErrorMsg("Dúvida não pode ser removida");
                 }else {
                     mView.showSuccessMsg("Dúvida removida");
@@ -55,8 +55,8 @@ public class DoubtPresenter extends BaseListPresenter<DoubtPresenter.View, Doubt
                 }
                 break;
             case EDIT:
-                rowUpdated = (int) result;
-                if (rowUpdated <= 0){
+                int rowsUpdated = (int) result;
+                if (rowsUpdated <= 0){
                     mView.showErrorMsg("Dúvida não pode ser editada");
                 }else {
                     mView.showSuccessMsg("Dúvida editada");
