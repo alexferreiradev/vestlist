@@ -31,6 +31,8 @@ public abstract class BaseActivity<ModelType extends BaseModel,
     @Override
     public void initializeWidgets(Bundle savedInstanceState) {
         mProgressBar = (ProgressBar) findViewById(progressBar);
+        if (mProgressBar == null)
+            throw new NullPointerException("A Activity não tem progressBar no layout.");
     }
 
     @Override
