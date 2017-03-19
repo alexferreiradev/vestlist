@@ -26,6 +26,9 @@ public abstract class BaseAddOrEditPresenter<ModelType extends BaseModel,
 
     @Override
     public Object taskFromSource(ModelType data, TaskType taskType) {
+        if (taskType == null)
+            throw new NullPointerException("Tipo de task está nulo");
+
         switch (taskType){
             case EDIT:
                 return updateDataFromSource(data);

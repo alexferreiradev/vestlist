@@ -30,7 +30,7 @@ public class ListPresenter extends BaseListPresenter<ListPresenter.View, Exercis
                 List<ExerciseList> list = (List<ExerciseList>) result;
                 if (list == null || list.isEmpty())
                     return;
-                if (mOffset <= 0)
+                if (mView.getAdapter() == null)
                     mView.createListAdapter(list);
                 else
                     mView.addAdapterData(list);
