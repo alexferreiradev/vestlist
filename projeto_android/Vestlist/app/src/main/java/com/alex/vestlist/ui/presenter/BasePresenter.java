@@ -17,7 +17,7 @@ public abstract class BasePresenter<ViewType extends BasePresenter.View,
     protected ViewType mView;
     protected StudentSource mSource;
 
-    public BasePresenter(ViewType mView, Context mContext, Bundle savedInstanceState) {
+    protected BasePresenter(ViewType mView, Context mContext, Bundle savedInstanceState) {
         this.mContext = mContext;
         this.mView = mView;
         this.mSource = new StudentSource(mContext);
