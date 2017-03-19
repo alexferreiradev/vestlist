@@ -114,9 +114,9 @@ public enum CursorModelUtil implements BaseCursorModelUtil{
             exerciseList.setId(id);
             exerciseList.setName(name);
             if (status == 1)
-                exerciseList.setStatus(true);
+                exerciseList.setCompleted(true);
             else
-                exerciseList.setStatus(false);
+                exerciseList.setCompleted(false);
             exerciseList.setTeacherId(teacherId);
             return exerciseList;
         }

@@ -12,7 +12,7 @@ import com.alex.vestlist.dao.VestListContract;
 public class ExerciseList extends BaseModel<ExerciseList> {
 
     private String name;
-    private boolean status;
+    private boolean completed;
     private long teacherId;
 
     @Override
@@ -22,7 +22,7 @@ public class ExerciseList extends BaseModel<ExerciseList> {
         contentValues.put(BaseColumns._ID, id);
         contentValues.put(VestListContract.ListEntry.NAME_COLLUNM, name);
         contentValues.put(VestListContract.ListEntry.FK_TEACHER_COLLUNM, teacherId);
-        if (status)
+        if (completed)
             contentValues.put(VestListContract.ListEntry.STATUS_COLLUNM, 1);
         else
             contentValues.put(VestListContract.ListEntry.STATUS_COLLUNM, 0);
@@ -38,12 +38,12 @@ public class ExerciseList extends BaseModel<ExerciseList> {
         this.name = name;
     }
 
-    public boolean isStatus() {
-        return status;
+    public boolean isCompleted() {
+        return completed;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
     }
 
     public long getTeacherId() {
@@ -61,7 +61,7 @@ public class ExerciseList extends BaseModel<ExerciseList> {
 
         ExerciseList that = (ExerciseList) o;
 
-        if (status != that.status) return false;
+        if (completed != that.completed) return false;
         if (teacherId != that.teacherId) return false;
         return name.equals(that.name);
 
@@ -70,7 +70,7 @@ public class ExerciseList extends BaseModel<ExerciseList> {
     @Override
     public int hashCode() {
         int result = name.hashCode();
-        result = 31 * result + (status ? 1 : 0);
+        result = 31 * result + (completed ? 1 : 0);
         result = 31 * result + (int) (teacherId ^ (teacherId >>> 32));
         return result;
     }
@@ -79,7 +79,7 @@ public class ExerciseList extends BaseModel<ExerciseList> {
     public String toString() {
         return "ExerciseList{" +
                 "name='" + name + '\'' +
-                ", status=" + status +
+                ", completed=" + completed +
                 ", teacherId=" + teacherId +
                 '}';
     }
