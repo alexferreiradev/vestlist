@@ -7,10 +7,9 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.alex.vestlist.R;
 import com.alex.vestlist.model.BaseModel;
 import com.alex.vestlist.ui.presenter.BasePresenter;
-
-import static com.alex.vestlist.R.id.progressBar;
 
 /**
  * Created by Alex on 16/03/2017.
@@ -30,7 +29,7 @@ public abstract class BaseActivity<ModelType extends BaseModel,
 
     @Override
     public void initializeWidgets(Bundle savedInstanceState) {
-        mProgressBar = (ProgressBar) findViewById(progressBar);
+        mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
         if (mProgressBar == null)
             throw new NullPointerException("A Activity não tem progressBar no layout.");
     }
