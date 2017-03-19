@@ -24,7 +24,7 @@ public interface BaseListContract {
 
         public BaseAdapter getAdapter();
 
-        public void setAdapter(BaseAdapter newAdapter);
+        public void destroyListAdapter();
 
 
         public void showAddOrEditDataView(ModelType data);

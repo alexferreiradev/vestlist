@@ -81,8 +81,9 @@ public class DoubtActivity extends BaseListViewActivity<Doubt, DoubtPresenter, D
     }
 
     @Override
-    public void setAdapter(BaseAdapter newAdapter) {
-        mAdapter = (DoubtListViewAdapter) newAdapter;
+    public void destroyListAdapter() {
+        mAdapter = null;
+        mListView.setAdapter(null);
     }
 
     @Override

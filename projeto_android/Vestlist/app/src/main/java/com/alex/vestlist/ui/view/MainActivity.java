@@ -38,8 +38,9 @@ public class MainActivity extends BaseListViewActivity<Subject, SubjectPresenter
     }
 
     @Override
-    public void setAdapter(BaseAdapter newAdapter) {
-        mAdapter = (SubjectListViewAdapter) newAdapter;
+    public void destroyListAdapter() {
+        mAdapter = null;
+        mListView.setAdapter(null);
     }
 
     @Override

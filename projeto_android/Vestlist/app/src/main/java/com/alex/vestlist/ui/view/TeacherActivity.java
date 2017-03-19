@@ -52,8 +52,9 @@ public class TeacherActivity extends BaseListViewActivity<Teacher, TeacherPresen
     }
 
     @Override
-    public void setAdapter(BaseAdapter newAdapter) {
-        mAdapter = (TeacherListViewAdapter) newAdapter;
+    public void destroyListAdapter() {
+        mAdapter = null;
+        mListView.setAdapter(null);
     }
 
     @Override

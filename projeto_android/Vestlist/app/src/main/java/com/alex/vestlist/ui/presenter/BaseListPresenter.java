@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.widget.BaseAdapter;
 
 import com.alex.vestlist.model.BaseModel;
-import com.alex.vestlist.model.ExerciseList;
 
 import java.util.List;
 
@@ -54,14 +53,30 @@ public abstract class BaseListPresenter<ViewType extends BaseListContract.View ,
     protected abstract List<ModelType> applyFilterFromSource();
 
 
+    protected abstract void showDataNotEditedError();
+
+    protected abstract void showDataEditedSuccess();
+
+    protected abstract void showDataSavedSuccess();
+
+    protected abstract void showDataRemovedError();
+
+    protected abstract void showDataRemovedSuccess();
+
+    protected abstract void showDataNotSavedError();
+
+    protected void showDataFilteredSuccess() {
+        mView.showSuccessMsg("Filtro aplicado com sucesso");
+    }
+
     @Override
     public void analiseBackgroundThreadResultData(Object result, TaskType taskType) {
         switch (taskType){
             case LOAD:
-                List<ExerciseList> list = (List<ExerciseList>) result;
+                List list = (List) result;
                 if (list == null || list.isEmpty()) {
                     if (isNewAdapter()) {
-                        mView.setAdapter(null);
+                        mView.destroyListAdapter();
                     }
                     return;
                 }
@@ -99,7 +114,7 @@ public abstract class BaseListPresenter<ViewType extends BaseListContract.View ,
                 break;
             case FILTER_FROM_ADAPTER:
             case FILTER_FROM_SOURCE:
-                list = (List<ExerciseList>) result;
+                list = (List) result;
                 if (list == null || list.isEmpty())
                     return;
                 else{
@@ -110,22 +125,6 @@ public abstract class BaseListPresenter<ViewType extends BaseListContract.View ,
 
         }
     }
-
-    protected void showDataFilteredSuccess() {
-        mView.showSuccessMsg("Filtro aplicado com sucesso");
-    }
-
-    protected abstract void showDataNotEditedError();
-
-    protected abstract void showDataEditedSuccess();
-
-    protected abstract void showDataSavedSuccess();
-
-    protected abstract void showDataRemovedError();
-
-    protected abstract void showDataRemovedSuccess();
-
-    protected abstract void showDataNotSavedError();
 
     @Override
     public void applyFilter(String filterKey, String filterValue) {
@@ -195,6 +194,7 @@ public abstract class BaseListPresenter<ViewType extends BaseListContract.View ,
 
 
     public void reCreateAdapter(){
+        mView.destroyListAdapter();
         initialize();
     }
 
@@ -211,7 +211,7 @@ public abstract class BaseListPresenter<ViewType extends BaseListContract.View ,
     }
 
     protected boolean isNewAdapter() {
-        return mOffset == LIMIT_INITIAL ? true : false;
+        return mView.getAdapter() == null || mView.getAdapter().isEmpty() ? true : false;
     }
 
     private void resetPaginationCounter(){

@@ -75,8 +75,9 @@ public class ListActivity extends BaseListViewActivity<ExerciseList, ListPresent
     }
 
     @Override
-    public void setAdapter(BaseAdapter newAdapter) {
-        mAdapter = (ExerciseListListViewAdapter) newAdapter;
+    public void destroyListAdapter() {
+        mAdapter = null;
+        mListView.setAdapter(null);
     }
 
     @Override
