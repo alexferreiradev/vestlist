@@ -8,7 +8,6 @@ import com.alex.vestlist.model.BaseModel;
 
 import java.util.List;
 
-import static android.R.attr.offset;
 import static com.alex.vestlist.ui.presenter.BasePresenter.TaskType.FILTER_FROM_ADAPTER;
 import static com.alex.vestlist.ui.presenter.BasePresenter.TaskType.FILTER_FROM_SOURCE;
 import static com.alex.vestlist.ui.presenter.BasePresenter.TaskType.LOAD;
@@ -86,10 +85,10 @@ public abstract class BaseListPresenter<ViewType extends BaseListContract.View ,
     public void loadMoreData(int firstVisibleItem, int visibleItemCount, int adapterTotalItems){
         int lastItemVisiblePosition = firstVisibleItem + visibleItemCount;
         if (lastItemVisiblePosition > adapterTotalItems - 20){
-            if (offset <= adapterTotalItems){
+            if (mOffset <= adapterTotalItems){
                 mView.toggleProgressBar();
-                mView.startBackgroundThread(null, LOAD);
-                mOffset = offset + mLoadItemsLimit;
+                startBackgroundThread(null, LOAD);
+                mOffset = mOffset + mLoadItemsLimit;
             }
         }
 
@@ -101,6 +100,9 @@ public abstract class BaseListPresenter<ViewType extends BaseListContract.View ,
 
     @Override
     public Object taskFromSource(ModelType data, TaskType taskType) {
+        if (taskType == null)
+            throw new NullPointerException("Tipo de task está nulo");
+
         switch (taskType){
             case EDIT:
                 return updateDataFromSource(data);
