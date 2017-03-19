@@ -52,6 +52,8 @@ public class DoubtPresenter extends BaseListPresenter<DoubtPresenter.View, Doubt
     @Override
     public void showAddOrEditView(Doubt data) {
         Intent intent = new Intent(mContext, AddOrEditDoubtActivity.class);
+        intent.putExtra(AddOrEditDoubtActivity.ARGUMENT_LIST_ID_KEY, data.getListId());
+
         if (data != null){
             intent.putExtra(AddOrEditDoubtActivity.ARGUMENT_DOUBT_KEY, data);
             // TODO tratar forma de editar, alterar nos presenters tudo

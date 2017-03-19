@@ -16,7 +16,8 @@ import com.alex.vestlist.ui.presenter.AddOrEditDoubtPresenter;
 public class AddOrEditDoubtActivity extends BaseActivity implements AddOrEditDoubtPresenter.View {
 
     public static final String ARGUMENT_DOUBT_KEY = "doubt argument";
-    private static final String ARGUMENT_LIST_ID_KEY = "list id argument";
+    public static final String ARGUMENT_LIST_ID_KEY = "list id argument";
+
     private AddOrEditDoubtPresenter mPresenter;
     private EditText questionETV;
     private EditText detailsETV;
