@@ -90,7 +90,7 @@ public class ListActivity extends BaseListViewActivity<ExerciseList, ListPresent
                 String textTyped = etvName.getText().toString();
                 ExerciseList exerciseList = new ExerciseList();
                 exerciseList.setName(textTyped);
-                mPresenter.startSaveOrEditDataInSource(data);
+                mPresenter.startSaveOrEditDataInSource(exerciseList);
             }
         });
         builder.create().show();
