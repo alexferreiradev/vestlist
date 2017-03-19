@@ -50,6 +50,8 @@ public class AddOrEditDoubtActivity extends BaseActivity<Doubt, AddOrEditDoubtPr
 
     @Override
     public void initializeWidgets(Bundle savedInstanceState) {
+        super.initializeWidgets(savedInstanceState);
+
         questionETV = (EditText) findViewById(R.id.questionETV);
         detailsETV = (EditText) findViewById(R.id.detailsETV);
 
