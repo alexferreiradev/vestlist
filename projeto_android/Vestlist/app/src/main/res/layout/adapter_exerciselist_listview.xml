@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/nameTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_alignBaseline="@+id/statusCB"
+        android:layout_alignBottom="@+id/statusCB"
+        android:layout_toRightOf="@+id/statusCB"
+        android:layout_toEndOf="@+id/statusCB" />
+
+    <CheckBox
+        android:id="@+id/statusCB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="23dp"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="38dp"
+        />
+
+    <Button
+        android:id="@+id/deleteBT"
+        style="@style/Widget.AppCompat.Button.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/statusCB"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/statusCB"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:background="@android:drawable/ic_delete" />
+</RelativeLayout>

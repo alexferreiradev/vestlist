@@ -17,10 +17,11 @@ import com.alex.vestlist.ui.presenter.ListPresenter;
 
 import java.util.List;
 
-public class ListActivity extends BaseListViewActivity<ExerciseList, ListPresenter, ListPresenter.View> implements ListPresenter.View {
+public class ListActivity extends BaseListViewActivity<ExerciseList, ListPresenter, ListPresenter.View> implements ListPresenter.View{
 
     public static final String TEACHER_EXTRA_KEY = "teacher extra" ;
     private Teacher mTeacher;
+    private ExerciseListListViewAdapter mAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,21 +55,23 @@ public class ListActivity extends BaseListViewActivity<ExerciseList, ListPresent
 
     @Override
     public void createListAdapter(List results) {
-        mListView.setAdapter(new ExerciseListListViewAdapter(this, results, R.layout.adapter_subject_listview));
+        mAdapter = new ExerciseListListViewAdapter(this, results, R.layout.adapter_exerciselist_listview, mPresenter);
+        mListView.setAdapter(mAdapter);
     }
 
     @Override
     public void addAdapterData(List<ExerciseList> result) {
+        mAdapter.addAll(result);
     }
 
     @Override
     public void removeAdapterData(List<ExerciseList> result) {
-
+        mAdapter.removeAll(result);
     }
 
     @Override
     public BaseAdapter getAdapter() {
-        return null;
+        return mAdapter;
     }
 
     @Override
@@ -106,4 +109,5 @@ public class ListActivity extends BaseListViewActivity<ExerciseList, ListPresent
     public Teacher getTeacher() {
         return mTeacher;
     }
+
 }
