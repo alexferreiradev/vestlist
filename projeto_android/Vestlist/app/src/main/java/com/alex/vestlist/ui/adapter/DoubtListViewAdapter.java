@@ -58,4 +58,9 @@ public class DoubtListViewAdapter extends BaseAdapter {
 
         return convertView;
     }
+
+    public void addAll(List<Doubt> result) {
+        doubts.addAll(result);
+        notifyDataSetChanged();
+    }
 }
