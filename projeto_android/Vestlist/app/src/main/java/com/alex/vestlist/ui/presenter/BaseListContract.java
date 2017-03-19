@@ -64,12 +64,12 @@ public interface BaseListContract {
 
         public void populateFilteredList(String filterType);
 
-        public abstract void openDataDetails(ModelType item);
+        public abstract void selectItemClicked(ModelType item);
 
 
         public abstract void showAddOrEditView(ModelType data);
 
-        public abstract int updateModelInSource(ModelType data);
+        public abstract Long updateModelInSource(ModelType data);
 
         public abstract void startAddOrEditThread(ModelType data);
 
