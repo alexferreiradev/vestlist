@@ -31,17 +31,22 @@ public abstract class BasePresenter<ViewType extends BasePresenter.View,
      */
     protected abstract void initialize();
 
+    public abstract Object taskFromSource(ModelType data, TaskType taskType);
+
+    public abstract void analiseBackgroundThreadResult(Object result, TaskType taskType);
+
     /**
      * Chamado para fazer bind entre view e atributos da activity.
      * @param savedInstanceState -
      */
     protected void initializeWidgets(Bundle savedInstanceState) {
         mView.initializeWidgets(savedInstanceState);
+        initialize();
     }
 
-    public abstract void startBackgroundThread(ModelType data, TaskType taskType);
-
-    public abstract Object taskFromSource(ModelType data, TaskType taskType);
+    public void startBackgroundThread(ModelType data, TaskType taskType){
+        mView.startBackgroundThread(data, taskType);
+    }
 
     /**
      * Funções que todas mView tem
@@ -71,6 +76,8 @@ public abstract class BasePresenter<ViewType extends BasePresenter.View,
         SAVE,
         EDIT,
         REMOVE,
-        LOAD
+        LOAD,
+        FILTER_FROM_ADAPTER,
+        FILTER_FROM_SOURCE,
     }
 }
