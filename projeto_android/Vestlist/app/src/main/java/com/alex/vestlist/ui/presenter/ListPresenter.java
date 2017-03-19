@@ -118,7 +118,7 @@ public class ListPresenter extends BaseListPresenter<ListPresenter.View, Exercis
 
     @Override
     public void showAddOrEditView(ExerciseList data) {
-
+        mView.showAddOrEditDataView(data);
     }
 
 

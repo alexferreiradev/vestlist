@@ -44,9 +44,7 @@ public abstract class BasePresenter<ViewType extends BasePresenter.View,
     protected abstract void analiseBackgroundThreadResultData(Object result, TaskType taskType);
 
     public synchronized void startSaveOrEditDataInSource(ModelType data) {
-        if (data == null)
-            throw new NullPointerException("Dado a ser salvo estava nulo");
-        if (data.getId() > 0)
+        if (data != null && data.getId() > 0)
             startBackgroundThread(data, TaskType.EDIT);
         else
             startBackgroundThread(data, TaskType.SAVE);
