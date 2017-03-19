@@ -3,13 +3,15 @@ package com.alex.vestlist.ui.presenter;
 import android.content.Context;
 import android.os.Bundle;
 
+import com.alex.vestlist.model.BaseModel;
 import com.alex.vestlist.source.StudentSource;
 
 /**
  * Created by Alex on 16/03/2017.
  */
 
-public abstract class BasePresenter<ViewType extends BasePresenter.View> {
+public abstract class BasePresenter<ViewType extends BasePresenter.View,
+        ModelType extends BaseModel> {
 
     protected Context mContext;
     protected ViewType mView;
@@ -37,10 +39,14 @@ public abstract class BasePresenter<ViewType extends BasePresenter.View> {
         mView.initializeWidgets(savedInstanceState);
     }
 
+    public abstract void startBackgroundThread(ModelType data, TaskType taskType);
+
+    public abstract Object taskFromSource(ModelType data, TaskType taskType);
+
     /**
      * Funções que todas mView tem
      */
-    public interface View {
+    public interface View<ModelType extends BaseModel> {
 
         /**
          * Inverte o atributo visible de um progressBar
@@ -57,5 +63,14 @@ public abstract class BasePresenter<ViewType extends BasePresenter.View> {
 
         public void showSuccessMsg(String msg);
 
+        public void startBackgroundThread(ModelType data, TaskType taskType);
+
+    }
+
+    public enum TaskType{
+        SAVE,
+        EDIT,
+        REMOVE,
+        LOAD
     }
 }

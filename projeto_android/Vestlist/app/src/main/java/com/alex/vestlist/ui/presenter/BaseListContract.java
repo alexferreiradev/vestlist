@@ -27,14 +27,6 @@ public interface BaseListContract {
 
         public void toggleEmptyView();
 
-        /**
-         * Reinicia os contadores de paginação da lista de info.
-         * Usado para dar update na lista ou recarregar os elementos desde do 0.
-         *
-         * Use a constante LIMIT_INITITAL.
-         */
-        public void resetPagingCounters();
-
         public void showAddOrEditDataView();
 
         public void setOffsetValue(int newValue);
@@ -46,30 +38,26 @@ public interface BaseListContract {
         void startSaveOrEditThread(ModelType data);
     }
 
-    public interface Presenter<ModelType> {
+    public interface Presenter<ModelType extends BaseModel> {
 
 
-        public void populateList(List<ModelType> result, int offset);
+        public void populateAdapter(List<ModelType> result, int offset);
 
         public void loadMoreData(
                 int offset, int loadItemsLimit, int firstVisibleItem,
                 int visibleItemCount, int adapterTotalItens);
 
-        public abstract List<ModelType> loadDataFromSource(int offset, int loadItemsLimit);
 
+        public void reCreateAdapter();
 
-        public void reloadList();
+        public abstract void applyFilterFromAdapter(String filterKey, String filterValue, List<ModelType> dataInAdapter);
 
-        public void showfilterListView();
-
-        public void populateFilteredList(String filterType);
+        public void applyFilterFromSource(String filterKey, String filterValue);
 
         public abstract void selectItemClicked(ModelType item);
 
 
         public abstract void showAddOrEditView(ModelType data);
-
-        public abstract int updateModelInSource(ModelType data);
 
         public abstract void startAddOrEditThread(ModelType data);
 
