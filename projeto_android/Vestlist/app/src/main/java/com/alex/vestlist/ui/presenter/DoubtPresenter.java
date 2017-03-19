@@ -1,11 +1,14 @@
 package com.alex.vestlist.ui.presenter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.alex.vestlist.model.Doubt;
 import com.alex.vestlist.model.ExerciseList;
 import com.alex.vestlist.ui.util.ViewUtil;
+import com.alex.vestlist.ui.view.AddOrEditDoubtActivity;
 
 import java.util.List;
 
@@ -14,6 +17,8 @@ import java.util.List;
  */
 
 public class DoubtPresenter extends BaseListPresenter<DoubtPresenter.View, Doubt> {
+
+    private static final int ADD_DOUBT_REQUEST_CODE = 0;
 
     public DoubtPresenter(View mView, Context context, Bundle savedInstanceState) {
         super(mView, context, savedInstanceState);
@@ -46,7 +51,12 @@ public class DoubtPresenter extends BaseListPresenter<DoubtPresenter.View, Doubt
 
     @Override
     public void showAddOrEditView(Doubt data) {
-        // TODO
+        Intent intent = new Intent(mContext, AddOrEditDoubtActivity.class);
+        if (data != null){
+            intent.putExtra(AddOrEditDoubtActivity.ARGUMENT_DOUBT_KEY, data);
+            // TODO tratar forma de editar, alterar nos presenters tudo
+        }
+        ((Activity)mContext).startActivityForResult(intent, ADD_DOUBT_REQUEST_CODE);
     }
 
     @Override

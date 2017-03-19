@@ -1,6 +1,9 @@
 package com.alex.vestlist.ui.view;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.alex.vestlist.R;
 import com.alex.vestlist.model.Doubt;
@@ -21,6 +24,30 @@ public class DoubtActivity extends BaseListViewActivity<Doubt, DoubtPresenter, D
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doubt);
         mPresenter = new DoubtPresenter(this, this, savedInstanceState);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.doubt_activity, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.newDoubtAction:
+                mPresenter.showAddOrEditView(null);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK)
+            mPresenter.reloadList();
+
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
