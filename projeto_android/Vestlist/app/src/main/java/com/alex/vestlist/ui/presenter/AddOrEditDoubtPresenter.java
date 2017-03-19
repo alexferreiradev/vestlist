@@ -22,16 +22,20 @@ public class AddOrEditDoubtPresenter extends BaseAddOrEditPresenter<Doubt, AddOr
 
     @Override
     public void validateData(Doubt data) {
-        if (data == null)
+        mView.toggleProgressBar();
+        if (data == null) {
+            mView.toggleProgressBar();
             throw new NullPointerException("Dado para validar está nulo");
-        else if (data.getQuestion().isEmpty() )
+        }else if (data.getQuestion().isEmpty() ) {
+            mView.toggleProgressBar();
             mView.showInvalidInputError("Você deve informar a questão");
-        else
+        }else
             mView.startAddOrUpdateThread();
     }
 
     @Override
     public void analiseResultFromThread(Long result) {
+        mView.toggleProgressBar();
         if (result <= 0)
             mView.showErrorMsg("Erro ao salvar dado");
         else{

@@ -1,12 +1,15 @@
 package com.alex.vestlist.ui.view;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.alex.vestlist.R;
+import com.alex.vestlist.model.Doubt;
 import com.alex.vestlist.ui.presenter.AddOrEditDoubtPresenter;
 
 public class AddOrEditDoubtActivity extends BaseActivity implements AddOrEditDoubtPresenter.View {
@@ -21,6 +24,27 @@ public class AddOrEditDoubtActivity extends BaseActivity implements AddOrEditDou
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_edit_doubt);
         mPresenter = new AddOrEditDoubtPresenter(this, this, savedInstanceState);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.add_edit_doubt_activity, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.saveAction:
+
+                Doubt doubt = new Doubt();
+                doubt.setQuestion(questionETV.getText().toString());
+                doubt.setDetails(detailsETV.getText().toString());
+                mPresenter.validateData(doubt);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
