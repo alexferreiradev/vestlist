@@ -56,7 +56,7 @@ public class SubjectListViewAdapter extends BaseAdapter {
         TextView tvName = (TextView) convertView.findViewById(R.id.tvName);
 
         Subject subject = subjects.get(position);
-        tvAcronomy.setText(subject.getName().substring(0,2));
+        tvAcronomy.setText(subject.getName().substring(0,3));
         tvName.setText(subject.getName());
 
         return convertView;
