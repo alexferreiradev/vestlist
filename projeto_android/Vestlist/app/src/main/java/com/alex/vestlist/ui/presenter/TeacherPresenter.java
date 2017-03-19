@@ -48,19 +48,19 @@ public class TeacherPresenter extends BaseListPresenter<TeacherPresenter.View, T
 
     @Override
     public void showAddOrEditView(Teacher data) {
-        ViewUtil.showNotImplementedMsg(context);
+        ViewUtil.showNotImplementedMsg(mContext);
     }
 
     @Override
-    public int updateModelInSource(Teacher data) {
+    public Long updateModelInSource(Teacher data) {
         return 0;
     }
 
     @Override
-    public void openDataDetails(Teacher item) {
-        Intent intent = new Intent(context, ListActivity.class);
+    public void selectItemClicked(Teacher item) {
+        Intent intent = new Intent(mContext, ListActivity.class);
         intent.putExtra(ListActivity.TEACHER_EXTRA_KEY, item);
-        context.startActivity(intent);
+        mContext.startActivity(intent);
     }
 
     public interface View extends BaseListContract.View<Teacher>{

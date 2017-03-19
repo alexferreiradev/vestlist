@@ -1,11 +1,12 @@
 package com.alex.vestlist.ui.presenter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.alex.vestlist.model.ExerciseList;
 import com.alex.vestlist.model.Teacher;
-import com.alex.vestlist.ui.util.ViewUtil;
+import com.alex.vestlist.ui.view.DoubtActivity;
 
 import java.util.List;
 
@@ -59,7 +60,7 @@ public class ListPresenter extends BaseListPresenter<ListPresenter.View, Exercis
     }
 
     @Override
-    public int updateModelInSource(ExerciseList data) {
+    public Long updateModelInSource(ExerciseList data) {
         return mSource.updateList(data);
     }
 
@@ -84,8 +85,10 @@ public class ListPresenter extends BaseListPresenter<ListPresenter.View, Exercis
     }
 
     @Override
-    public void openDataDetails(ExerciseList item) {
-        ViewUtil.showNotImplementedMsg(context);
+    public void selectItemClicked(ExerciseList item) {
+        Intent intent = new Intent(mContext, DoubtActivity.class);
+        intent.putExtra(DoubtActivity.ARGUMENT_LIST_KEY, item);
+        mContext.startActivity(intent);
     }
 
 

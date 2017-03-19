@@ -24,15 +24,15 @@ public class SubjectPresenter extends BaseListPresenter<SubjectPresenter.View, S
     }
 
     @Override
-    public int updateModelInSource(Subject data) {
+    public Long updateModelInSource(Subject data) {
         return 0;
     }
 
     @Override
-    public void openDataDetails(Subject subject) {
-        Intent intent = new Intent(context, TeacherActivity.class);
+    public void selectItemClicked(Subject subject) {
+        Intent intent = new Intent(mContext, TeacherActivity.class);
         intent.putExtra(TeacherActivity.SUBJECT_EXTRA_KEY, subject);
-        context.startActivity(intent);
+        mContext.startActivity(intent);
     }
 
     @Override
