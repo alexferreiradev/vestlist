@@ -135,6 +135,10 @@ public abstract class BaseListPresenter<ViewType extends BaseListContract.View ,
         setEmptyView();
     }
 
+    protected boolean isNewAdapter() {
+        return mOffset == LIMIT_INITIAL ? true : false;
+    }
+
     private void resetPaginationCounter(){
         mLoadItemsLimit = LIMIT_INITIAL;
         mOffset = 0;
