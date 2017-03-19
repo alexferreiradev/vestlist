@@ -14,6 +14,7 @@ import com.alex.vestlist.ui.presenter.AddOrEditDoubtPresenter;
 
 public class AddOrEditDoubtActivity extends BaseActivity implements AddOrEditDoubtPresenter.View {
 
+    public static final String ARGUMENT_DOUBT_KEY = "doubt argument";
     private AddOrEditDoubtPresenter mPresenter;
     private EditText questionETV;
     private EditText detailsETV;
@@ -60,6 +61,8 @@ public class AddOrEditDoubtActivity extends BaseActivity implements AddOrEditDou
         questionETV = (EditText) findViewById(R.id.questionETV);
         detailsETV = (EditText) findViewById(R.id.detailsETV);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
+
+        // todo verificar se tem doubt para editar e setar dados com presenter
     }
 
     @Override
