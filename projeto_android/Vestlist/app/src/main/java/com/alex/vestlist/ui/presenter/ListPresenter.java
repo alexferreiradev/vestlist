@@ -23,8 +23,7 @@ public class ListPresenter extends BaseListPresenter<ListPresenter.View, Exercis
     }
 
     @Override
-    public void analiseBackgroundThreadResult(Object result, TaskType taskType) {
-        mView.toggleProgressBar();
+    protected void analiseBackgroundThreadResultData(Object result, TaskType taskType) {
         switch (taskType){
             case LOAD:
                 List<ExerciseList> list = (List<ExerciseList>) result;

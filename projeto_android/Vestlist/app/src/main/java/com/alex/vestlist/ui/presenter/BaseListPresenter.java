@@ -25,7 +25,8 @@ public abstract class BaseListPresenter<ViewType extends BaseListContract.View ,
         extends BasePresenter<ViewType, ModelType>
         implements BaseListContract.Presenter<ModelType>{
 
-    private static final int LIMIT_INITIAL = 20;
+    private static final int LIMIT_INITIAL = 50; // 30 pronto para mostrar + 20 esperando no adapter
+    public static final int INTERVAL_TO_LOAD_MORE = 20; // 30 já visto, 20 faltando para visualizar
     private static final int TOTAL_FILTER_FROM_ADAPTER = 200;
 
     private int mLoadItemsLimit;
@@ -63,7 +64,6 @@ public abstract class BaseListPresenter<ViewType extends BaseListContract.View ,
     }
 
     public void populateAdapter(List<ModelType> result){
-        mView.toggleProgressBar();
         if (result != null && !result.isEmpty() && mOffset <= 0){
             mView.createListAdapter(result);
         }else if (result != null){
@@ -82,27 +82,22 @@ public abstract class BaseListPresenter<ViewType extends BaseListContract.View ,
      * @param visibleItemCount - total de linhas que são visíveis
      * @param adapterTotalItems - total de itens no adapter
      */
-    public void loadMoreData(int firstVisibleItem, int visibleItemCount, int adapterTotalItems){
+    public synchronized void loadMoreData(int firstVisibleItem, int visibleItemCount, int adapterTotalItems){
         int lastItemVisiblePosition = firstVisibleItem + visibleItemCount;
-        if (lastItemVisiblePosition > adapterTotalItems - 20){
+        if (lastItemVisiblePosition > adapterTotalItems - INTERVAL_TO_LOAD_MORE){
             if (mOffset <= adapterTotalItems){
-                mView.toggleProgressBar();
                 startBackgroundThread(null, LOAD);
-                mOffset = mOffset + mLoadItemsLimit;
             }
         }
 
-        if (mLoadItemsLimit < visibleItemCount + 20)
-            mLoadItemsLimit = visibleItemCount + 20;
+        if (mLoadItemsLimit < visibleItemCount + INTERVAL_TO_LOAD_MORE)
+            mLoadItemsLimit = visibleItemCount + INTERVAL_TO_LOAD_MORE;
     }
 
 
 
     @Override
-    public Object taskFromSource(ModelType data, TaskType taskType) {
-        if (taskType == null)
-            throw new NullPointerException("Tipo de task está nulo");
-
+    public synchronized Object taskFromSource(ModelType data, TaskType taskType) {
         switch (taskType){
             case EDIT:
                 return updateDataFromSource(data);
@@ -111,7 +106,9 @@ public abstract class BaseListPresenter<ViewType extends BaseListContract.View ,
             case REMOVE:
                 return removeDataFromSource(data);
             case LOAD:
-                return loadDataFromSource(mOffset, mLoadItemsLimit);
+                List<ModelType> modelTypes = loadDataFromSource(mOffset, mLoadItemsLimit);
+                mOffset = mOffset + mLoadItemsLimit;
+                return modelTypes;
             case FILTER_FROM_SOURCE:
                 return applyFilterFromSource();
             case FILTER_FROM_ADAPTER:

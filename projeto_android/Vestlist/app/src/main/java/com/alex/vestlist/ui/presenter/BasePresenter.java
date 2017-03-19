@@ -33,9 +33,17 @@ public abstract class BasePresenter<ViewType extends BasePresenter.View,
 
     public abstract Object taskFromSource(ModelType data, TaskType taskType);
 
-    public abstract void analiseBackgroundThreadResult(Object result, TaskType taskType);
+    public void analiseBackgroundThreadResult(Object result, TaskType taskType){
+        mView.toggleProgressBar();
+        if (taskType == null )
+            throw new NullPointerException("Tipo de task está nulo");
 
-    public void startSaveOrEditDataInSource(ModelType data) {
+        analiseBackgroundThreadResultData(result, taskType);
+    }
+
+    protected abstract void analiseBackgroundThreadResultData(Object result, TaskType taskType);
+
+    public synchronized void startSaveOrEditDataInSource(ModelType data) {
         if (data == null)
             throw new NullPointerException("Dado a ser salvo estava nulo");
         if (data.getId() > 0)
@@ -50,10 +58,9 @@ public abstract class BasePresenter<ViewType extends BasePresenter.View,
      */
     protected void initializeWidgets(Bundle savedInstanceState) {
         mView.initializeWidgets(savedInstanceState);
-        initialize();
     }
 
-    protected void startBackgroundThread(ModelType data, TaskType taskType){
+    protected synchronized void startBackgroundThread(ModelType data, TaskType taskType){
         mView.toggleProgressBar();
         mView.startBackgroundThread(data, taskType);
     }

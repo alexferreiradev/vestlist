@@ -20,7 +20,7 @@ public class SubjectPresenter extends BaseListPresenter<SubjectPresenter.View, S
     }
 
     @Override
-    public void analiseBackgroundThreadResult(Object result, TaskType taskType) {
+    protected void analiseBackgroundThreadResultData(Object result, TaskType taskType) {
         switch (taskType){
             case LOAD:
                 List<Subject> list = (List<Subject>) result;

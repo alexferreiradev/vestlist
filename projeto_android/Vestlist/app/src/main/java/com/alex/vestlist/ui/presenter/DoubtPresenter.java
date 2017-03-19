@@ -25,8 +25,7 @@ public class DoubtPresenter extends BaseListPresenter<DoubtPresenter.View, Doubt
     }
 
     @Override
-    public void analiseBackgroundThreadResult(Object result, TaskType taskType) {
-        mView.toggleProgressBar();
+    protected void analiseBackgroundThreadResultData(Object result, TaskType taskType) {
         switch (taskType){
             case LOAD:
                 List<Doubt> list = (List<Doubt>) result;
