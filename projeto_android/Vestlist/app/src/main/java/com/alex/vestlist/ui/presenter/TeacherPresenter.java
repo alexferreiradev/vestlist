@@ -52,8 +52,8 @@ public class TeacherPresenter extends BaseListPresenter<TeacherPresenter.View, T
     }
 
     @Override
-    public Long updateModelInSource(Teacher data) {
-        return new Long(0);
+    public int updateModelInSource(Teacher data) {
+        return 0;
     }
 
     @Override

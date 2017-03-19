@@ -88,7 +88,7 @@ public class StudentSource implements StudentSourceContract {
     }
 
     @Override
-    public long updateDoubt(Doubt doubt) {
+    public int updateDoubt(Doubt doubt) {
         return doubtCrud.update(doubt.getId(), doubt.toContentValues());
     }
 

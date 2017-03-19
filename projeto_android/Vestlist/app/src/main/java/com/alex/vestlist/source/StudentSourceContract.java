@@ -60,7 +60,7 @@ interface StudentSourceContract {
     public long insertList(ExerciseList list);
     public long insertDoubt(Doubt doubt);
 
-    public long updateDoubt(Doubt doubt);
+    public int updateDoubt(Doubt doubt);
     public int updateList(ExerciseList list);
 
     /**
