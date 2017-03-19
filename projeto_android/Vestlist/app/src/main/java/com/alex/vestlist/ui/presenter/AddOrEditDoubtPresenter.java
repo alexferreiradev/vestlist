@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import com.alex.vestlist.model.Doubt;
 
+import java.security.InvalidParameterException;
+
 /**
  * Created by Alex on 19/03/2017.
  */
@@ -81,6 +83,14 @@ public class AddOrEditDoubtPresenter extends BaseAddOrEditPresenter<Doubt, AddOr
             mView.showInvalidInputError("Você deve informar a questão");
         }else
             startBackgroundThread(data, TaskType.SAVE);
+    }
+
+    @Override
+    public void validateDataToEdit(Doubt data) {
+        if (data == null || data.getQuestion().isEmpty() || data.getId() <= 0 || data.getListId() <= 0)
+            throw new InvalidParameterException("Dúvida não é válida para edição");
+        else
+            mView.setViewToEditData(data);
     }
 
     public interface View extends BaseAddOrEditContract.View<Doubt>{
