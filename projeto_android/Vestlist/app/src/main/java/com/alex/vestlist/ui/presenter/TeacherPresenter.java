@@ -28,13 +28,15 @@ public class TeacherPresenter extends BaseListPresenter<TeacherPresenter.View, T
                 List<Teacher> list = (List<Teacher>) result;
                 if (list == null || list.isEmpty())
                     return;
-                if (mOffset <= 0)
+                if (isNewAdapter())
                     mView.createListAdapter(list);
                 else
                     mView.addAdapterData(list);
                 break;
         }
     }
+
+
 
     @Override
     public List<Teacher> loadDataFromSource(int offset, int loadItemsLimit) {

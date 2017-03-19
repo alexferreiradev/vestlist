@@ -31,7 +31,7 @@ public class DoubtPresenter extends BaseListPresenter<DoubtPresenter.View, Doubt
                 List<Doubt> list = (List<Doubt>) result;
                 if (list == null || list.isEmpty())
                     return;
-                if (mOffset <= 0)
+                if (isNewAdapter())
                     mView.createListAdapter(list);
                 else
                     mView.addAdapterData(list);
