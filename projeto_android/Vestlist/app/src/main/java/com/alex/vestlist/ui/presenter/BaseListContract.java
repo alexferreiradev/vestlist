@@ -48,7 +48,5 @@ public interface BaseListContract {
 
         public abstract void showAddOrEditView(ModelType data);
 
-        public abstract void analiseSaveThreadResult(Long rowsUpdated);
-
     }
 }
