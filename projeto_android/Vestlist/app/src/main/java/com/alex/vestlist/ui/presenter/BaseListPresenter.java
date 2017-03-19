@@ -30,7 +30,7 @@ public abstract class BaseListPresenter<ViewType extends BaseListContract.View ,
     private static final int TOTAL_FILTER_FROM_ADAPTER = 200;
 
     private int mLoadItemsLimit;
-    private int mOffset;
+    protected int mOffset;
     private String filterKey;
     private String filterValue;
 
