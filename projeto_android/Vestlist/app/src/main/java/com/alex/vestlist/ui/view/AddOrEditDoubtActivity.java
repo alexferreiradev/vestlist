@@ -1,19 +1,15 @@
 package com.alex.vestlist.ui.view;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
-import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.alex.vestlist.R;
 import com.alex.vestlist.model.Doubt;
 import com.alex.vestlist.ui.presenter.AddOrEditDoubtPresenter;
 
-public class AddOrEditDoubtActivity extends BaseActivity implements AddOrEditDoubtPresenter.View {
+public class AddOrEditDoubtActivity extends BaseActivity<Doubt, AddOrEditDoubtPresenter.View, AddOrEditDoubtPresenter> implements AddOrEditDoubtPresenter.View {
 
     public static final String ARGUMENT_DOUBT_KEY = "doubt argument";
     public static final String ARGUMENT_LIST_ID_KEY = "list id argument";
@@ -21,8 +17,6 @@ public class AddOrEditDoubtActivity extends BaseActivity implements AddOrEditDou
     private AddOrEditDoubtPresenter mPresenter;
     private EditText questionETV;
     private EditText detailsETV;
-    private ProgressBar progressBar;
-    private Doubt mDoubt;
     private long mListId;
 
     @Override
@@ -55,37 +49,16 @@ public class AddOrEditDoubtActivity extends BaseActivity implements AddOrEditDou
     }
 
     @Override
-    public void toggleProgressBar() {
-        if (progressBar.getVisibility() == View.VISIBLE)
-            progressBar.setVisibility(View.GONE);
-        else
-            progressBar.setVisibility(View.VISIBLE);
-    }
-
-    @Override
     public void initializeWidgets(Bundle savedInstanceState) {
         questionETV = (EditText) findViewById(R.id.questionETV);
         detailsETV = (EditText) findViewById(R.id.detailsETV);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         mListId = getIntent().getExtras().getLong(ARGUMENT_LIST_ID_KEY);
-        // todo verificar se tem doubt para editar e setar dados com presenter
-    }
+        if (mListId <= 0)
+            throw new IllegalArgumentException("Id de lista está nulo ou não foi passado");
 
-    @Override
-    public void showErrorMsg(String msg) {
-        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void showSuccessMsg(String msg) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void startAddOrUpdateThread(Doubt data) {
-        mDoubt = data;
-        new SaveThread().execute();
+        if (getIntent().hasExtra(ARGUMENT_DOUBT_KEY))
+            mPresenter.validateDataToEdit((Doubt) getIntent().getExtras().getSerializable(ARGUMENT_DOUBT_KEY));
     }
 
     @Override
@@ -99,17 +72,9 @@ public class AddOrEditDoubtActivity extends BaseActivity implements AddOrEditDou
         finish();
     }
 
-    public class SaveThread extends AsyncTask<String, Integer, Object>{
-
-        @Override
-        protected Object doInBackground(String... params) {
-            return mPresenter.saveOrEditDataInSource(mDoubt);
-        }
-
-        @Override
-        protected void onPostExecute(Object o) {
-            super.onPostExecute(o);
-            mPresenter.analiseResultFromThread(o);
-        }
+    @Override
+    public void setViewToEditData(Doubt data) {
+        questionETV.setText(data.getQuestion());
+        detailsETV.setText(data.getDetails());
     }
 }

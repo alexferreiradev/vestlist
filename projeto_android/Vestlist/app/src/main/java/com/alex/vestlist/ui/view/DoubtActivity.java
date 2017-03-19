@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.BaseAdapter;
 
 import com.alex.vestlist.R;
 import com.alex.vestlist.model.Doubt;
@@ -47,7 +48,7 @@ public class DoubtActivity extends BaseListViewActivity<Doubt, DoubtPresenter, D
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK)
-            mPresenter.reloadList();
+            mPresenter.reCreateAdapter();
 
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -65,18 +66,28 @@ public class DoubtActivity extends BaseListViewActivity<Doubt, DoubtPresenter, D
     }
 
     @Override
-    public void showAddOrEditDataView() {
-        // TODO
-    }
-
-    @Override
     public void addAdapterData(List<Doubt> result) {
         mAdapter.addAll(result);
     }
 
     @Override
-    public void startSaveOrEditThread(Doubt data) {
-        // TODO
+    public void removeAdapterData(List<Doubt> result) {
+
+    }
+
+    @Override
+    public BaseAdapter getAdapter() {
+        return null;
+    }
+
+    @Override
+    public void showAddOrEditDataView(Doubt data) {
+
+    }
+
+    @Override
+    public void showDataView(Doubt data) {
+
     }
 
     @Override

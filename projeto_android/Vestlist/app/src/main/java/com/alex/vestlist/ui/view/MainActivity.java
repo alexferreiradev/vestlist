@@ -1,6 +1,7 @@
 package com.alex.vestlist.ui.view;
 
 import android.os.Bundle;
+import android.widget.BaseAdapter;
 
 import com.alex.vestlist.R;
 import com.alex.vestlist.model.Subject;
@@ -27,7 +28,22 @@ public class MainActivity extends BaseListViewActivity<Subject, SubjectPresenter
     }
 
     @Override
-    public void showAddOrEditDataView() {
+    public void removeAdapterData(List<Subject> result) {
+
+    }
+
+    @Override
+    public BaseAdapter getAdapter() {
+        return null;
+    }
+
+    @Override
+    public void showAddOrEditDataView(Subject data) {
+
+    }
+
+    @Override
+    public void showDataView(Subject data) {
 
     }
 
@@ -37,8 +53,4 @@ public class MainActivity extends BaseListViewActivity<Subject, SubjectPresenter
             mAdapter.addAll(result);
     }
 
-    @Override
-    public void startSaveOrEditThread(Subject data) {
-
-    }
 }

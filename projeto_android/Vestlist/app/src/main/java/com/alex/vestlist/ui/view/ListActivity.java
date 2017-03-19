@@ -1,12 +1,12 @@
 package com.alex.vestlist.ui.view;
 
 import android.content.DialogInterface;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.BaseAdapter;
 import android.widget.EditText;
 
 import com.alex.vestlist.R;
@@ -21,7 +21,6 @@ public class ListActivity extends BaseListViewActivity<ExerciseList, ListPresent
 
     public static final String TEACHER_EXTRA_KEY = "teacher extra" ;
     private Teacher mTeacher;
-    private ExerciseList mList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,10 +58,30 @@ public class ListActivity extends BaseListViewActivity<ExerciseList, ListPresent
     }
 
     @Override
-    public void showAddOrEditDataView() {
+    public void addAdapterData(List<ExerciseList> result) {
+    }
+
+    @Override
+    public void removeAdapterData(List<ExerciseList> result) {
+
+    }
+
+    @Override
+    public BaseAdapter getAdapter() {
+        return null;
+    }
+
+    @Override
+    public void showAddOrEditDataView(final ExerciseList data) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
+        String name = "";
+        if (data != null && !data.getName().isEmpty())
+            name = data.getName();
+
         final EditText etvName = new EditText(this);
+        etvName.setText(name);
+
         builder.setView(etvName);
         builder.setTitle("Digite o nome da lista:");
         builder.setPositiveButton("Adicionar", new DialogInterface.OnClickListener() {
@@ -71,40 +90,19 @@ public class ListActivity extends BaseListViewActivity<ExerciseList, ListPresent
                 String textTyped = etvName.getText().toString();
                 ExerciseList exerciseList = new ExerciseList();
                 exerciseList.setName(textTyped);
-                mPresenter.startAddOrEditThread(exerciseList);
+                mPresenter.startSaveOrEditDataInSource(data);
             }
         });
         builder.create().show();
     }
 
     @Override
-    public void addAdapterData(List result) {
+    public void showDataView(ExerciseList data) {
 
-    }
-
-    @Override
-    public void startSaveOrEditThread(ExerciseList data) {
-        mList = (ExerciseList) data;
-        mList.setTeacherId(mTeacher.getId());
-        new SaveItem().execute();
     }
 
     @Override
     public Teacher getTeacher() {
         return mTeacher;
-    }
-
-    public class SaveItem extends AsyncTask<Object, Object, Long> {
-
-        @Override
-        protected Long doInBackground(Object... params) {
-            return mPresenter.saveModelInSource(mList);
-        }
-
-        @Override
-        protected void onPostExecute(Long aLong) {
-            super.onPostExecute(aLong);
-            mPresenter.analiseSaveThreadResult(aLong);
-        }
     }
 }

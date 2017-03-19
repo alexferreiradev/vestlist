@@ -1,6 +1,7 @@
 package com.alex.vestlist.ui.view;
 
 import android.os.Bundle;
+import android.widget.BaseAdapter;
 
 import com.alex.vestlist.R;
 import com.alex.vestlist.model.Subject;
@@ -41,7 +42,22 @@ public class TeacherActivity extends BaseListViewActivity<Teacher, TeacherPresen
     }
 
     @Override
-    public void showAddOrEditDataView() {
+    public void removeAdapterData(List<Teacher> result) {
+
+    }
+
+    @Override
+    public BaseAdapter getAdapter() {
+        return null;
+    }
+
+    @Override
+    public void showAddOrEditDataView(Teacher data) {
+
+    }
+
+    @Override
+    public void showDataView(Teacher data) {
 
     }
 
@@ -50,8 +66,4 @@ public class TeacherActivity extends BaseListViewActivity<Teacher, TeacherPresen
         mAdapter.addAll(result);
     }
 
-    @Override
-    public void startSaveOrEditThread(Teacher data) {
-
-    }
 }
