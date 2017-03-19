@@ -18,28 +18,28 @@ import java.util.List;
 
 public class ExerciseListListViewAdapter extends BaseAdapter {
     private Context context;
-    private List<ExerciseList> teachers;
+    private List<ExerciseList> exerciseLists;
     private int resourceLayout;
 
-    public ExerciseListListViewAdapter(Context context, List teachers, int resourceLayout) {
+    public ExerciseListListViewAdapter(Context context, List list, int resourceLayout) {
         this.context = context;
-        this.teachers = teachers;
+        this.exerciseLists = list;
         this.resourceLayout = resourceLayout;
     }
 
     @Override
     public int getCount() {
-        return teachers.size();
+        return exerciseLists.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return teachers.get(position);
+        return exerciseLists.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return teachers.get(position).getId();
+        return exerciseLists.get(position).getId();
     }
 
     @Override
@@ -53,7 +53,7 @@ public class ExerciseListListViewAdapter extends BaseAdapter {
 
         TextView tvName = (TextView) convertView.findViewById(R.id.tvName);
 
-        ExerciseList exerciseList = teachers.get(position);
+        ExerciseList exerciseList = exerciseLists.get(position);
         tvName.setText(exerciseList.getName());
 
         return convertView;

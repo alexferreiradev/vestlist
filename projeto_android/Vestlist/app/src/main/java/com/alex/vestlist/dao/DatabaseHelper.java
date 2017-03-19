@@ -14,7 +14,7 @@ import com.alex.vestlist.model.Teacher;
  */
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-    public static final int DB_VERSION = 10;
+    public static final int DB_VERSION = 11;
     public static final String DB_NAME = "vestlist.db";
 
     public static final String CREATE_TABLE_SQL_STRING = "CREATE TABLE ";

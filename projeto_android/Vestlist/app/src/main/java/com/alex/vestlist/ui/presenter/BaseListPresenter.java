@@ -27,12 +27,9 @@ public abstract class BaseListPresenter<ViewType extends BaseListContract.View ,
 
     public void populateList(List<Model> result, int offset){
         mView.toggleProgressBar();
-        if (result == null || result.isEmpty()) {
-            mView.toggleEmptyView();
-        }
-        else if (offset <= 0){
+        if (result != null && !result.isEmpty() && offset <= 0){
                 mView.createListAdapter(result);
-        }else {
+        }else if (result != null){
             mView.addAdapterData(result);
         }
     }

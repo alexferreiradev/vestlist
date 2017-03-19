@@ -151,9 +151,8 @@ abstract class BaseListViewActivity<ModelType extends BaseModel,
 
         @Override
         protected void onPostExecute(List list) {
-            List listBase = list;
             if (mPresenter != null)
-                mPresenter.populateList(listBase, mOffset);
+                mPresenter.populateList(list, mOffset);
         }
     }
 }

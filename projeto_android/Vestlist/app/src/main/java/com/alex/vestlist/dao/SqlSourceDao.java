@@ -40,12 +40,9 @@ public class SqlSourceDao<ModelType extends BaseModel> implements StudentSource.
     @Override
     public long save(ModelType object) {
         SQLiteDatabase writableDatabase = new DatabaseHelper(context).getWritableDatabase();
-        writableDatabase.beginTransaction();
-        // todo resolver problema de factory
         ContentValues values = object.toContentValues();
         values.remove(BaseColumns._ID);
         long id = writableDatabase.insert(tableName, null, values);
-
         return id;
     }
 

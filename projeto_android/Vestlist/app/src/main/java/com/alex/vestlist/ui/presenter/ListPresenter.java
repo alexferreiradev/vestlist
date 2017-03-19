@@ -15,6 +15,8 @@ import java.util.List;
 
 public class ListPresenter extends BaseListPresenter<ListPresenter.View, ExerciseList>{
 
+    private boolean errorInBackground;
+
     public ListPresenter(View mView, Context context, Bundle savedInstanceState) {
         super(mView, context, savedInstanceState);
     }
@@ -45,6 +47,13 @@ public class ListPresenter extends BaseListPresenter<ListPresenter.View, Exercis
     }
 
     @Override
+    public void analiseSaveThreadResult(Long id) {
+        if (errorInBackground)
+            mView.showErrorMsg("Erro ao salvar ou editar");
+        super.analiseSaveThreadResult(id);
+    }
+
+    @Override
     public void showAddOrEditView(ExerciseList data) {
         mView.showAddOrEditDataView();
     }
@@ -56,7 +65,12 @@ public class ListPresenter extends BaseListPresenter<ListPresenter.View, Exercis
 
     //TODO colocar no BaseContract
     public long saveModelInSource(ExerciseList data){
-        return mSource.insertList(data);
+        try {
+            return mSource.insertList(data);
+        } catch (Exception e){
+            errorInBackground = true;
+        }
+        return -1;
     }
 
     @Override

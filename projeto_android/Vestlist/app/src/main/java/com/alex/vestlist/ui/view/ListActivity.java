@@ -55,7 +55,7 @@ public class ListActivity extends BaseListViewActivity<ExerciseList, ListPresent
 
     @Override
     public void createListAdapter(List results) {
-        mListView.setAdapter(new ExerciseListListViewAdapter(this, results, R.layout.activity_list));
+        mListView.setAdapter(new ExerciseListListViewAdapter(this, results, R.layout.adapter_subject_listview));
     }
 
     @Override
@@ -85,6 +85,7 @@ public class ListActivity extends BaseListViewActivity<ExerciseList, ListPresent
     @Override
     public void startSaveOrEditThread(ExerciseList data) {
         mList = (ExerciseList) data;
+        mList.setTeacherId(mTeacher.getId());
         new SaveItem().execute();
     }
 
