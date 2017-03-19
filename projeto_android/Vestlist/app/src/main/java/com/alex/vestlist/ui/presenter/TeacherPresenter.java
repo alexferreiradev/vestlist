@@ -28,7 +28,7 @@ public class TeacherPresenter extends BaseListPresenter<TeacherPresenter.View, T
                 List<Teacher> list = (List<Teacher>) result;
                 if (list == null || list.isEmpty())
                     return;
-                if (mView.getAdapter() == null)
+                if (mOffset <= 0)
                     mView.createListAdapter(list);
                 else
                     mView.addAdapterData(list);

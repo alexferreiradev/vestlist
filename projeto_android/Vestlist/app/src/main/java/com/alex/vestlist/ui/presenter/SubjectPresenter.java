@@ -26,7 +26,7 @@ public class SubjectPresenter extends BaseListPresenter<SubjectPresenter.View, S
                 List<Subject> list = (List<Subject>) result;
                 if (list == null || list.isEmpty())
                     return;
-                if (mView.getAdapter() == null)
+                if (mOffset <= 0)
                     mView.createListAdapter(list);
                 else
                     mView.addAdapterData(list);
