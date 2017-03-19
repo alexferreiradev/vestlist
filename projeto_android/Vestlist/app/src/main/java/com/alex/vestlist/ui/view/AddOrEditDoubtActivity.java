@@ -9,7 +9,7 @@ import android.widget.Toast;
 import com.alex.vestlist.R;
 import com.alex.vestlist.ui.presenter.AddOrEditDoubtPresenter;
 
-public class AddOrEditDoubt extends BaseActivity implements AddOrEditDoubtPresenter.View {
+public class AddOrEditDoubtActivity extends BaseActivity implements AddOrEditDoubtPresenter.View {
 
     private AddOrEditDoubtPresenter mPresenter;
     private EditText questionETV;
@@ -46,5 +46,21 @@ public class AddOrEditDoubt extends BaseActivity implements AddOrEditDoubtPresen
     @Override
     public void showSuccessMsg(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void startAddOrUpdateThread() {
+        // TODO
+    }
+
+    @Override
+    public void showInvalidInputError(String msg) {
+        showErrorMsg(msg);
+    }
+
+    @Override
+    public void returnResultToActivity() {
+        setResult(RESULT_OK, null);// Dado foi salvo no Bd, somente precisa de refresh list
+        finish();
     }
 }

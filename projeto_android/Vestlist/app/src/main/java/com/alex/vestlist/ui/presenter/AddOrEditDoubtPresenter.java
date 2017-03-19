@@ -3,11 +3,13 @@ package com.alex.vestlist.ui.presenter;
 import android.content.Context;
 import android.os.Bundle;
 
+import com.alex.vestlist.model.Doubt;
+
 /**
  * Created by Alex on 19/03/2017.
  */
 
-public class AddOrEditDoubtPresenter extends BasePresenter<AddOrEditDoubtPresenter.View> {
+public class AddOrEditDoubtPresenter extends BaseAddOrEditPresenter<Doubt, AddOrEditDoubtPresenter.View> {
 
     public AddOrEditDoubtPresenter(View mView, Context mContext, Bundle savedInstanceState) {
         super(mView, mContext, savedInstanceState);
@@ -18,7 +20,27 @@ public class AddOrEditDoubtPresenter extends BasePresenter<AddOrEditDoubtPresent
         // TODO start teclado no primeiro ETV
     }
 
-    public interface View extends BasePresenter.View{
+    @Override
+    public void validateData(Doubt data) {
+        if (data == null)
+            throw new NullPointerException("Dado para validar está nulo");
+        else if (data.getQuestion().isEmpty() )
+            mView.showInvalidInputError("Você deve informar a questão");
+        else
+            mView.startAddOrUpdateThread();
+    }
+
+    @Override
+    public void analiseResultFromThread(Long result) {
+        if (result <= 0)
+            mView.showErrorMsg("Erro ao salvar dado");
+        else{
+            mView.showSuccessMsg("Dúvida salva");
+            returnResultToActivity();
+        }
+    }
+
+    public interface View extends BaseAddOrEditContract.View{
 
     }
 }

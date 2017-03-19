@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:mContext="com.alex.vestlist.ui.view.AddOrEditDoubt">
+    tools:context="com.alex.vestlist.ui.view.AddOrEditDoubtActivity">
 
     <EditText
         android:id="@+id/questionETV"
