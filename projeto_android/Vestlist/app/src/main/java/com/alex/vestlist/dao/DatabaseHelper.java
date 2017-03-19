@@ -17,10 +17,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /**
      * Histórico de versões
      *
-     * 12 - todas tabelas testadas com insert e list
+     * 1 - todas tabelas criadas e testadas
      * 
      */
-    public static final int DB_VERSION = 12;
+    public static final int DB_VERSION = 1;
     public static final String DB_NAME = "vestlist.db";
 
     public static final String CREATE_TABLE_SQL_STRING = "CREATE TABLE ";
