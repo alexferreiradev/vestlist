@@ -25,7 +25,7 @@ public class SubjectPresenter extends BaseListPresenter<SubjectPresenter.View, S
 
     @Override
     public Long updateModelInSource(Subject data) {
-        return 0;
+        return new Long(0);
     }
 
     @Override
