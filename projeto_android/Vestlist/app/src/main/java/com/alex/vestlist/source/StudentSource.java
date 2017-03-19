@@ -42,7 +42,7 @@ public class StudentSource implements StudentSourceContract {
 
     @Override
     public List loadDoubts(ExerciseList list, int offset, int limit) {
-        return doubtCrud.load(offset, limit);
+        return doubtCrud.search(VestListContract.DoubtEntry.FK_LIST_COLLUNM, String.valueOf(list.getId()), offset, limit);
     }
 
     @Override
