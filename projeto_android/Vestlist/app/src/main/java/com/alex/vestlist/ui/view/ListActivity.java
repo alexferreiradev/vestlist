@@ -75,6 +75,11 @@ public class ListActivity extends BaseListViewActivity<ExerciseList, ListPresent
     }
 
     @Override
+    public void setAdapter(BaseAdapter newAdapter) {
+        mAdapter = (ExerciseListListViewAdapter) newAdapter;
+    }
+
+    @Override
     public void showAddOrEditDataView(final ExerciseList data) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 

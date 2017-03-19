@@ -34,7 +34,12 @@ public class MainActivity extends BaseListViewActivity<Subject, SubjectPresenter
 
     @Override
     public BaseAdapter getAdapter() {
-        return null;
+        return mAdapter;
+    }
+
+    @Override
+    public void setAdapter(BaseAdapter newAdapter) {
+        mAdapter = (SubjectListViewAdapter) newAdapter;
     }
 
     @Override

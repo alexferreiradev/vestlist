@@ -48,7 +48,12 @@ public class TeacherActivity extends BaseListViewActivity<Teacher, TeacherPresen
 
     @Override
     public BaseAdapter getAdapter() {
-        return null;
+        return mAdapter;
+    }
+
+    @Override
+    public void setAdapter(BaseAdapter newAdapter) {
+        mAdapter = (TeacherListViewAdapter) newAdapter;
     }
 
     @Override

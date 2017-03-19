@@ -72,12 +72,17 @@ public class DoubtActivity extends BaseListViewActivity<Doubt, DoubtPresenter, D
 
     @Override
     public void removeAdapterData(List<Doubt> result) {
-
+//        mAdapter. TODO
     }
 
     @Override
     public BaseAdapter getAdapter() {
-        return null;
+        return mAdapter;
+    }
+
+    @Override
+    public void setAdapter(BaseAdapter newAdapter) {
+        mAdapter = (DoubtListViewAdapter) newAdapter;
     }
 
     @Override
