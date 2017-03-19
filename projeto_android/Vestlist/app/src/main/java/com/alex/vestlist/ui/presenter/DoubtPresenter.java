@@ -54,9 +54,8 @@ public class DoubtPresenter extends BaseListPresenter<DoubtPresenter.View, Doubt
         Intent intent = new Intent(mContext, AddOrEditDoubtActivity.class);
         intent.putExtra(AddOrEditDoubtActivity.ARGUMENT_LIST_ID_KEY, data.getListId());
 
-        if (data != null){
+        if (data != null && data.getId() > 0){
             intent.putExtra(AddOrEditDoubtActivity.ARGUMENT_DOUBT_KEY, data);
-            // TODO tratar forma de editar, alterar nos presenters tudo
         }
         ((Activity)mContext).startActivityForResult(intent, ADD_DOUBT_REQUEST_CODE);
     }
