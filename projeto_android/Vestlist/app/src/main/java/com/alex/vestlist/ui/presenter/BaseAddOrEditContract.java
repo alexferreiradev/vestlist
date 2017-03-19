@@ -8,8 +8,8 @@ import com.alex.vestlist.model.BaseModel;
 
 interface BaseAddOrEditContract {
 
-    public interface View extends BasePresenter.View{
-        public void startAddOrUpdateThread();
+    public interface View<ModelType extends BaseModel> extends BasePresenter.View{
+        public void startAddOrUpdateThread(ModelType data);
 
         public void showInvalidInputError(String msg);
 
@@ -20,7 +20,7 @@ interface BaseAddOrEditContract {
 
         public abstract void validateData(ModelType data);
 
-        public abstract void analiseResultFromThread(Long result);
+        public abstract void analiseResultFromThread(Object result);
 
     }
 

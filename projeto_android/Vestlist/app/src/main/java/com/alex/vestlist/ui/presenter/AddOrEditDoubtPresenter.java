@@ -30,13 +30,14 @@ public class AddOrEditDoubtPresenter extends BaseAddOrEditPresenter<Doubt, AddOr
             mView.toggleProgressBar();
             mView.showInvalidInputError("Você deve informar a questão");
         }else
-            mView.startAddOrUpdateThread();
+            mView.startAddOrUpdateThread(data);
     }
 
     @Override
-    public void analiseResultFromThread(Long result) {
+    public void analiseResultFromThread(Object result) {
+        Long resultLong = new Long(String.valueOf(result));
         mView.toggleProgressBar();
-        if (result <= 0)
+        if (resultLong <= 0)
             mView.showErrorMsg("Erro ao salvar dado");
         else{
             mView.showSuccessMsg("Dúvida salva");
@@ -44,7 +45,17 @@ public class AddOrEditDoubtPresenter extends BaseAddOrEditPresenter<Doubt, AddOr
         }
     }
 
-    public interface View extends BaseAddOrEditContract.View{
+    public Object saveOrEditDataInSource(Doubt doubt){
+        Object result;
+        if (doubt.getId() > 0) // edit
+            result = mSource.updateDoubt(doubt);
+        else
+            result = mSource.insertDoubt(doubt);
+
+        return result;
+    }
+
+    public interface View extends BaseAddOrEditContract.View<Doubt>{
 
     }
 }

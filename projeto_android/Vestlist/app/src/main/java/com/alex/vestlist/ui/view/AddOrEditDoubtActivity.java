@@ -1,5 +1,6 @@
 package com.alex.vestlist.ui.view;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,6 +20,7 @@ public class AddOrEditDoubtActivity extends BaseActivity implements AddOrEditDou
     private EditText questionETV;
     private EditText detailsETV;
     private ProgressBar progressBar;
+    private Doubt mDoubt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,8 +78,9 @@ public class AddOrEditDoubtActivity extends BaseActivity implements AddOrEditDou
     }
 
     @Override
-    public void startAddOrUpdateThread() {
-        // TODO
+    public void startAddOrUpdateThread(Doubt data) {
+        mDoubt = data;
+        new SaveThread().execute();
     }
 
     @Override
@@ -89,5 +92,19 @@ public class AddOrEditDoubtActivity extends BaseActivity implements AddOrEditDou
     public void returnResultToActivity() {
         setResult(RESULT_OK, null);// Dado foi salvo no Bd, somente precisa de refresh list
         finish();
+    }
+
+    public class SaveThread extends AsyncTask<String, Integer, Object>{
+
+        @Override
+        protected Object doInBackground(String... params) {
+            return mPresenter.saveOrEditDataInSource(mDoubt);
+        }
+
+        @Override
+        protected void onPostExecute(Object o) {
+            super.onPostExecute(o);
+            mPresenter.analiseResultFromThread(o);
+        }
     }
 }
