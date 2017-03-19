@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.BaseAdapter;
 
 import com.alex.vestlist.model.BaseModel;
+import com.alex.vestlist.model.ExerciseList;
 
 import java.util.List;
 
@@ -51,6 +52,80 @@ public abstract class BaseListPresenter<ViewType extends BaseListContract.View ,
     protected abstract List<ModelType> applyFilterFromAdapter();
 
     protected abstract List<ModelType> applyFilterFromSource();
+
+
+    @Override
+    public void analiseBackgroundThreadResultData(Object result, TaskType taskType) {
+        switch (taskType){
+            case LOAD:
+                List<ExerciseList> list = (List<ExerciseList>) result;
+                if (list == null || list.isEmpty()) {
+                    if (isNewAdapter()) {
+                        mView.setAdapter(null);
+                    }
+                    return;
+                }
+                if (isNewAdapter())
+                    mView.createListAdapter(list);
+                else
+                    mView.addAdapterData(list);
+                break;
+            case SAVE:
+                Long dataId = (Long) result;
+                if (dataId <= 0){
+                    showDataNotSavedError();
+                }else {
+                    showDataSavedSuccess();
+                    reCreateAdapter();
+                }
+                break;
+            case REMOVE:
+                boolean deleted = (boolean) result;
+                if (!deleted){
+                    showDataRemovedError();
+                }else {
+                    showDataRemovedSuccess();
+                    reCreateAdapter();
+                }
+                break;
+            case EDIT:
+                int rowsUpdated = (int) result;
+                if (rowsUpdated <= 0){
+                    showDataNotEditedError();
+                }else {
+                    showDataEditedSuccess();
+                    reCreateAdapter();
+                }
+                break;
+            case FILTER_FROM_ADAPTER:
+            case FILTER_FROM_SOURCE:
+                list = (List<ExerciseList>) result;
+                if (list == null || list.isEmpty())
+                    return;
+                else{
+                    showDataFilteredSuccess();
+                    mView.createListAdapter(list);
+                }
+                break;
+
+        }
+    }
+
+    protected void showDataFilteredSuccess() {
+        mView.showSuccessMsg("Filtro aplicado com sucesso");
+    }
+
+    protected abstract void showDataNotEditedError();
+
+    protected abstract void showDataEditedSuccess();
+
+    protected abstract void showDataSavedSuccess();
+
+    protected abstract void showDataRemovedError();
+
+    protected abstract void showDataRemovedSuccess();
+
+    protected abstract void showDataNotSavedError();
 
     @Override
     public void applyFilter(String filterKey, String filterValue) {

@@ -20,18 +20,33 @@ public class SubjectPresenter extends BaseListPresenter<SubjectPresenter.View, S
     }
 
     @Override
-    protected void analiseBackgroundThreadResultData(Object result, TaskType taskType) {
-        switch (taskType){
-            case LOAD:
-                List<Subject> list = (List<Subject>) result;
-                if (list == null || list.isEmpty())
-                    return;
-                if (isNewAdapter())
-                    mView.createListAdapter(list);
-                else
-                    mView.addAdapterData(list);
-                break;
-        }
+    protected void showDataNotEditedError() {
+
+    }
+
+    @Override
+    protected void showDataEditedSuccess() {
+
+    }
+
+    @Override
+    protected void showDataSavedSuccess() {
+
+    }
+
+    @Override
+    protected void showDataRemovedError() {
+
+    }
+
+    @Override
+    protected void showDataRemovedSuccess() {
+
+    }
+
+    @Override
+    protected void showDataNotSavedError() {
+
     }
 
     @Override

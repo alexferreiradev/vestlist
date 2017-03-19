@@ -23,55 +23,33 @@ public class ListPresenter extends BaseListPresenter<ListPresenter.View, Exercis
     }
 
     @Override
-    protected void analiseBackgroundThreadResultData(Object result, TaskType taskType) {
-        switch (taskType){
-            case LOAD:
-                List<ExerciseList> list = (List<ExerciseList>) result;
-                if (list == null || list.isEmpty())
-                    return;
-                if (isNewAdapter())
-                    mView.createListAdapter(list);
-                else
-                    mView.addAdapterData(list);
-                break;
-            case SAVE:
-                Long dataId = (Long) result;
-                if (dataId <= 0){
-                    mView.showErrorMsg("Lista não foi salva");
-                }else {
-                    mView.showSuccessMsg("Lista adicionada");
-                    reCreateAdapter();
-                }
-                break;
-            case REMOVE:
-                boolean deleted = (boolean) result;
-                if (!deleted){
-                    mView.showErrorMsg("Lista não pode ser removida");
-                }else {
-                    mView.showSuccessMsg("Lista removida");
-                    reCreateAdapter();
-                }
-                break;
-            case EDIT:
-                int rowsUpdated = (int) result;
-                if (rowsUpdated <= 0){
-                    mView.showErrorMsg("Lista não pode ser editada");
-                }else {
-                    mView.showSuccessMsg("Lista editada");
-                    reCreateAdapter();
-                }
-                break;
-            case FILTER_FROM_ADAPTER:
-            case FILTER_FROM_SOURCE:
-                list = (List<ExerciseList>) result;
-                if (list == null || list.isEmpty())
-                    return;
-                else{
-                    mView.createListAdapter(list);
-                }
-                break;
+    protected void showDataNotEditedError() {
+        mView.showSuccessMsg("Lista não editada");
+    }
 
-        }
+    @Override
+    protected void showDataEditedSuccess() {
+        mView.showSuccessMsg("Lista editada");
+    }
+
+    @Override
+    protected void showDataSavedSuccess() {
+        mView.showSuccessMsg("Lista adicionada");
+    }
+
+    @Override
+    protected void showDataRemovedError() {
+        mView.showErrorMsg("Lista não pode ser removida");
+    }
+
+    @Override
+    protected void showDataRemovedSuccess() {
+        mView.showErrorMsg("Lista removida");
+    }
+
+    @Override
+    protected void showDataNotSavedError() {
+        mView.showSuccessMsg("Lista não adicionada");
     }
 
     @Override

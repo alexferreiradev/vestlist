@@ -22,20 +22,34 @@ public class TeacherPresenter extends BaseListPresenter<TeacherPresenter.View, T
     }
 
     @Override
-    protected void analiseBackgroundThreadResultData(Object result, TaskType taskType) {
-        switch (taskType){
-            case LOAD:
-                List<Teacher> list = (List<Teacher>) result;
-                if (list == null || list.isEmpty())
-                    return;
-                if (isNewAdapter())
-                    mView.createListAdapter(list);
-                else
-                    mView.addAdapterData(list);
-                break;
-        }
+    protected void showDataNotEditedError() {
+
     }
 
+    @Override
+    protected void showDataEditedSuccess() {
+
+    }
+
+    @Override
+    protected void showDataSavedSuccess() {
+
+    }
+
+    @Override
+    protected void showDataRemovedError() {
+
+    }
+
+    @Override
+    protected void showDataRemovedSuccess() {
+
+    }
+
+    @Override
+    protected void showDataNotSavedError() {
+
+    }
 
 
     @Override

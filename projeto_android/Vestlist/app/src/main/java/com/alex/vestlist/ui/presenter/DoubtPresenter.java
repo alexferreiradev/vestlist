@@ -25,55 +25,33 @@ public class DoubtPresenter extends BaseListPresenter<DoubtPresenter.View, Doubt
     }
 
     @Override
-    protected void analiseBackgroundThreadResultData(Object result, TaskType taskType) {
-        switch (taskType){
-            case LOAD:
-                List<Doubt> list = (List<Doubt>) result;
-                if (list == null || list.isEmpty())
-                    return;
-                if (isNewAdapter())
-                    mView.createListAdapter(list);
-                else
-                    mView.addAdapterData(list);
-                break;
-            case SAVE:
-                Long dataId = (Long) result;
-                if (dataId <= 0){
-                    mView.showErrorMsg("Dúvida não foi salva");
-                }else {
-                    mView.showSuccessMsg("Dúvida adicionada");
-                    reCreateAdapter();
-                }
-                break;
-            case REMOVE:
-                boolean deleted = (boolean) result;
-                if (!deleted){
-                    mView.showErrorMsg("Dúvida não pode ser removida");
-                }else {
-                    mView.showSuccessMsg("Dúvida removida");
-                    reCreateAdapter();
-                }
-                break;
-            case EDIT:
-                int rowsUpdated = (int) result;
-                if (rowsUpdated <= 0){
-                    mView.showErrorMsg("Dúvida não pode ser editada");
-                }else {
-                    mView.showSuccessMsg("Dúvida editada");
-                    reCreateAdapter();
-                }
-                break;
-            case FILTER_FROM_ADAPTER:
-            case FILTER_FROM_SOURCE:
-                list = (List<Doubt>) result;
-                if (list == null || list.isEmpty())
-                    return;
-                else{
-                    mView.createListAdapter(list);
-                }
-                break;
+    protected void showDataNotEditedError() {
+        // TODO
+    }
 
-        }
+    @Override
+    protected void showDataEditedSuccess() {
+        // TODO
+    }
+
+    @Override
+    protected void showDataSavedSuccess() {
+        // TODO
+    }
+
+    @Override
+    protected void showDataRemovedError() {
+        // TODO
+    }
+
+    @Override
+    protected void showDataRemovedSuccess() {
+        // TODO
+    }
+
+    @Override
+    protected void showDataNotSavedError() {
+        // TODO
     }
 
     @Override
