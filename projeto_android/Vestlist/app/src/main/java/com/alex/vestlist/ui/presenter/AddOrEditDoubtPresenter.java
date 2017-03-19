@@ -26,7 +26,7 @@ public class AddOrEditDoubtPresenter extends BaseAddOrEditPresenter<Doubt, AddOr
         if (data == null) {
             mView.toggleProgressBar();
             throw new NullPointerException("Dado para validar está nulo");
-        }else if (data.getQuestion().isEmpty() ) {
+        }else if (data.getQuestion().isEmpty() || data.getListId() <= 0) {
             mView.toggleProgressBar();
             mView.showInvalidInputError("Você deve informar a questão");
         }else

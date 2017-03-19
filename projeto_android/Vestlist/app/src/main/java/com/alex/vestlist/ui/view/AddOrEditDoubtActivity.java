@@ -16,11 +16,13 @@ import com.alex.vestlist.ui.presenter.AddOrEditDoubtPresenter;
 public class AddOrEditDoubtActivity extends BaseActivity implements AddOrEditDoubtPresenter.View {
 
     public static final String ARGUMENT_DOUBT_KEY = "doubt argument";
+    private static final String ARGUMENT_LIST_ID_KEY = "list id argument";
     private AddOrEditDoubtPresenter mPresenter;
     private EditText questionETV;
     private EditText detailsETV;
     private ProgressBar progressBar;
     private Doubt mDoubt;
+    private long mListId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,7 @@ public class AddOrEditDoubtActivity extends BaseActivity implements AddOrEditDou
                 Doubt doubt = new Doubt();
                 doubt.setQuestion(questionETV.getText().toString());
                 doubt.setDetails(detailsETV.getText().toString());
+                doubt.setListId(mListId);
                 mPresenter.validateData(doubt);
                 break;
         }
@@ -64,6 +67,7 @@ public class AddOrEditDoubtActivity extends BaseActivity implements AddOrEditDou
         detailsETV = (EditText) findViewById(R.id.detailsETV);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
+        mListId = getIntent().getExtras().getLong(ARGUMENT_LIST_ID_KEY);
         // todo verificar se tem doubt para editar e setar dados com presenter
     }
 
