@@ -6,6 +6,8 @@ import android.os.Bundle;
 import com.alex.vestlist.model.BaseModel;
 import com.alex.vestlist.source.StudentSource;
 
+import java.security.InvalidParameterException;
+
 /**
  * Created by Alex on 16/03/2017.
  */
@@ -48,6 +50,13 @@ public abstract class BasePresenter<ViewType extends BasePresenter.View,
             startBackgroundThread(data, TaskType.EDIT);
         else
             startBackgroundThread(data, TaskType.SAVE);
+    }
+
+    public synchronized void startRemoveDataInSource(ModelType data){
+        if (data != null && data.getId() > 0)
+            startBackgroundThread(data, TaskType.REMOVE);
+        else
+            throw new InvalidParameterException("Tentando remover um objeto nulo ou sem id");
     }
 
     /**
