@@ -9,6 +9,7 @@ import com.alex.vestlist.model.BaseModel;
 interface BaseAddOrEditContract {
 
     public interface View<ModelType extends BaseModel> extends BasePresenter.View{
+
         public void startAddOrUpdateThread(ModelType data);
 
         public void showInvalidInputError(String msg);
@@ -19,8 +20,6 @@ interface BaseAddOrEditContract {
     public interface Presenter<ModelType extends BaseModel> {
 
         public abstract void validateData(ModelType data);
-
-        public abstract void analiseResultFromThread(Object result);
 
     }
 

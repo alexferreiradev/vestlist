@@ -6,6 +6,13 @@ import android.os.Bundle;
 import com.alex.vestlist.model.BaseModel;
 import com.alex.vestlist.source.StudentSource;
 
+import java.util.List;
+
+import static com.alex.vestlist.ui.presenter.BasePresenter.TaskType.EDIT;
+import static com.alex.vestlist.ui.presenter.BasePresenter.TaskType.LOAD;
+import static com.alex.vestlist.ui.presenter.BasePresenter.TaskType.REMOVE;
+import static com.alex.vestlist.ui.presenter.BasePresenter.TaskType.SAVE;
+
 /**
  * Created by Alex on 16/03/2017.
  */
@@ -44,7 +51,7 @@ public abstract class BasePresenter<ViewType extends BasePresenter.View,
         initialize();
     }
 
-    public void startBackgroundThread(ModelType data, TaskType taskType){
+    protected void startBackgroundThread(ModelType data, TaskType taskType){
         mView.startBackgroundThread(data, taskType);
     }
 

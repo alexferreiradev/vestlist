@@ -2,12 +2,15 @@ package com.alex.vestlist.ui.presenter;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.widget.BaseAdapter;
 
 import com.alex.vestlist.model.BaseModel;
 
 import java.util.List;
 
 import static android.R.attr.offset;
+import static com.alex.vestlist.ui.presenter.BasePresenter.TaskType.FILTER_FROM_ADAPTER;
+import static com.alex.vestlist.ui.presenter.BasePresenter.TaskType.FILTER_FROM_SOURCE;
 import static com.alex.vestlist.ui.presenter.BasePresenter.TaskType.LOAD;
 
 /**
@@ -24,19 +27,46 @@ public abstract class BaseListPresenter<ViewType extends BaseListContract.View ,
         implements BaseListContract.Presenter<ModelType>{
 
     private static final int LIMIT_INITIAL = 20;
+    private static final int TOTAL_FILTER_FROM_ADAPTER = 200;
 
     private int mLoadItemsLimit;
     private int mOffset;
+    private String filterKey;
+    private String filterValue;
 
     public BaseListPresenter(ViewType mView, Context context, Bundle savedInstanceState) {
         super(mView, context, savedInstanceState);
-        initialize();
     }
 
-    public void populateAdapter(List<ModelType> result, int offset){
+    protected abstract void setEmptyView();
+
+    protected abstract List<ModelType> loadDataFromSource(int offset, int loadItemsLimit);
+
+    protected abstract int updateDataFromSource(ModelType data);
+
+    protected abstract int removeDataFromSource(ModelType data);
+
+    protected abstract Long saveDataFromSource(ModelType data);
+
+    protected abstract List<ModelType> applyFilterFromAdapter();
+
+    protected abstract List<ModelType> applyFilterFromSource();
+
+    @Override
+    public void applyFilter(String filterKey, String filterValue) {
+        this.filterKey = filterKey;
+        this.filterValue = filterValue;
+        BaseAdapter adapter = mView.getAdapter();
+        if (adapter != null && adapter.getCount() <= TOTAL_FILTER_FROM_ADAPTER){
+            startBackgroundThread(null, FILTER_FROM_ADAPTER);
+        }else
+            startBackgroundThread(null, FILTER_FROM_SOURCE);
+    }
+
+    public void populateAdapter(List<ModelType> result){
         mView.toggleProgressBar();
-        if (result != null && !result.isEmpty() && offset <= 0){
-                mView.createListAdapter(result);
+        if (result != null && !result.isEmpty() && mOffset <= 0){
+            mView.createListAdapter(result);
         }else if (result != null){
             mView.addAdapterData(result);
         }
@@ -67,73 +97,47 @@ public abstract class BaseListPresenter<ViewType extends BaseListContract.View ,
             mLoadItemsLimit = visibleItemCount + 20;
     }
 
-    @Override
-    public void startBackgroundThread(ModelType data, TaskType taskType) {
-        mView.startBackgroundThread(data, taskType);
-    }
+
 
     @Override
     public Object taskFromSource(ModelType data, TaskType taskType) {
         switch (taskType){
-            case LOAD:
-                return loadDataFromSource(mOffset, mLoadItemsLimit);
             case EDIT:
                 return updateDataFromSource(data);
-            case REMOVE:
-                return removeDataFromSource(data);
             case SAVE:
                 return saveDataFromSource(data);
+            case REMOVE:
+                return removeDataFromSource(data);
+            case LOAD:
+                return loadDataFromSource(mOffset, mLoadItemsLimit);
+            case FILTER_FROM_SOURCE:
+                return applyFilterFromSource();
+            case FILTER_FROM_ADAPTER:
+                return applyFilterFromAdapter();
         }
         return null;
     }
 
 
-    /**
-     * Recarrega os dados para lista, desde o primeiro. Caso os dados mudaram, seram atualizados no adapter.
-     */
+
     public void reCreateAdapter(){
         initialize();
     }
 
     @Override
-    public void analiseSaveThreadResult(Long id) {
-        if (id > 0){
-            showSuccessMsg();// TODO fazer msg para cada operação com metodo abstract para cada uma
-            reCreateAdapter();
-        }else{
-            showErrorMsg();// TODO fazer msg para cada operação com metodo abstract para cada uma
-        }
-    }
-
-    protected abstract List<ModelType> loadDataFromSource(int offset, int loadItemsLimit);
-
-    protected abstract int updateDataFromSource(ModelType data);
-
-    protected abstract int removeDataFromSource(ModelType data);
-
-    protected abstract Long saveDataFromSource(ModelType data);
-
-    protected abstract void setEmptyView();
-
-    protected abstract void showSuccessMsg();
-
-
-    protected abstract void showErrorMsg();
-
-    private void resetPaginationCounter(){
-        mLoadItemsLimit = LIMIT_INITIAL;
-        mOffset = 0;
-    }
-
-    @Override
     protected void initialize() {
         resetPaginationCounter();
-        loadMoreData(0, 0, 0, 0, 0);
+        loadMoreData(0, 0, 0);
     }
 
     @Override
     protected void initializeWidgets(Bundle savedInstanceState) {
         super.initializeWidgets(savedInstanceState);
         setEmptyView();
+    }
+
+    private void resetPaginationCounter(){
+        mLoadItemsLimit = LIMIT_INITIAL;
+        mOffset = 0;
     }
 }
