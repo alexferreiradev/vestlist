@@ -36,7 +36,9 @@ public class DoubtActivity extends BaseListViewActivity<Doubt, DoubtPresenter, D
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.newDoubtAction:
-                mPresenter.showAddOrEditView(null);
+                Doubt doubt = new Doubt();
+                doubt.setListId(mList.getId());
+                mPresenter.showAddOrEditView(doubt);
                 break;
         }
         return super.onOptionsItemSelected(item);
