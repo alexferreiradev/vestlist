@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 
 import com.alex.vestlist.R;
@@ -57,6 +59,11 @@ public class DoubtActivity extends BaseListViewActivity<Doubt, DoubtPresenter, D
     public void initializeWidgets(Bundle savedInstanceState) {
         mList = (ExerciseList) getIntent().getExtras().getSerializable(ARGUMENT_LIST_KEY);
         super.initializeWidgets(savedInstanceState);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        super.onItemClick(parent, view, position, id);
     }
 
     @Override

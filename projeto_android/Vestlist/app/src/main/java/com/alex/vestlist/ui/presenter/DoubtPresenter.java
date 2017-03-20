@@ -7,7 +7,6 @@ import android.os.Bundle;
 
 import com.alex.vestlist.model.Doubt;
 import com.alex.vestlist.model.ExerciseList;
-import com.alex.vestlist.ui.util.ViewUtil;
 import com.alex.vestlist.ui.view.AddOrEditDoubtActivity;
 
 import java.util.List;
@@ -102,7 +101,7 @@ public class DoubtPresenter extends BaseListPresenter<DoubtPresenter.View, Doubt
 
     @Override
     public void selectItemClicked(Doubt item) {
-        ViewUtil.showNotImplementedMsg(mContext);
+        showAddOrEditView(item);
     }
 
     public interface View extends BaseListContract.View<Doubt>{
