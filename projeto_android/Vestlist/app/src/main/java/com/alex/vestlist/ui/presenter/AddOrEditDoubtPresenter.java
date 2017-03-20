@@ -33,11 +33,6 @@ public class AddOrEditDoubtPresenter extends BaseAddOrEditPresenter<Doubt, AddOr
     }
 
     @Override
-    protected void initialize() {
-        // TODO start teclado no primeiro ETV
-    }
-
-    @Override
     protected void analiseBackgroundThreadResultData(Object result, TaskType taskType) {
         switch (taskType){
             case SAVE:

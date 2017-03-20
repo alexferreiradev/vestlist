@@ -27,9 +27,9 @@ public abstract class BasePresenter<ViewType extends BasePresenter.View,
     }
 
     /**
-     * Deve ser chamado depois de chamar initializeWidgets.
+     * Deve ser chamado depois de instanciar o presenter.
      *
-     * Deve fazer mostrar views.
+     * Realiza funções necessárias para view iniciar: carrega argumentos, carrega lista.
      */
     protected abstract void initialize();
 
@@ -87,6 +87,8 @@ public abstract class BasePresenter<ViewType extends BasePresenter.View,
          * @param savedInstanceState - dados da instancia salvos
          */
         public void initializeWidgets(Bundle savedInstanceState);
+
+        public void initializeArgumentsFromIntent();
 
         public void showErrorMsg(String msg);
 
