@@ -46,7 +46,8 @@ public abstract class BaseAddOrEditPresenter<ModelType extends BaseModel,
 
     @Override
     protected void initialize() {
-
+        mView.initializeArgumentsFromIntent();
+        // TODO iniciar teclado no primeiro ETV
     }
 
 }
