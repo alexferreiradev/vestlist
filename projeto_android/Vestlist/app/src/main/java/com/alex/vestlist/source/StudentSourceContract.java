@@ -41,6 +41,14 @@ interface StudentSourceContract {
         public List<ModelType> load(int offset, int limit);
 
         public int update(long id, ContentValues values);
+
+        /**
+         * Faz join entre listas e duvidas para retornar total de duvidas por lista
+         * @return
+         * @param offset
+         * @param limit
+         */
+        public List<ExerciseList> getExerciseListWithDoubt(int offset, int limit, long teacherId);
     }
 
     /**

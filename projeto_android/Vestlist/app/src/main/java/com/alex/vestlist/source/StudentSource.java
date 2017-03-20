@@ -47,7 +47,9 @@ public class StudentSource implements StudentSourceContract {
 
     @Override
     public List loadLists(Teacher teacher, int offset, int limit) {
-        return exerciseListCrud.search(VestListContract.ListEntry.FK_TEACHER_COLLUNM, String.valueOf(teacher.getId()), offset, limit);
+//        exerciseListCrud.search(VestListContract.ListEntry.FK_TEACHER_COLLUNM
+//                , String.valueOf(teacher.getId()), offset, limit);
+        return exerciseListCrud.getExerciseListWithDoubt(offset, limit, teacher.getId());
     }
 
     @Override

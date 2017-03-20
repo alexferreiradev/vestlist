@@ -92,6 +92,10 @@ public class SqlSourceDao<ModelType extends BaseModel> implements StudentSource.
         SQLiteDatabase readableDatabase = new DatabaseHelper(context).getReadableDatabase();
         String limitString = offset + "," + limit;
         String[] args = {String.valueOf(teacherId)};
+        //String sqlJoin = "select *, count(d._id) as "+ TOTAL_DOUBTS_COLLUMN_NAME + " from " + VestListContract.ListEntry.TABLE_NAME
+//        + " as l LEFT JOIN "+ VestListContract.DoubtEntry.TABLE_NAME +" as d on l._id = d._id WHERE l."
+//                + VestListContract.ListEntry.FK_TEACHER_COLLUNM + "=? LIMIT "+ limitString;
+//        Cursor cursor = readableDatabase.rawQuery(sqlJoin, args);
         String sqlJoin = "select * from " + VestListContract.ListEntry.TABLE_NAME
                 + " as l JOIN (select count(*) as "+ TOTAL_DOUBTS_COLLUMN_NAME +" from "
                 + VestListContract.DoubtEntry.TABLE_NAME + "as d on l._id = d._id LIMIT 1) WHERE l."

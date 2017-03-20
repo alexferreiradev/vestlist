@@ -1,6 +1,7 @@
 package com.alex.vestlist.ui.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,7 +63,11 @@ public class ExerciseListListViewAdapter extends BaseAdapter {
 
         final ExerciseList exerciseList = exerciseLists.get(position);
         tvName.setText(exerciseList.getName());
+        if (!exerciseList.isHasDoubt())
+            tvName.setTextColor(Color.RED);
+
         statusCB.setChecked(exerciseList.isCompleted());
+
         statusCB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
