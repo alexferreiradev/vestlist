@@ -13,6 +13,7 @@ public class ExerciseList extends BaseModel<ExerciseList> {
 
     private String name;
     private boolean completed;
+    private boolean hasDoubt;
     private long teacherId;
 
     @Override
@@ -54,6 +55,14 @@ public class ExerciseList extends BaseModel<ExerciseList> {
         this.teacherId = teacherId;
     }
 
+    public boolean isHasDoubt() {
+        return hasDoubt;
+    }
+
+    public void setHasDoubt(boolean hasDoubt) {
+        this.hasDoubt = hasDoubt;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -62,15 +71,17 @@ public class ExerciseList extends BaseModel<ExerciseList> {
         ExerciseList that = (ExerciseList) o;
 
         if (completed != that.completed) return false;
+        if (hasDoubt != that.hasDoubt) return false;
         if (teacherId != that.teacherId) return false;
-        return name.equals(that.name);
+        return name != null ? name.equals(that.name) : that.name == null;
 
     }
 
     @Override
     public int hashCode() {
-        int result = name.hashCode();
+        int result = name != null ? name.hashCode() : 0;
         result = 31 * result + (completed ? 1 : 0);
+        result = 31 * result + (hasDoubt ? 1 : 0);
         result = 31 * result + (int) (teacherId ^ (teacherId >>> 32));
         return result;
     }
@@ -80,6 +91,7 @@ public class ExerciseList extends BaseModel<ExerciseList> {
         return "ExerciseList{" +
                 "name='" + name + '\'' +
                 ", completed=" + completed +
+                ", hasDoubt=" + hasDoubt +
                 ", teacherId=" + teacherId +
                 '}';
     }
