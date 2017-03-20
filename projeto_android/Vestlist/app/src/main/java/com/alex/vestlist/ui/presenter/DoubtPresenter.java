@@ -25,32 +25,32 @@ public class DoubtPresenter extends BaseListPresenter<DoubtPresenter.View, Doubt
 
     @Override
     protected void showDataNotEditedError() {
-        // TODO
+        mView.showErrorMsg("Dúvida não foi editada");
     }
 
     @Override
     protected void showDataEditedSuccess() {
-        // TODO
+        mView.showSuccessMsg("Dúvida foi editada");
     }
 
     @Override
     protected void showDataSavedSuccess() {
-        // TODO
+        mView.showSuccessMsg("Dúvida foi adicionada");
     }
 
     @Override
     protected void showDataRemovedError() {
-        // TODO
+        mView.showErrorMsg("Dúvida não foi removida");
     }
 
     @Override
     protected void showDataRemovedSuccess() {
-        // TODO
+        mView.showSuccessMsg("Dúvida foi removida");
     }
 
     @Override
     protected void showDataNotSavedError() {
-        // TODO
+        mView.showErrorMsg("Dúvida não foi adicionada");
     }
 
     @Override
@@ -60,7 +60,7 @@ public class DoubtPresenter extends BaseListPresenter<DoubtPresenter.View, Doubt
 
     @Override
     protected int updateDataFromSource(Doubt data) {
-        return 0;
+        return mSource.updateDoubt(data);
     }
 
     @Override
