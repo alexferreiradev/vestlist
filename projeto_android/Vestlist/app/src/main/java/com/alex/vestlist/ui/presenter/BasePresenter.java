@@ -31,6 +31,11 @@ public abstract class BasePresenter<ViewType extends BasePresenter.View,
      *
      * Realiza funções necessárias para view iniciar: carrega argumentos, carrega lista.
      */
+    public void startPresenterView() {
+        mView.initializeArgumentsFromIntent();
+        initialize();
+    }
+
     protected abstract void initialize();
 
     public abstract Object taskFromSource(ModelType data, TaskType taskType);
@@ -83,7 +88,10 @@ public abstract class BasePresenter<ViewType extends BasePresenter.View,
         public void toggleProgressBar();
 
         /**
-         * Faz bind entre view e atributos da activity
+         * Faz bind entre view e atributos da activity.
+         *
+         * O presenter neste momento ainda não foi instanciado.
+         *
          * @param savedInstanceState - dados da instancia salvos
          */
         public void initializeWidgets(Bundle savedInstanceState);

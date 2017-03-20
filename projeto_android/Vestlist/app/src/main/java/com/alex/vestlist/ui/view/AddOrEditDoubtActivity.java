@@ -36,12 +36,17 @@ public class AddOrEditDoubtActivity extends BaseActivity<Doubt, AddOrEditDoubtPr
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.saveAction:
+                Doubt doubt = null;
+                if (mData != null && mData.getId() > 0){
+                    doubt = mData;
+                }else {
+                    doubt = new Doubt();
+                }
 
-                Doubt doubt = new Doubt();
                 doubt.setQuestion(questionETV.getText().toString());
                 doubt.setDetails(detailsETV.getText().toString());
                 doubt.setListId(mListId);
-                mPresenter.validateDataInputedToSaveOrEdit(doubt);
+                mPresenter.validateDataInputToSaveOrEdit(doubt);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -50,11 +55,13 @@ public class AddOrEditDoubtActivity extends BaseActivity<Doubt, AddOrEditDoubtPr
     @Override
     public void initializeWidgets(Bundle savedInstanceState) {
         super.initializeWidgets(savedInstanceState);
-
         questionETV = (EditText) findViewById(R.id.questionETV);
         detailsETV = (EditText) findViewById(R.id.detailsETV);
+    }
 
-        mListId = getIntent().getExtras().getLong(ARGUMENT_LIST_ID_KEY);
+    @Override
+    public void initializeArgumentsFromIntent() {
+        mListId = getIntent().getExtras().getLong(ARGUMENT_LIST_ID_KEY, -1);
         if (mListId <= 0)
             throw new IllegalArgumentException("Id de lista está nulo ou não foi passado");
 
@@ -75,6 +82,7 @@ public class AddOrEditDoubtActivity extends BaseActivity<Doubt, AddOrEditDoubtPr
 
     @Override
     public void setViewToEditData(Doubt data) {
+        mData = data;
         questionETV.setText(data.getQuestion());
         detailsETV.setText(data.getDetails());
     }

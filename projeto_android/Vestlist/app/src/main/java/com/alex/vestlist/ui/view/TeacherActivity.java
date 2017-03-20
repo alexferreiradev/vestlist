@@ -12,7 +12,7 @@ import com.alex.vestlist.ui.presenter.TeacherPresenter;
 import java.util.List;
 
 public class TeacherActivity extends BaseListViewActivity<Teacher, TeacherPresenter, TeacherPresenter.View> implements TeacherPresenter.View {
-    public static final String SUBJECT_EXTRA_KEY = "subject extra";
+    public static final String ARGUMENT_SUBJECT_KEY = "subject extra";
     private TeacherListViewAdapter mAdapter;
     private Subject mSubject;
 
@@ -24,10 +24,11 @@ public class TeacherActivity extends BaseListViewActivity<Teacher, TeacherPresen
     }
 
     @Override
-    public void initializeWidgets(Bundle savedInstanceState) {
-        super.initializeWidgets(savedInstanceState);
+    public void initializeArgumentsFromIntent() {
+        mSubject = (Subject) getIntent().getExtras().getSerializable(ARGUMENT_SUBJECT_KEY);
 
-        mSubject = (Subject) getIntent().getExtras().getSerializable(SUBJECT_EXTRA_KEY);
+        if (mSubject == null || mSubject.getId() <= 0)
+            throw new IllegalArgumentException("materia nula ou sem id");
     }
 
     @Override

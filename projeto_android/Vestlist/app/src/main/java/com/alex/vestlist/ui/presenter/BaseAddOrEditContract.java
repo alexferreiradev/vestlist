@@ -19,7 +19,7 @@ interface BaseAddOrEditContract {
 
     public interface Presenter<ModelType extends BaseModel> {
 
-        public abstract void validateDataInputedToSaveOrEdit(ModelType data);
+        public abstract void validateDataInputToSaveOrEdit(ModelType data);
 
         public void validateDataToSetEditView(ModelType data);
 

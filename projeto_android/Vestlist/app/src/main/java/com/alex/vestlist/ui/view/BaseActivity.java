@@ -28,6 +28,12 @@ public abstract class BaseActivity<ModelType extends BaseModel,
 
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        mPresenter.startPresenterView();
+    }
+
+    @Override
     public void initializeWidgets(Bundle savedInstanceState) {
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
         if (mProgressBar == null)

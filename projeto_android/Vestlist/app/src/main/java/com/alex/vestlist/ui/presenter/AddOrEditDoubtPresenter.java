@@ -67,10 +67,10 @@ public class AddOrEditDoubtPresenter extends BaseAddOrEditPresenter<Doubt, AddOr
     }
 
     @Override
-    public void validateDataInputedToSaveOrEdit(Doubt data) {
-        if (data == null) {
-            throw new NullPointerException("Dado para validar está nulo");
-        }else if (data.getQuestion().isEmpty() || data.getListId() <= 0) {
+    public void validateDataInputToSaveOrEdit(Doubt data) {
+        if (data == null || data.getListId() <= 0) {
+            throw new NullPointerException("Dado para validar está nulo ou sem id de lista");
+        }else if (data.getQuestion().isEmpty()) {
             mView.showInvalidInputError("Você deve informar a questão");
         }else
             startSaveOrEditDataInSource(data);

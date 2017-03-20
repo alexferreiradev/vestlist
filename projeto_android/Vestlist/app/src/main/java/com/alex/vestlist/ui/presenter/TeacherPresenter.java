@@ -96,7 +96,7 @@ public class TeacherPresenter extends BaseListPresenter<TeacherPresenter.View, T
     @Override
     public void selectItemClicked(Teacher item) {
         Intent intent = new Intent(mContext, ListActivity.class);
-        intent.putExtra(ListActivity.TEACHER_EXTRA_KEY, item);
+        intent.putExtra(ListActivity.ARGUMENT_TEACHER_KEY, item);
         mContext.startActivity(intent);
     }
 

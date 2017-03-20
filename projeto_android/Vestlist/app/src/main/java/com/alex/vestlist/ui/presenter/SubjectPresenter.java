@@ -52,7 +52,7 @@ public class SubjectPresenter extends BaseListPresenter<SubjectPresenter.View, S
     @Override
     public void selectItemClicked(Subject subject) {
         Intent intent = new Intent(mContext, TeacherActivity.class);
-        intent.putExtra(TeacherActivity.SUBJECT_EXTRA_KEY, subject);
+        intent.putExtra(TeacherActivity.ARGUMENT_SUBJECT_KEY, subject);
         mContext.startActivity(intent);
     }
 

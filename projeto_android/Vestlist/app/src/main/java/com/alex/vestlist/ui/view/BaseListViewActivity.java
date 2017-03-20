@@ -49,13 +49,6 @@ abstract class BaseListViewActivity<ModelType extends BaseModel,
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        if (mPresenter != null)
-            mPresenter.reCreateAdapter();
-    }
-
-    @Override
     public void initializeWidgets(Bundle savedInstanceState) {
         super.initializeWidgets(savedInstanceState);
         mListView = (ListView) findViewById(listView);

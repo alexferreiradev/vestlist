@@ -56,14 +56,16 @@ public class DoubtActivity extends BaseListViewActivity<Doubt, DoubtPresenter, D
     }
 
     @Override
-    public void initializeWidgets(Bundle savedInstanceState) {
+    public void initializeArgumentsFromIntent() {
         mList = (ExerciseList) getIntent().getExtras().getSerializable(ARGUMENT_LIST_KEY);
-        super.initializeWidgets(savedInstanceState);
+
+        if (mList == null || mList.getId() <= 0)
+            throw new IllegalArgumentException("Lista nula ou sem id");
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        super.onItemClick(parent, view, position, id);
+        mPresenter.showAddOrEditView((Doubt) mAdapter.getItem(position));
     }
 
     @Override
@@ -95,7 +97,7 @@ public class DoubtActivity extends BaseListViewActivity<Doubt, DoubtPresenter, D
 
     @Override
     public void showAddOrEditDataView(Doubt data) {
-
+        // somente quando tem dialogo.
     }
 
     @Override

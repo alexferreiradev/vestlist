@@ -59,4 +59,8 @@ public class MainActivity extends BaseListViewActivity<Subject, SubjectPresenter
             mAdapter.addAll(result);
     }
 
+    @Override
+    public void initializeArgumentsFromIntent() {
+
+    }
 }

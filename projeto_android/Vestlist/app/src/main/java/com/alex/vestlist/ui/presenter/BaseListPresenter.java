@@ -200,7 +200,7 @@ public abstract class BaseListPresenter<ViewType extends BaseListContract.View ,
 
     @Override
     protected void initialize() {
-        mView.initializeArgumentsFromIntent();
+        mView.destroyListAdapter();
         resetPaginationCounter();
         loadMoreData(0, 0, 0);
     }

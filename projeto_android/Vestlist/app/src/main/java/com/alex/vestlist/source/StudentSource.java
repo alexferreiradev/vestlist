@@ -38,8 +38,11 @@ public class StudentSource implements StudentSourceContract {
     @Override
     public List loadTeachers(Subject subject, int offset, int limit) {
         List<Teacher> allTeacher = teacherCrud.search(VestListContract.TeacherEntry.FK_SUBJECT_COLLUNM, String.valueOf(subject.getId()), offset, limit);
+        if (allTeacher == null)
+            return null;
+
         for (Teacher teacher : allTeacher) {
-            teacher.setListPercentage(getListCompletedPercent(teacher));
+            teacher.setListPercentage(new Float(getListCompletedPercent(teacher)));
         }
 
         return allTeacher;
@@ -99,8 +102,11 @@ public class StudentSource implements StudentSourceContract {
     }
 
     @Override
-    public float getListCompletedPercent(Teacher teacher) {
-        List<ExerciseList> lists = exerciseListCrud.search(VestListContract.ListEntry.FK_TEACHER_COLLUNM, String.valueOf(teacher.getId()), 0, -1);
+    public double getListCompletedPercent(Teacher teacher) {
+        List<ExerciseList> lists = exerciseListCrud.search(VestListContract.ListEntry.FK_TEACHER_COLLUNM, String.valueOf(teacher.getId()), 0, Integer.MAX_VALUE);
+        if (lists == null)
+            return 0;
+
         int total = lists.size();
         int completed = 0;
         for (ExerciseList list : lists) {
@@ -108,7 +114,7 @@ public class StudentSource implements StudentSourceContract {
                 completed ++;
         }
 
-        return completed/total;
+        return completed*1.0/total*100;
     }
 
     @Override

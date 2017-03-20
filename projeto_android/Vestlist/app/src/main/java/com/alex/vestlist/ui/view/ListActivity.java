@@ -19,7 +19,7 @@ import java.util.List;
 
 public class ListActivity extends BaseListViewActivity<ExerciseList, ListPresenter, ListPresenter.View> implements ListPresenter.View{
 
-    public static final String TEACHER_EXTRA_KEY = "teacher extra" ;
+    public static final String ARGUMENT_TEACHER_KEY = "teacher extra" ;
     private Teacher mTeacher;
     private ExerciseListListViewAdapter mAdapter;
 
@@ -31,10 +31,11 @@ public class ListActivity extends BaseListViewActivity<ExerciseList, ListPresent
     }
 
     @Override
-    public void initializeWidgets(Bundle savedInstanceState) {
-        super.initializeWidgets(savedInstanceState);
+    public void initializeArgumentsFromIntent() {
+        mTeacher = (Teacher) getIntent().getExtras().getSerializable(ARGUMENT_TEACHER_KEY);
 
-        mTeacher = (Teacher) getIntent().getExtras().getSerializable(TEACHER_EXTRA_KEY);
+        if (mTeacher == null || mTeacher.getId() <= 0)
+            throw new IllegalArgumentException("professor nulo ou sem id");
     }
 
     @Override

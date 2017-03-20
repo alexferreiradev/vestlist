@@ -75,6 +75,6 @@ interface StudentSourceContract {
      * Calcula a porcentagem de listas de um professor que estão com status true.
      * @return a porcentagem.
      */
-    public float getListCompletedPercent(Teacher teacher);
+    public double getListCompletedPercent(Teacher teacher);
 
 }
