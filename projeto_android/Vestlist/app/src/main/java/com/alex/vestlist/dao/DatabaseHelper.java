@@ -78,9 +78,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      */
     private void createFixedValues(SQLiteDatabase db) {
         db.beginTransaction();
-        String []subjectNames = {"Matemática", "Português"};
-        String []teacherNames = {"João", "José"};
+        String []subjectNames = {"História", "Geografia", "Biologia", "Física", "Química"
+                , "Linguagem, codigos e suas tecnologias  ", "Matemática"};
+        String [][]teacherNames = {{"Pedro Ivo", "Tainá", "Eduardo", "Norberto"}
+                ,{"Luiz", "Sabbath"} ,{"Rodriguinho", "Éder", "Camacho", "Tovar"
+                , "Anderson Macena"} ,{"Vilela", "Xingu", "Clinton", "Greg"}
+                ,{"Cleiton", "Tasso", "Manzi", "Paulo", "Gildão"} ,{"Ádino", "Sinval"
+                , "Hugo", "Jairo Beraldo", "Thiago", "Patolino"} ,{"André Mal", "Jairo"
+                , "Musgley", "Manim", "Kairo"} };
 
+        int subjectIndx = 0;
         for (String name : subjectNames) {
             Subject subject = new Subject();
             subject.setName(name);
@@ -88,7 +95,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             values.remove(BaseColumns._ID);
             long insert = db.insert(VestListContract.SubjectEntry.TABLE_NAME, null, values);
             subject.setId(insert);
-            for (String teacherName : teacherNames){
+            for (String teacherName : teacherNames[subjectIndx]){
                 Teacher teacher = new Teacher();
                 teacher.setSubjectId(subject.getId());
                 teacher.setName(teacherName);
@@ -97,6 +104,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 insert = db.insert(VestListContract.TeacherEntry.TABLE_NAME, null, values);
                 teacher.setId(insert);
             }
+            subjectIndx ++;
         }
 
         db.setTransactionSuccessful();
