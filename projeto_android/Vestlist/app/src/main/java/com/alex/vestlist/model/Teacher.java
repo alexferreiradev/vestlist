@@ -14,6 +14,7 @@ public class Teacher extends BaseModel<Teacher> {
     private long id;
     private String name;
     private long subjectId;
+    private Float listPercentage;
 
     @Override
     public ContentValues toContentValues() {
@@ -51,6 +52,14 @@ public class Teacher extends BaseModel<Teacher> {
         this.subjectId = subjectId;
     }
 
+    public Float getListPercentage() {
+        return listPercentage;
+    }
+
+    public void setListPercentage(Float listPercentage) {
+        this.listPercentage = listPercentage;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -60,7 +69,8 @@ public class Teacher extends BaseModel<Teacher> {
 
         if (id != teacher.id) return false;
         if (subjectId != teacher.subjectId) return false;
-        return name != null ? name.equals(teacher.name) : teacher.name == null;
+        if (name != null ? !name.equals(teacher.name) : teacher.name != null) return false;
+        return listPercentage != null ? listPercentage.equals(teacher.listPercentage) : teacher.listPercentage == null;
 
     }
 
@@ -69,6 +79,7 @@ public class Teacher extends BaseModel<Teacher> {
         int result = (int) (id ^ (id >>> 32));
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (int) (subjectId ^ (subjectId >>> 32));
+        result = 31 * result + (listPercentage != null ? listPercentage.hashCode() : 0);
         return result;
     }
 
@@ -78,6 +89,7 @@ public class Teacher extends BaseModel<Teacher> {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", subjectId=" + subjectId +
+                ", listPercentage=" + listPercentage +
                 '}';
     }
 }
