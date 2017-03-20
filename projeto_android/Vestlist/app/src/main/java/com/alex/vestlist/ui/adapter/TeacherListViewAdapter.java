@@ -54,7 +54,7 @@ public class TeacherListViewAdapter extends BaseAdapter {
         TextView tvName = (TextView) convertView.findViewById(R.id.tvName);
 
         Teacher teacher = teachers.get(position);
-        tvName.setText(teacher.getName());
+        tvName.setText(teacher.getName()+" - "+teacher.getListPercentage() + "%");
 
         return convertView;
     }

@@ -37,7 +37,12 @@ public class StudentSource implements StudentSourceContract {
 
     @Override
     public List loadTeachers(Subject subject, int offset, int limit) {
-        return teacherCrud.search(VestListContract.TeacherEntry.FK_SUBJECT_COLLUNM, String.valueOf(subject.getId()), offset, limit);
+        List<Teacher> allTeacher = teacherCrud.search(VestListContract.TeacherEntry.FK_SUBJECT_COLLUNM, String.valueOf(subject.getId()), offset, limit);
+        for (Teacher teacher : allTeacher) {
+            teacher.setListPercentage(getListCompletedPercent(teacher));
+        }
+
+        return allTeacher;
     }
 
     @Override
@@ -47,9 +52,22 @@ public class StudentSource implements StudentSourceContract {
 
     @Override
     public List loadLists(Teacher teacher, int offset, int limit) {
-//        exerciseListCrud.search(VestListContract.ListEntry.FK_TEACHER_COLLUNM
-//                , String.valueOf(teacher.getId()), offset, limit);
-        return exerciseListCrud.getExerciseListWithDoubt(offset, limit, teacher.getId());
+        List<ExerciseList> allList = exerciseListCrud.search(VestListContract.ListEntry.FK_TEACHER_COLLUNM
+                , String.valueOf(teacher.getId()), offset, limit);
+        if (allList == null)
+            return null;
+
+        for (ExerciseList exerciseList : allList) {
+            List list = loadDoubts(exerciseList, 0, 1);
+            if (list != null && !list.isEmpty()){
+                exerciseList.setHasDoubt(true);
+                continue;
+            }
+        }
+
+//        exerciseListCrud.getExerciseListWithDoubt(offset, limit, teacher.getId());
+
+        return allList;
     }
 
     @Override
@@ -84,9 +102,13 @@ public class StudentSource implements StudentSourceContract {
     public float getListCompletedPercent(Teacher teacher) {
         List<ExerciseList> lists = exerciseListCrud.search(VestListContract.ListEntry.FK_TEACHER_COLLUNM, String.valueOf(teacher.getId()), 0, -1);
         int total = lists.size();
-        List<ExerciseList> completedLists = exerciseListCrud.search(VestListContract.ListEntry.STATUS_COLLUNM, "1", 0, -1);
-        int totalCompletedLists = completedLists.size();
-        return totalCompletedLists/total;
+        int completed = 0;
+        for (ExerciseList list : lists) {
+            if (list.isCompleted())
+                completed ++;
+        }
+
+        return completed/total;
     }
 
     @Override

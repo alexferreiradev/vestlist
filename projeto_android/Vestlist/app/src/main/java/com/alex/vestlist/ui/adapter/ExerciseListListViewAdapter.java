@@ -63,7 +63,7 @@ public class ExerciseListListViewAdapter extends BaseAdapter {
 
         final ExerciseList exerciseList = exerciseLists.get(position);
         tvName.setText(exerciseList.getName());
-        if (!exerciseList.isHasDoubt())
+        if (exerciseList.isHasDoubt())
             tvName.setTextColor(Color.RED);
 
         statusCB.setChecked(exerciseList.isCompleted());
