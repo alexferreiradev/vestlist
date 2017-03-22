@@ -5,10 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.alex.vestlist.R;
 import com.alex.vestlist.model.Doubt;
+import com.alex.vestlist.ui.presenter.BasePresenter;
 
 import java.util.List;
 
@@ -20,11 +22,13 @@ public class DoubtListViewAdapter extends BaseAdapter {
     private Context context;
     private List<Doubt> doubts;
     private int resourceLayout;
+    private BasePresenter mPresenter;
 
-    public DoubtListViewAdapter(Context context, List doubts, int resourceLayout) {
+    public DoubtListViewAdapter(Context context, List doubts, int resourceLayout, BasePresenter mPresenter) {
         this.context = context;
         this.doubts = doubts;
         this.resourceLayout = resourceLayout;
+        this.mPresenter = mPresenter;
     }
 
     @Override
@@ -51,10 +55,17 @@ public class DoubtListViewAdapter extends BaseAdapter {
         }else
             convertView = (View) convertView.getTag();
 
-        TextView tvName = (TextView) convertView.findViewById(R.id.tvName);
+        TextView nameTV = (TextView) convertView.findViewById(R.id.nameTV);
+        Button deleteBT = (Button) convertView.findViewById(R.id.deleteBT);
 
-        Doubt doubt = doubts.get(position);
-        tvName.setText(doubt.getQuestion());
+        final Doubt doubt = doubts.get(position);
+        deleteBT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.startRemoveDataInSource(doubt);
+            }
+        });
+        nameTV.setText(doubt.getQuestion());
 
         return convertView;
     }

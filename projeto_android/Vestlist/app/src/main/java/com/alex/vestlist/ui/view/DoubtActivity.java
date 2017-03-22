@@ -70,7 +70,7 @@ public class DoubtActivity extends BaseListViewActivity<Doubt, DoubtPresenter, D
 
     @Override
     public void createListAdapter(List results) {
-        mAdapter = new DoubtListViewAdapter(this, results, R.layout.adapter_subject_listview);
+        mAdapter = new DoubtListViewAdapter(this, results, R.layout.adapter_doubt_listview, mPresenter);
         mListView.setAdapter(mAdapter);
     }
 
