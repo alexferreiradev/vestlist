@@ -27,7 +27,7 @@ public class AddOrEditDoubtActivity extends BaseActivity<Doubt, AddOrEditDoubtPr
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.add_edit_doubt_activity, menu);
+        getMenuInflater().inflate(R.menu.add_edit_doubt_menu, menu);
 
         return super.onCreateOptionsMenu(menu);
     }

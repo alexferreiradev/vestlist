@@ -31,7 +31,7 @@ public class DoubtActivity extends BaseListViewActivity<Doubt, DoubtPresenter, D
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.doubt_activity, menu);
+        getMenuInflater().inflate(R.menu.doubt_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
