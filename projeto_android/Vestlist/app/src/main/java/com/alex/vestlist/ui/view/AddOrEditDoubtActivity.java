@@ -71,10 +71,9 @@ public class AddOrEditDoubtActivity extends BaseActivity<Doubt, AddOrEditDoubtPr
         TextView mTitleAB = (TextView) mToolbar.findViewById(R.id.toolbar_title);
         if (getIntent().hasExtra(ARGUMENT_DOUBT_KEY)) {
             mPresenter.validateDataToSetEditView((Doubt) getIntent().getExtras().getSerializable(ARGUMENT_DOUBT_KEY));
-
             mTitleAB.setText("Atualizando dúvida");
         }else{
-            mToolbar.setTitle("Nova dúvida");
+            mTitleAB.setText("Nova dúvida");
         }
 
     }

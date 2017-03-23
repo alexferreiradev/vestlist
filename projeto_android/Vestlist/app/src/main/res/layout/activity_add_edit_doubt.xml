@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.alex.vestlist.ui.view.AddOrEditDoubtActivity">
+
+    <include layout="@layout/default_action_bar"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/includedActionbar" />
 
     <EditText
         android:id="@+id/questionETV"
@@ -14,7 +18,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
+        android:layout_below="@id/includedActionbar"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:ems="10"
         android:hint="Questão"
         android:inputType="textPersonName" />
@@ -23,7 +28,6 @@
         android:id="@+id/detailsETV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
@@ -42,10 +46,5 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="13dp"
         android:visibility="gone" />
-
-    <include layout="@layout/default_action_bar"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:id="@+id/includedActionbar" />
 
 </RelativeLayout>

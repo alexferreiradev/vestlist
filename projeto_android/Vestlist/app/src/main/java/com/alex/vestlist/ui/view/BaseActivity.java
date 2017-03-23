@@ -40,6 +40,7 @@ public abstract class BaseActivity<ModelType extends BaseModel,
         Toolbar mToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(mToolbar);
 
+        getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Drawable drawable = getResources().getDrawable(R.mipmap.ic_launcher);
         drawable.setBounds(24,24,24,24);
