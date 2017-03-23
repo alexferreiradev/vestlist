@@ -1,8 +1,10 @@
 package com.alex.vestlist.ui.view;
 
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -35,7 +37,13 @@ public abstract class BaseActivity<ModelType extends BaseModel,
 
     @Override
     public void initializeWidgets(Bundle savedInstanceState) {
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(mToolbar);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Drawable drawable = getResources().getDrawable(R.mipmap.ic_launcher);
+        drawable.setBounds(24,24,24,24);
+        getSupportActionBar().setHomeAsUpIndicator(drawable);
 
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
         if (mProgressBar == null)
