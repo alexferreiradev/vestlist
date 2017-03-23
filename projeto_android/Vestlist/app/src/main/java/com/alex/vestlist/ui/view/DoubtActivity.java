@@ -62,7 +62,7 @@ public class DoubtActivity extends BaseListViewActivity<Doubt, DoubtPresenter, D
         if (mList == null || mList.getId() <= 0)
             throw new IllegalArgumentException("Lista nula ou sem id");
 
-        getSupportActionBar().setTitle(mList.getName());
+        getSupportActionBar().setTitle("Lista: ".concat(mList.getName()));
     }
 
     @Override
