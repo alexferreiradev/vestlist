@@ -63,4 +63,11 @@ public class MainActivity extends BaseListViewActivity<Subject, SubjectPresenter
     public void initializeArgumentsFromIntent() {
 
     }
+
+    @Override
+    public void initializeWidgets(Bundle savedInstanceState) {
+        super.initializeWidgets(savedInstanceState);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(false);
+    }
 }

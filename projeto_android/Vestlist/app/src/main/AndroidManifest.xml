@@ -15,10 +15,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.view.TeacherActivity" />
-        <activity android:name=".ui.view.ListActivity" />
-        <activity android:name=".ui.view.DoubtActivity" />
-        <activity android:name=".ui.view.AddOrEditDoubtActivity"></activity>
+        <activity android:name=".ui.view.TeacherActivity"
+            android:parentActivityName=".ui.view.MainActivity"/>
+        <activity android:name=".ui.view.ListActivity"
+            android:parentActivityName=".ui.view.TeacherActivity"/>
+        <activity android:name=".ui.view.DoubtActivity"
+            android:parentActivityName=".ui.view.TeacherActivity"/>
+        <activity android:name=".ui.view.AddOrEditDoubtActivity"
+            android:parentActivityName=".ui.view.DoubtActivity"></activity>
     </application>
 
 </manifest>

@@ -35,6 +35,9 @@ public abstract class BaseActivity<ModelType extends BaseModel,
 
     @Override
     public void initializeWidgets(Bundle savedInstanceState) {
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
         if (mProgressBar == null)
             throw new NullPointerException("A Activity não tem progressBar no layout.");
