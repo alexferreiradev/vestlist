@@ -36,6 +36,8 @@ public class ListActivity extends BaseListViewActivity<ExerciseList, ListPresent
 
         if (mTeacher == null || mTeacher.getId() <= 0)
             throw new IllegalArgumentException("professor nulo ou sem id");
+
+        getSupportActionBar().setTitle(mTeacher.getName());
     }
 
     @Override

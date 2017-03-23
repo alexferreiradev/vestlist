@@ -27,8 +27,11 @@ public class TeacherActivity extends BaseListViewActivity<Teacher, TeacherPresen
     public void initializeArgumentsFromIntent() {
         mSubject = (Subject) getIntent().getExtras().getSerializable(ARGUMENT_SUBJECT_KEY);
 
-        if (mSubject == null || mSubject.getId() <= 0)
+        if (mSubject == null || mSubject.getId() <= 0) {
             throw new IllegalArgumentException("materia nula ou sem id");
+        }
+
+        getSupportActionBar().setTitle(mSubject.getName());
     }
 
     @Override

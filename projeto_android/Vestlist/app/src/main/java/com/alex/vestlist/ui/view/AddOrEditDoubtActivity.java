@@ -65,8 +65,13 @@ public class AddOrEditDoubtActivity extends BaseActivity<Doubt, AddOrEditDoubtPr
         if (mListId <= 0)
             throw new IllegalArgumentException("Id de lista está nulo ou não foi passado");
 
-        if (getIntent().hasExtra(ARGUMENT_DOUBT_KEY))
+        if (getIntent().hasExtra(ARGUMENT_DOUBT_KEY)) {
             mPresenter.validateDataToSetEditView((Doubt) getIntent().getExtras().getSerializable(ARGUMENT_DOUBT_KEY));
+            getSupportActionBar().setTitle("Atualizando dúvida");
+        }else{
+            getSupportActionBar().setTitle("Nova dúvida");
+        }
+
     }
 
     @Override
