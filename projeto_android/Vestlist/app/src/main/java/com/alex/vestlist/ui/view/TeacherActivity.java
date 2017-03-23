@@ -1,7 +1,9 @@
 package com.alex.vestlist.ui.view;
 
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import com.alex.vestlist.R;
 import com.alex.vestlist.model.Subject;
@@ -31,7 +33,9 @@ public class TeacherActivity extends BaseListViewActivity<Teacher, TeacherPresen
             throw new IllegalArgumentException("materia nula ou sem id");
         }
 
-        getSupportActionBar().setTitle(mSubject.getName());
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        TextView mTitleAB = (TextView) mToolbar.findViewById(R.id.toolbar_title);
+        mTitleAB.setText(mSubject.getName());
     }
 
     @Override

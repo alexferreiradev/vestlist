@@ -2,11 +2,13 @@ package com.alex.vestlist.ui.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import com.alex.vestlist.R;
 import com.alex.vestlist.model.Doubt;
@@ -62,7 +64,9 @@ public class DoubtActivity extends BaseListViewActivity<Doubt, DoubtPresenter, D
         if (mList == null || mList.getId() <= 0)
             throw new IllegalArgumentException("Lista nula ou sem id");
 
-        getSupportActionBar().setTitle("Lista: ".concat(mList.getName()));
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        TextView mTitleAB = (TextView) mToolbar.findViewById(R.id.toolbar_title);
+        mTitleAB.setText("Lista: ".concat(mList.getName()));
     }
 
     @Override

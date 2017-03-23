@@ -1,9 +1,11 @@
 package com.alex.vestlist.ui.view;
 
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.alex.vestlist.R;
 import com.alex.vestlist.model.Doubt;
@@ -65,11 +67,14 @@ public class AddOrEditDoubtActivity extends BaseActivity<Doubt, AddOrEditDoubtPr
         if (mListId <= 0)
             throw new IllegalArgumentException("Id de lista está nulo ou não foi passado");
 
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        TextView mTitleAB = (TextView) mToolbar.findViewById(R.id.toolbar_title);
         if (getIntent().hasExtra(ARGUMENT_DOUBT_KEY)) {
             mPresenter.validateDataToSetEditView((Doubt) getIntent().getExtras().getSerializable(ARGUMENT_DOUBT_KEY));
-            getSupportActionBar().setTitle("Atualizando dúvida");
+
+            mTitleAB.setText("Atualizando dúvida");
         }else{
-            getSupportActionBar().setTitle("Nova dúvida");
+            mToolbar.setTitle("Nova dúvida");
         }
 
     }
